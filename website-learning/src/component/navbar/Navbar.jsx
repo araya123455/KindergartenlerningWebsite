@@ -17,22 +17,22 @@ function NavbarHead() {
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="#">
+            <NavLink to="schoolHistory">
               <i>ประวัติโรงเรียน</i>
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="#">
+            <NavLink to="personel">
               <i>บุคลากร</i>
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="#">
+            <NavLink to="contact">
               <i>ติดต่อเรา</i>
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="#">
+            <NavLink to="login ">
               <i>Login</i>
             </NavLink>
           </div>
