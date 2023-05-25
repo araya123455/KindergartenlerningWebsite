@@ -11,28 +11,25 @@ function NavbarHead() {
     <div className="navbarHeader">
       <Navbar bg="dark" variant="dark" className="main-navbar">
         <Nav className="me-auto d-flex align-items-center">
-          <div className="navbarCon">
-            <NavLink to="home">
+          {/* <div className="navbarCon">
+            <NavLink to="/main">
               <i>Home</i>
             </NavLink>
+          </div> */}
+          <div className="navbarCon">
+            <a href="#home">Home</a>
           </div>
           <div className="navbarCon">
-            <NavLink to="schoolHistory">
-              <i>ประวัติโรงเรียน</i>
-            </NavLink>
+            <a href="#contact">Contact</a>
           </div>
           <div className="navbarCon">
-            <NavLink to="personel">
-              <i>บุคลากร</i>
-            </NavLink>
+            <a href="#personel">Personel</a>
           </div>
           <div className="navbarCon">
-            <NavLink to="contact">
-              <i>ติดต่อเรา</i>
-            </NavLink>
+            <a href="#schoolHistory">School History</a>
           </div>
           <div className="navbarCon">
-            <NavLink to="login ">
+            <NavLink to="/login ">
               <i>Login</i>
             </NavLink>
           </div>

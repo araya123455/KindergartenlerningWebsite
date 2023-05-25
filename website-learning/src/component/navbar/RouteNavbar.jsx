@@ -2,6 +2,10 @@ import React from "react";
 import NavbarHead from "./Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import "../../assets/css/Navbar.css";
+import Home from "../../mainPage/home/Home";
+import Contact from "../../mainPage/home/Contact";
+import Personnel from "../../mainPage/home/Personnel";
+import SchoolHistory from "../../mainPage/home/SchoolHistory";
 function RouteNavbar() {
   return (
     <>
@@ -9,7 +13,10 @@ function RouteNavbar() {
         <div className="content-right">
           <NavbarHead />
           <div className="main-content">
-            <Outlet />
+          <Home />
+      <Contact />
+      <Personnel />
+      <SchoolHistory />
           </div>
         </div>
       </div>
