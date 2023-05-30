@@ -6,7 +6,7 @@ import { adminlogin, teacherlogin, studentlogin } from "../../slice/DataSlice";
 import md5 from "md5";
 import "../../assets/css/Login.css";
 
-function Login() {
+function Login({signin}) {
   /*const checkRole= ()=>{
     if(status === 0){
       navigate("/techer");
@@ -44,7 +44,7 @@ function Login() {
         .then((result) => {
           console.log(result);
           if (result.payload === "success") {
-            // signin();
+            signin();
             navigate("/teacher");
           }
           if (result.payload === "Try Again") {
@@ -65,7 +65,8 @@ function Login() {
         .then((result) => {
           console.log(result);
           if (result.payload === "success") {
-            // signin();
+            signin();
+            console.log("SignIn",signin);
             navigate("/admin");
           }
           if (result.payload === "Try Again") {
@@ -86,7 +87,7 @@ function Login() {
           .then((result) => {
             console.log(result);
             if (result.payload === "success") {
-              // signin();
+              signin();
               navigate("/student");
             }
             if (result.payload === "Try Again") {
@@ -108,18 +109,20 @@ function Login() {
           <Form.Group className="mb-3" controlId="usernameInput">
             <Form.Label>Username</Form.Label>
             <Form.Control
-              className="input-line"
+              className="input-line form-control"
               type="text"
               placeholder="Enter username"
+              autoComplete="username"
               onChange={(e) => setUsernameInput(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="passwordInput">
             <Form.Label>Password</Form.Label>
             <Form.Control
-              className="input-line"
+              className="input-line form-control"
               type="password"
               placeholder="Enter password"
+              autoComplete="current-password"
               onChange={(e) => setPasswordInput(e.target.value)}
             />
           </Form.Group>

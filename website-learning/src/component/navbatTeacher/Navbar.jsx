@@ -30,9 +30,22 @@ function NavbarHead(props) {
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="test">
-              <i>แบบทดสอบ</i>
-            </NavLink>
+            <NavDropdown title="Test" id="basic-nav-dropdown">
+              <NavDropdown.Item>
+                <NavLink to="test/createTest">
+                  <div className="list">
+                    <i>Create Test</i>
+                  </div>
+                </NavLink>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <NavLink to="test/testRe">
+                  <div className="list">
+                    <i>Test Result</i>
+                  </div>
+                </NavLink>
+              </NavDropdown.Item>
+            </NavDropdown>
           </div>
           <div className="navbarCon">
             <NavLink to="teaSeacher">
@@ -46,7 +59,8 @@ function NavbarHead(props) {
           </div>
           <div className="navbarCon">
             <NavLink to="/login ">
-              {props.isSignedIn ? (
+            <i>Sign Out</i>
+              {/* {props.isSignedIn ? (
                 <button className="bth-danger" onClick={props.signout}>
                   Sign out
                 </button>
@@ -54,7 +68,7 @@ function NavbarHead(props) {
                 <button className="bth-danger" onClick={props.signin}>
                   Sign in
                 </button>
-              )}
+              )} */}
             </NavLink>
           </div>
         </Nav>

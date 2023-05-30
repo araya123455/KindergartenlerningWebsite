@@ -2,15 +2,12 @@ import React from "react";
 import NavbarHead from "./Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import "../../assets/css/Navbar.css";
-function RouteTeacher(props) {
-  let signin = props.signin;
-  let signout = props.signout;
-  let isSignedIn = props.isSignedIn;
+function RouteTeacher() {
   return (
     <>
       <div style={{ display: "flex" }}>
         <div className="content-right">
-          <NavbarHead signin={signin} signout={signout} isSignedIn={isSignedIn}/>
+          <NavbarHead />
           <div className="main-content">
             <Outlet />
           </div>

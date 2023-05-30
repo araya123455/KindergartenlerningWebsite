@@ -26,15 +26,7 @@ function NavbarHead(props) {
           </div>
           <div className="navbarCon">
             <NavLink to="/login ">
-              {props.isSignedIn ? (
-                <button className="bth-danger" onClick={props.signout}>
-                  Sign out
-                </button>
-              ) : (
-                <button className="bth-danger" onClick={props.signin}>
-                  Sign in
-                </button>
-              )}
+              <i>Sign Out</i>
             </NavLink>
           </div>
         </Nav>
