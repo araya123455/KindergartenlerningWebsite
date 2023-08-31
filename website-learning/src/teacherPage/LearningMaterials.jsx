@@ -5,11 +5,8 @@ import { Container, Row, Col } from "react-bootstrap";
 // import movenment from "./Movement";
 
 const LearningMaterials = () => {
-  return (
-    
-      
-      <div className="App">
-        
+  return (  
+      <div className="App">   
         <Container className="p-4"> 
         <div id="clouds">
              <div className="cloud x1"></div>

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { learningvideo } from "../slice/DataSlice";
 import "../assets/css/movement.css";
 import Button from "react-bootstrap/Button";
+import "../assets/css/clouds.css";
 
 function Movement2() {
   const dispatch = useDispatch();

@@ -7,6 +7,7 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import axios from "axios";
 import "../assets/css/learning.css";
+import "../assets/css/clouds.css";
 
 function LearningFile() {
   const dispatch = useDispatch();

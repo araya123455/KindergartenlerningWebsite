@@ -5,6 +5,7 @@ import { learningvideo } from "../slice/DataSlice";
 // import { learningfilepdf } from "../slice/DataSlice";
 import "../assets/css/movement.css";
 import Button from "react-bootstrap/Button";
+import "../assets/css/clouds.css";
 
 const Movement = () => {
   const dispatch = useDispatch();

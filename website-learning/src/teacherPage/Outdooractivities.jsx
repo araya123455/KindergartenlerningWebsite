@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { learningvideo } from "../slice/DataSlice";
 import "../assets/css/movement.css"
+import "../assets/css/clouds.css";
 
 const Outdooractivities = () => {
   const dispatch = useDispatch();
