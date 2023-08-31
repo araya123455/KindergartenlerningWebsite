@@ -2,44 +2,30 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
-import AddClassTest from "./AddClassTest";
-
 import {
-  showtest,
-  edittest,
-  deletetest,
-  inserttest,
-} from "../slice/TeacherSlice";
+  showsubject,
+  insertsubject,
+  editsubject,
+  deletesubject,
+  showsyllabus,
+} from "../slice/DataSlice";
 
-function CreateTest(props) {
+function MgtSubject() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
+  const [showsylla, setshowsylla] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  const [insert, setinsert] = useState({
-    test_detail: "",
-  });
+  const [insert, setinsert] = useState({ sub_name: "", sylla_id: "" });
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
-  const [update, setupdate] = useState({
-    test_detail: "",
-  });
+  const [update, setupdate] = useState({ sub_name: "", sylla_id: "" });
   const AddClose = () => {
     setShowAdd(false);
   };
   const AddShow = () => {
     setShowAdd(true);
   };
-  const loadData = () => {
-    dispatch(showtest())
-      .then((result) => {
-        setshowdata(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  //   recomment
   const handleInsert = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -51,22 +37,54 @@ function CreateTest(props) {
   //   on click insert value
   const onInsrt = () => {
     let body = {
-      test_detail: insert.test_detail,
+      sub_name: insert.sub_name,
+      sylla_id: insert.sylla_id,
     };
-
-    dispatch(inserttest(body))
+    dispatch(insertsubject(body))
       .then((result) => {
         setShowAdd(false);
         setShowAdd({
-          test_detail: "",
+          sub_name: "",
+          sylla_id: "",
         });
         loadData();
-        AddClose();
+        // show success notification
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  useEffect(() => {
+    loadSyllabus();
+    loadData();
+  }, []);
+  // show syllabus
+  const loadSyllabus = () => {
+    dispatch(showsyllabus())
+      .then((result) => {
+        setshowsylla(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadData = () => {
+    dispatch(showsubject())
+      .then((result) => {
+        setshowdata(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // reload
+  useEffect(() => {
+    loadSyllabus();
+    loadData();
+  }, []);
+
   const EditClose = () => {
     setshowEdit(false);
   };
@@ -86,30 +104,28 @@ function CreateTest(props) {
   //   on click save value edit
   const onSave = () => {
     let body = {
-      id: datamodal.test_id,
+      id: datamodal.sub_id,
       body: {
-        test_detail:
-          update.test_detail === ""
-            ? datamodal.test_detail
-            : update.test_detail,
+        sub_name: update.sub_name === "" ? datamodal.sub_name : update.sub_name,
+        sylla_id: update.sylla_id === "" ? datamodal.sylla_id : update.sylla_id,
       },
     };
 
-    dispatch(edittest(body))
+    dispatch(editsubject(body))
       .then((result) => {
         setshowEdit(false);
-        setupdate({
-          test_detail: "",
-        });
+        setupdate({ sub_name: "", sylla_id: "" });
+        loadSyllabus();
         loadData();
-        AddClose();
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  //   Delete
   const onDelete = (id) => {
-    dispatch(deletetest(id))
+    dispatch(deletesubject(id))
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -121,19 +137,10 @@ function CreateTest(props) {
         console.log(err);
       });
   };
-  const onClickId = (id) => {
-    console.log("id: ", id);
-    if (!props.data) {
-      props.set(props.data + id);
-    } else {
-      props.set(props.data * 0 + id);
-    }
-  };
-  // reload
   useEffect(() => {
+    loadSyllabus();
     loadData();
   }, []);
-
   return (
     <>
       <Button className="button" variant="primary" onClick={AddShow}>
@@ -142,34 +149,22 @@ function CreateTest(props) {
       <table>
         <thead>
           <tr>
-            <th>ชื่อแบบทดสอบ</th>
-            <th>เพิ่มห้องเรียน</th>
-            <th>Details</th>
-            <th>Confix</th>
+            <th>ชื่อวิชา</th>
+            <th>ชื่อหลักสูตร</th>
+            <th>confix</th>
           </tr>
         </thead>
         <tbody>
           {showdata?.map((data) => {
-            const { test_id, test_detail } = data;
+            const { sub_id, sub_name, sylla_id } = data;
+            const syllabus = showsylla.find(
+              (sylla) => sylla.sylla_id === sylla_id
+            );
+            const sylla_name = syllabus ? syllabus.sylla_name : "";
             return (
-              <tr key={test_id}>
-                <td>{test_detail}</td>
-                <td>
-                  <Link
-                    to="/teacher/test/addClassTest"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Add class
-                  </Link>
-                </td>
-                <td>
-                  <Link
-                    to="/teacher/test/createChoice"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Test detail
-                  </Link>
-                </td>
+              <tr key={sub_id}>
+                <td>{sub_name}</td>
+                <td>{sylla_name}</td>
                 <td>
                   <Button
                     variant="btn btn-secondary"
@@ -181,7 +176,7 @@ function CreateTest(props) {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(test_id)}
+                    onClick={() => onDelete(sub_id)}
                   >
                     DELETE
                   </Button>
@@ -191,6 +186,7 @@ function CreateTest(props) {
           })}
         </tbody>
       </table>
+      {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
           <Modal.Title>INSERT DATA</Modal.Title>
@@ -198,13 +194,29 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>ชื่อวิชา</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                name="test_detail"
+                name="sub_name"
                 onChange={(e) => handleInsert(e)}
               />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>ชื่อหลักสูตร</Form.Label>
+              <Form.Control
+                as="select"
+                className="input-line"
+                name="sylla_id"
+                onChange={(e) => handleInsert(e)}
+              >
+                <option value="">Choose Syllabus</option> {/* Default option */}
+                {showsylla.map((sylla) => (
+                  <option key={sylla.sylla_id} value={sylla.sylla_id}>
+                    {sylla.sylla_name}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -225,14 +237,31 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>ชื่อวิชา</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                placeholder={datamodal.test_detail}
+                placeholder={datamodal.sub_name}
                 onChange={(e) => handleChange(e)}
-                name={"test_detail"}
+                name={"sub_name"}
               />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>ชื่อหลักสูตร</Form.Label>
+              <Form.Control
+                as="select"
+                className="input-line"
+                value={update.sylla_id}
+                onChange={(e) => handleChange(e)}
+                name={"sylla_id"}
+              >
+                <option value="">Choose Syllabus</option> {/* Default option */}
+                {showsylla.map((sylla) => (
+                  <option key={sylla.sylla_id} value={sylla.sylla_id}>
+                    {sylla.sylla_name}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -245,9 +274,8 @@ function CreateTest(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Outlet />
     </>
   );
 }
 
-export default CreateTest;
+export default MgtSubject;

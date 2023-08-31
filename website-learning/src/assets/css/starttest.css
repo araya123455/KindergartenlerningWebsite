@@ -1,0 +1,155 @@
+/* Reset default margin and padding */
+body, h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styles */
+.body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* background-color: #f6f6f6; */
+}
+
+/* Container styles */
+.test-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  max-width: 90%; /* Set maximum width */
+}
+
+/* Question styles */
+.question {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.question h2 {
+  font-size: 24px;
+  color: #ff6b6b;
+  margin-bottom: 10px;
+}
+
+.question p {
+  margin-top: 20px;
+  font-size: 15px;
+  color: #666;
+}
+
+/* Navigation styles */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  /* border-radius: 5px; */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttn {
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #ff4f4f;
+}
+
+/* Timer styles */
+.timer {
+  font-size: 18px;
+  color: #666;
+  margin-top: 20px;
+}
+
+/* Answer Summary styles */
+.answer-summary {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 2px solid transparent; /* Initial transparent border */
+}
+
+.correct {
+  border-color: #4caf50; /* Green border for correct answer */
+}
+
+.incorrect {
+  border-color: #ff5722; /* Red border for incorrect answer */
+}
+
+.score {
+  font-weight: bold;
+}
+
+/* Radio button styles */
+.radio-container {
+  margin: 10px 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.radio-label {
+  position: relative;
+  margin-left: 10px;
+  padding-left: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+.radio-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="radio"]:checked + .radio-label::before {
+  background-color: #55aaff;
+  border-color: #306191;
+}
+
+.radio-label::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: none;
+}
+
+input[type="radio"]:checked + .radio-label::before::after {
+  display: block;
+}

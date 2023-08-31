@@ -3,8 +3,14 @@ import "../../assets/css/Navbar.css";
 import { Navbar, Container, NavDropdown } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
+import { saveToLocalStorage } from "../../LocalStorage/localstorage";
 
-function NavbarHead(props) {
+function NavbarHead({ signout }) {
+  const signOut = () => {
+    signout();
+    // console.log("123");
+    // saveToLocalStorage("auth", null);
+  };
   return (
     <div className="navbarHeader">
       <Navbar bg="dark" variant="dark" className="main-navbar">
@@ -26,7 +32,7 @@ function NavbarHead(props) {
           </div>
           <div className="navbarCon">
             <NavLink to="/login ">
-              <i>Sign Out</i>
+              <i onClick={() => signOut()}>Sign Out</i>
             </NavLink>
           </div>
         </Nav>

@@ -2,44 +2,28 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
-import AddClassTest from "./AddClassTest";
-
 import {
-  showtest,
-  edittest,
-  deletetest,
-  inserttest,
-} from "../slice/TeacherSlice";
+  showkinroom,
+  insertkinroom,
+  editkinroom,
+  deletekinroom,
+} from "../slice/DataSlice";
 
-function CreateTest(props) {
+function MgtKindergartenroomlevel() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  const [insert, setinsert] = useState({
-    test_detail: "",
-  });
+  const [insert, setinsert] = useState({ kinde_level: "", Kinder_room: "" });
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
-  const [update, setupdate] = useState({
-    test_detail: "",
-  });
+  const [update, setupdate] = useState({ kinde_level: "", Kinder_room: "" });
   const AddClose = () => {
     setShowAdd(false);
   };
   const AddShow = () => {
     setShowAdd(true);
   };
-  const loadData = () => {
-    dispatch(showtest())
-      .then((result) => {
-        setshowdata(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  //   recomment
   const handleInsert = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -51,22 +35,41 @@ function CreateTest(props) {
   //   on click insert value
   const onInsrt = () => {
     let body = {
-      test_detail: insert.test_detail,
+      kinde_level: insert.kinde_level,
+      Kinder_room: insert.Kinder_room,
     };
 
-    dispatch(inserttest(body))
+    dispatch(insertkinroom(body))
       .then((result) => {
-        setShowAdd(false);
+        setShow(false);
         setShowAdd({
-          test_detail: "",
+          kinde_level: "",
+          Kinder_room: "",
         });
         loadData();
-        AddClose();
+        // show success notification
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  useEffect(() => {
+    loadData();
+  }, []);
+  const loadData = () => {
+    dispatch(showkinroom())
+      .then((result) => {
+        setshowdata(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // reload
+  useEffect(() => {
+    loadData();
+  }, []);
   const EditClose = () => {
     setshowEdit(false);
   };
@@ -86,54 +89,45 @@ function CreateTest(props) {
   //   on click save value edit
   const onSave = () => {
     let body = {
-      id: datamodal.test_id,
+      id: datamodal.kinder_id,
       body: {
-        test_detail:
-          update.test_detail === ""
-            ? datamodal.test_detail
-            : update.test_detail,
+        kinde_level:
+          update.kinde_level === ""
+            ? datamodal.kinde_level
+            : update.kinde_level,
+        Kinder_room:
+          update.Kinder_room === ""
+            ? datamodal.Kinder_room
+            : update.Kinder_room,
       },
     };
 
-    dispatch(edittest(body))
+    dispatch(editkinroom(body))
       .then((result) => {
         setshowEdit(false);
-        setupdate({
-          test_detail: "",
-        });
+        setupdate({ kinde_level: "", Kinder_room: "" });
         loadData();
-        AddClose();
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  //   Delete
   const onDelete = (id) => {
-    dispatch(deletetest(id))
+    dispatch(deletekinroom(id))
       .then((result) => {
         if (result.payload && result.payload.error) {
-          console.log(result.payload.error);
+          console.log(result.payload.error); // You can log the error or show it to the user
         } else {
+          // Deletion successful, reload the data
           loadData();
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-  const onClickId = (id) => {
-    console.log("id: ", id);
-    if (!props.data) {
-      props.set(props.data + id);
-    } else {
-      props.set(props.data * 0 + id);
-    }
-  };
-  // reload
-  useEffect(() => {
-    loadData();
-  }, []);
-
+  };  
   return (
     <>
       <Button className="button" variant="primary" onClick={AddShow}>
@@ -142,46 +136,29 @@ function CreateTest(props) {
       <table>
         <thead>
           <tr>
-            <th>ชื่อแบบทดสอบ</th>
-            <th>เพิ่มห้องเรียน</th>
-            <th>Details</th>
+            <th>Level</th>
+            <th>Room</th>
             <th>Confix</th>
           </tr>
         </thead>
         <tbody>
-          {showdata?.map((data) => {
-            const { test_id, test_detail } = data;
+          {showdata.map((data) => {
+            const { kinder_id, kinde_level, Kinder_room } = data;
             return (
-              <tr key={test_id}>
-                <td>{test_detail}</td>
-                <td>
-                  <Link
-                    to="/teacher/test/addClassTest"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Add class
-                  </Link>
-                </td>
-                <td>
-                  <Link
-                    to="/teacher/test/createChoice"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Test detail
-                  </Link>
-                </td>
+              <tr key={kinder_id}>
+                <td>{kinde_level}</td>
+                <td>{Kinder_room}</td>
                 <td>
                   <Button
                     variant="btn btn-secondary"
                     onClick={() => EditShow(data)}
-                    // ส่งค่าผ่าน function ใช้ =>
                   >
                     EDIT
                   </Button>
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(test_id)}
+                    onClick={() => onDelete(kinder_id)}
                   >
                     DELETE
                   </Button>
@@ -191,6 +168,7 @@ function CreateTest(props) {
           })}
         </tbody>
       </table>
+      {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
           <Modal.Title>INSERT DATA</Modal.Title>
@@ -198,11 +176,20 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>Level</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                name="test_detail"
+                name="kinde_level"
+                onChange={(e) => handleInsert(e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Room</Form.Label>
+              <Form.Control
+                className="input-line"
+                type="text"
+                name="Kinder_room"
                 onChange={(e) => handleInsert(e)}
               />
             </Form.Group>
@@ -225,13 +212,23 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>Level</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                placeholder={datamodal.test_detail}
+                placeholder={datamodal.kinde_level}
                 onChange={(e) => handleChange(e)}
-                name={"test_detail"}
+                name={"kinde_level"}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Room</Form.Label>
+              <Form.Control
+                className="input-line"
+                type="text"
+                placeholder={datamodal.Kinder_room}
+                onChange={(e) => handleChange(e)}
+                name={"Kinder_room"}
               />
             </Form.Group>
           </Form>
@@ -245,9 +242,8 @@ function CreateTest(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Outlet />
     </>
   );
 }
 
-export default CreateTest;
+export default MgtKindergartenroomlevel;

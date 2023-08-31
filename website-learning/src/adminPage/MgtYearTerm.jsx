@@ -2,44 +2,28 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
-import AddClassTest from "./AddClassTest";
-
 import {
-  showtest,
-  edittest,
-  deletetest,
-  inserttest,
-} from "../slice/TeacherSlice";
+  getDataAll,
+  insertyearterm,
+  edityearterm,
+  deleteyeraterm,
+} from "../slice/DataSlice";
 
-function CreateTest(props) {
+function MgtYearTerm() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  const [insert, setinsert] = useState({
-    test_detail: "",
-  });
+  const [insert, setinsert] = useState({ year: "", term: "" });
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
-  const [update, setupdate] = useState({
-    test_detail: "",
-  });
+  const [update, setupdate] = useState({ year: "", term: "" });
   const AddClose = () => {
     setShowAdd(false);
   };
   const AddShow = () => {
     setShowAdd(true);
   };
-  const loadData = () => {
-    dispatch(showtest())
-      .then((result) => {
-        setshowdata(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  //   recomment
   const handleInsert = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -51,22 +35,42 @@ function CreateTest(props) {
   //   on click insert value
   const onInsrt = () => {
     let body = {
-      test_detail: insert.test_detail,
+      year: insert.year,
+      term: insert.term,
     };
 
-    dispatch(inserttest(body))
+    dispatch(insertyearterm(body))
       .then((result) => {
-        setShowAdd(false);
+        setShow(false);
         setShowAdd({
-          test_detail: "",
+          year: "",
+          term: "",
         });
         loadData();
-        AddClose();
+        // show success notification
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  useEffect(() => {
+    loadData();
+  }, []);
+  const loadData = () => {
+    dispatch(getDataAll())
+      .then((result) => {
+        setshowdata(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // reload
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const EditClose = () => {
     setshowEdit(false);
   };
@@ -86,53 +90,40 @@ function CreateTest(props) {
   //   on click save value edit
   const onSave = () => {
     let body = {
-      id: datamodal.test_id,
+      id: datamodal.yearTerm_id,
       body: {
-        test_detail:
-          update.test_detail === ""
-            ? datamodal.test_detail
-            : update.test_detail,
+        year: update.year === "" ? datamodal.year : update.year,
+        term: update.term === "" ? datamodal.term : update.term,
       },
     };
 
-    dispatch(edittest(body))
+    dispatch(edityearterm(body))
       .then((result) => {
         setshowEdit(false);
-        setupdate({
-          test_detail: "",
-        });
+        setupdate({ year: "", term: "" });
         loadData();
-        AddClose();
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  //   Delete
   const onDelete = (id) => {
-    dispatch(deletetest(id))
+    dispatch(deleteyeraterm(id))
       .then((result) => {
+        // Check if the response contains an error message
         if (result.payload && result.payload.error) {
-          console.log(result.payload.error);
+          console.log(result.payload.error); // You can log the error or show it to the user
         } else {
+          // Deletion successful, reload the data
           loadData();
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err); // Handle unexpected errors
       });
   };
-  const onClickId = (id) => {
-    console.log("id: ", id);
-    if (!props.data) {
-      props.set(props.data + id);
-    } else {
-      props.set(props.data * 0 + id);
-    }
-  };
-  // reload
-  useEffect(() => {
-    loadData();
-  }, []);
 
   return (
     <>
@@ -142,34 +133,18 @@ function CreateTest(props) {
       <table>
         <thead>
           <tr>
-            <th>ชื่อแบบทดสอบ</th>
-            <th>เพิ่มห้องเรียน</th>
-            <th>Details</th>
+            <th>Year</th>
+            <th>Term</th>
             <th>Confix</th>
           </tr>
         </thead>
         <tbody>
-          {showdata?.map((data) => {
-            const { test_id, test_detail } = data;
+          {showdata.map((data) => {
+            const { yearTerm_id, year, term } = data;
             return (
-              <tr key={test_id}>
-                <td>{test_detail}</td>
-                <td>
-                  <Link
-                    to="/teacher/test/addClassTest"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Add class
-                  </Link>
-                </td>
-                <td>
-                  <Link
-                    to="/teacher/test/createChoice"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Test detail
-                  </Link>
-                </td>
+              <tr key={yearTerm_id}>
+                <td>{year}</td>
+                <td>{term}</td>
                 <td>
                   <Button
                     variant="btn btn-secondary"
@@ -181,7 +156,7 @@ function CreateTest(props) {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(test_id)}
+                    onClick={() => onDelete(yearTerm_id)}
                   >
                     DELETE
                   </Button>
@@ -191,6 +166,7 @@ function CreateTest(props) {
           })}
         </tbody>
       </table>
+      {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
           <Modal.Title>INSERT DATA</Modal.Title>
@@ -198,11 +174,20 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>Year</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                name="test_detail"
+                name="year"
+                onChange={(e) => handleInsert(e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Term</Form.Label>
+              <Form.Control
+                className="input-line"
+                type="text"
+                name="term"
                 onChange={(e) => handleInsert(e)}
               />
             </Form.Group>
@@ -225,13 +210,23 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>Year</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                placeholder={datamodal.test_detail}
+                placeholder={datamodal.year}
                 onChange={(e) => handleChange(e)}
-                name={"test_detail"}
+                name={"year"}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Term</Form.Label>
+              <Form.Control
+                className="input-line"
+                type="text"
+                placeholder={datamodal.term}
+                onChange={(e) => handleChange(e)}
+                name={"term"}
               />
             </Form.Group>
           </Form>
@@ -245,9 +240,8 @@ function CreateTest(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Outlet />
     </>
   );
 }
 
-export default CreateTest;
+export default MgtYearTerm;

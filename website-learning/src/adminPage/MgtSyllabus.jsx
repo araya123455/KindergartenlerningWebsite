@@ -2,44 +2,29 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
-import AddClassTest from "./AddClassTest";
-
 import {
-  showtest,
-  edittest,
-  deletetest,
-  inserttest,
-} from "../slice/TeacherSlice";
+  showsyllabus,
+  insertsyllabus,
+  editsyllabus,
+  deletesyllabus,
+} from "../slice/DataSlice";
 
-function CreateTest(props) {
+function MgtSyllabus() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  const [insert, setinsert] = useState({
-    test_detail: "",
-  });
+  const [insert, setinsert] = useState({ sylla_name: "" });
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
-  const [update, setupdate] = useState({
-    test_detail: "",
-  });
+  const [update, setupdate] = useState({ sylla_name: "" });
   const AddClose = () => {
     setShowAdd(false);
+    loadData();
   };
   const AddShow = () => {
     setShowAdd(true);
   };
-  const loadData = () => {
-    dispatch(showtest())
-      .then((result) => {
-        setshowdata(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  //   recomment
   const handleInsert = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -51,22 +36,39 @@ function CreateTest(props) {
   //   on click insert value
   const onInsrt = () => {
     let body = {
-      test_detail: insert.test_detail,
+      sylla_name: insert.sylla_name,
     };
 
-    dispatch(inserttest(body))
+    dispatch(insertsyllabus(body))
       .then((result) => {
-        setShowAdd(false);
+        AddClose();
         setShowAdd({
-          test_detail: "",
+          sylla_name: "",
         });
         loadData();
-        AddClose();
+        // show success notification
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  useEffect(() => {
+    loadData();
+  }, []);
+  const loadData = () => {
+    dispatch(showsyllabus())
+      .then((result) => {
+        setshowdata(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // reload
+  useEffect(() => {
+    loadData();
+  }, []);
   const EditClose = () => {
     setshowEdit(false);
   };
@@ -86,30 +88,27 @@ function CreateTest(props) {
   //   on click save value edit
   const onSave = () => {
     let body = {
-      id: datamodal.test_id,
+      id: datamodal.sylla_id,
       body: {
-        test_detail:
-          update.test_detail === ""
-            ? datamodal.test_detail
-            : update.test_detail,
+        sylla_name:
+          update.sylla_name === "" ? datamodal.sylla_name : update.sylla_name,
       },
     };
 
-    dispatch(edittest(body))
+    dispatch(editsyllabus(body))
       .then((result) => {
         setshowEdit(false);
-        setupdate({
-          test_detail: "",
-        });
+        setupdate({ sylla_name: "" });
         loadData();
-        AddClose();
+        // notify();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  //   Delete
   const onDelete = (id) => {
-    dispatch(deletetest(id))
+    dispatch(deletesyllabus(id))
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -121,19 +120,6 @@ function CreateTest(props) {
         console.log(err);
       });
   };
-  const onClickId = (id) => {
-    console.log("id: ", id);
-    if (!props.data) {
-      props.set(props.data + id);
-    } else {
-      props.set(props.data * 0 + id);
-    }
-  };
-  // reload
-  useEffect(() => {
-    loadData();
-  }, []);
-
   return (
     <>
       <Button className="button" variant="primary" onClick={AddShow}>
@@ -142,34 +128,16 @@ function CreateTest(props) {
       <table>
         <thead>
           <tr>
-            <th>ชื่อแบบทดสอบ</th>
-            <th>เพิ่มห้องเรียน</th>
-            <th>Details</th>
-            <th>Confix</th>
+            <th>ชื่อหลักสูตร</th>
+            <th>confix</th>
           </tr>
         </thead>
         <tbody>
-          {showdata?.map((data) => {
-            const { test_id, test_detail } = data;
+          {showdata.map((data) => {
+            const { sylla_id, sylla_name } = data;
             return (
-              <tr key={test_id}>
-                <td>{test_detail}</td>
-                <td>
-                  <Link
-                    to="/teacher/test/addClassTest"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Add class
-                  </Link>
-                </td>
-                <td>
-                  <Link
-                    to="/teacher/test/createChoice"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Test detail
-                  </Link>
-                </td>
+              <tr key={sylla_id}>
+                <td>{sylla_name}</td>
                 <td>
                   <Button
                     variant="btn btn-secondary"
@@ -181,7 +149,7 @@ function CreateTest(props) {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(test_id)}
+                    onClick={() => onDelete(sylla_id)}
                   >
                     DELETE
                   </Button>
@@ -191,6 +159,7 @@ function CreateTest(props) {
           })}
         </tbody>
       </table>
+      {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
           <Modal.Title>INSERT DATA</Modal.Title>
@@ -198,11 +167,11 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>ชื่อหลักสูตร</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                name="test_detail"
+                name="sylla_name"
                 onChange={(e) => handleInsert(e)}
               />
             </Form.Group>
@@ -225,13 +194,13 @@ function CreateTest(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>ชื่อแบบทดสอบ</Form.Label>
+              <Form.Label>ชื่อหลักสูตร</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
-                placeholder={datamodal.test_detail}
+                placeholder={datamodal.sylla_name}
                 onChange={(e) => handleChange(e)}
-                name={"test_detail"}
+                name={"sylla_name"}
               />
             </Form.Group>
           </Form>
@@ -245,9 +214,8 @@ function CreateTest(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Outlet />
     </>
   );
 }
 
-export default CreateTest;
+export default MgtSyllabus;

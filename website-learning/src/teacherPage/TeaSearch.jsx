@@ -2,7 +2,7 @@ import React from 'react'
 
 function TeaSearch() {
   return (
-    <div>Search</div>
+    <div>TeaSearch</div>
   )
 }
 

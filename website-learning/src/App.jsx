@@ -3,10 +3,14 @@ import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import RouteNavbar from "./component/navbar/RouteNavbar";
 import RouteAdmin from "./component/navbarAdmin/RouteNavbar";
 import AdminProfile from "../src/adminPage/AdminProfile";
-import MgtAcademic from "../src/adminPage/MgtAcademic";
+import MgtYearTerm from "./adminPage/MgtYearTerm";
+import MgtKindergartenroomlevel from "./adminPage/MgtKindergartenroomlevel";
 import MgtStudent from "../src/adminPage/MgtStudent";
 import MgtTeacher from "../src/adminPage/MgtTeacher";
 import MgtClass from "../src/adminPage/MgtClass";
+import MgtClassroomTimetable from "./adminPage/MgtClassroomTimetable";
+import MgtSyllabus from "./adminPage/MgtSyllabus";
+import MgtSubject from "./adminPage/MgtSubject";
 import Search from "../src/adminPage/Search";
 import RouteTeacher from "./component/navbatTeacher/RouteNavbar";
 import TeacherProfile from "./teacherPage/TeacherProfile";
@@ -14,54 +18,78 @@ import LearningMaterials from "../src/teacherPage/LearningMaterials";
 import StudentAttendance from "../src/teacherPage/StudentAttendance";
 import SubjectScore from "../src/teacherPage/SubjectScore";
 import CreateTest from "./teacherPage/CreateTest";
-import TestRe from "./teacherPage/Test";
-import TeaSearch from "../src/teacherPage/Search";
+import AddClassTest from "./teacherPage/AddClassTest";
+import CreateChoice from "./teacherPage/CreateChoice";
+import TestResult from "./teacherPage/TestResult";
+import TeaSearch from "./teacherPage/TeaSearch";
 import Report from "../src/teacherPage/Report";
 import RouteStudent from "./component/navbarStudent/RouteNavbar";
 import CheckScore from "./studentPage/CheckScore";
 import StudentProfile from "./studentPage/StudentProfile";
 import Test from "./studentPage/Test";
+import StartTest from "./studentPage/StartTest";
+import ShowTestResult from "./studentPage/ShowTestResult";
 import Login from "../src/component/auth/Login";
 import ProtectedRoute from "./component/protected/ProtectedRoute";
+import PrivateRoutes from "./component/protected/PrivateRoutes";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
+  const [selectedId, setselectedId] = useState(0);
   const signin = () => {
     setIsSignedIn(true);
   };
   const signout = () => {
     setIsSignedIn(false);
   };
+  console.log(isSignedIn);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="login" replace />} />
         <Route index element={<Navigate to="login" replace />} />
-        <Route path="login" element={<Login signin={signin} isSignedIn={isSignedIn}/>} />
+        <Route
+          path="login"
+          element={<Login signin={signin}/>}
+        />
         <Route path="main" element={<RouteNavbar />} />
         <Route
           path="admin"
           element={
-            <ProtectedRoute isSignedIn={isSignedIn}>
-              <RouteAdmin />
-            </ProtectedRoute>
+            <RouteAdmin />
+            // <ProtectedRoute isSignedIn={isSignedIn}>
+            //   <RouteAdmin />
+            // </ProtectedRoute>
           }
         >
           <Route path="admin" element={<AdminProfile />} />
           <Route index element={<Navigate to="admin" replace />} />
-          <Route path="mgtAcademic" element={<MgtAcademic />} />
+          <Route path="mgtYearTerm" element={<MgtYearTerm />} />
+          <Route
+            path="mgtKindergartenroomlevel"
+            element={<MgtKindergartenroomlevel />}
+          />
           <Route path="mgtStudent" element={<MgtStudent />} />
           <Route path="mgtTeacher" element={<MgtTeacher />} />
           <Route path="mgtClass" element={<MgtClass />} />
+          <Route path="mgtClassTimetable" element={<MgtClassroomTimetable />} />
+          <Route path="mgtSyllabus" element={<MgtSyllabus />} />
+          <Route path="mgtSubject" element={<MgtSubject />} />
           <Route path="search" element={<Search />} />
         </Route>
+
         <Route
           path="teacher"
           element={
-            <ProtectedRoute isSignedIn={isSignedIn}>
-              <RouteTeacher />
+            <ProtectedRoute isSignedIn={isSignedIn} signin={signin}>
+              <RouteTeacher signout={signout}/>
             </ProtectedRoute>
           }
+          // element={
+          //   <PrivateRoutes>
+          //     <RouteTeacher />
+          //   </PrivateRoutes>
+          // }
         >
           <Route path="teacher" element={<TeacherProfile />} />
           <Route index element={<Navigate to="teacher" replace />} />
@@ -69,18 +97,30 @@ function App() {
           <Route path="attendance" element={<StudentAttendance />} />
           <Route path="subjectScore" element={<SubjectScore />} />
           <Route path="test">
+            <Route
+              path="createChoice"
+              element={<CreateChoice data={selectedId} set={setselectedId} />}
+            />
+            <Route
+              path="addClassTest"
+              element={<AddClassTest data={selectedId} set={setselectedId} />}
+            />
             <Route index element={<Navigate to="test" replace />}></Route>
-            <Route path="createTest" element={<CreateTest />} />
-            <Route path="testRe" element={<TestRe />} />
+            <Route
+              path="createTest"
+              element={<CreateTest data={selectedId} set={setselectedId} />}
+            />
+            <Route path="testRe" element={<TestResult />} />
           </Route>
-          <Route path="teaSearch" element={<TeaSearch />} />
-          <Route path="teaReport" element={<Report />} />
+          <Route path="teaSeacher" element={<TeaSearch />} />
+          <Route path="report" element={<Report />} />
         </Route>
         <Route
           path="student"
           element={
+            // <RouteStudent />
             <ProtectedRoute isSignedIn={isSignedIn}>
-              <RouteStudent />
+              <RouteStudent signout={signout}/>
             </ProtectedRoute>
           }
         >
@@ -88,6 +128,8 @@ function App() {
           <Route index element={<Navigate to="student" replace />} />
           <Route path="checkScore" element={<CheckScore />} />
           <Route path="test" element={<Test />} />
+          <Route path="startTest" element={<StartTest />} />
+          <Route path="showTestResult" element={<ShowTestResult />} />
         </Route>
       </Routes>
     </BrowserRouter>

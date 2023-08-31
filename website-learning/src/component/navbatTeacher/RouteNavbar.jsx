@@ -2,12 +2,12 @@ import React from "react";
 import NavbarHead from "./Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import "../../assets/css/Navbar.css";
-function RouteTeacher() {
+function RouteTeacher({ signout }) {
   return (
     <>
       <div style={{ display: "flex" }}>
         <div className="content-right">
-          <NavbarHead />
+          <NavbarHead signout={signout}/>
           <div className="main-content">
             <Outlet />
           </div>

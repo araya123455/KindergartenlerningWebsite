@@ -1,0 +1,18 @@
+.form-container {
+  display: flex;
+  align-items: center; 
+  gap: 10px;
+}
+
+.custom-select {
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.custom-select:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

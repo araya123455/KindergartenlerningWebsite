@@ -1,6 +1,5 @@
 import React from "react";
 import NavbarHead from "./Navbar";
-import { NavLink, Outlet } from "react-router-dom";
 import "../../assets/css/Navbar.css";
 import Home from "../../mainPage/home/Home";
 import Contact from "../../mainPage/home/Contact";
@@ -13,10 +12,10 @@ function RouteNavbar() {
         <div className="content-right">
           <NavbarHead />
           <div className="main-content">
-          <Home />
-      <Contact />
-      <Personnel />
-      <SchoolHistory />
+            <Home />
+            <Contact />
+            <Personnel />
+            <SchoolHistory />
           </div>
         </div>
       </div>

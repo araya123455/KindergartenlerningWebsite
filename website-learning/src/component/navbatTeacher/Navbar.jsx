@@ -3,8 +3,13 @@ import "../../assets/css/Navbar.css";
 import { Navbar, Container, NavDropdown } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
+import { saveToLocalStorage } from "../../LocalStorage/localstorage";
 
-function NavbarHead(props) {
+function NavbarHead({ signout }) {
+  const signOut = () => {
+    signout();
+    // saveToLocalStorage("auth", null);
+  };
   return (
     <div className="navbarHeader">
       <Navbar bg="dark" variant="dark" className="main-navbar">
@@ -58,8 +63,8 @@ function NavbarHead(props) {
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="/login ">
-            <i>Sign Out</i>
+            <NavLink to="/login">
+              <i onClick={() => signOut()}>Sign Out</i>
               {/* {props.isSignedIn ? (
                 <button className="bth-danger" onClick={props.signout}>
                   Sign out
