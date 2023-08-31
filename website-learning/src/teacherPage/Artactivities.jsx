@@ -60,10 +60,7 @@ const Artactivities = () => {
   const handleCloseModal = () => {
     setSelectedVideo(null);
   };
-
   return (
-   
-    
     <div className="video-container">
        <div id="clouds">
              <div className="cloud x1"></div>
