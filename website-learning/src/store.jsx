@@ -4,6 +4,7 @@ import UserSlice from "./slice/userSlice";
 import dataReducer from "./slice/TchStuSlice";
 import searchReducer from "./slice/searchSlice";
 import studentReducer from "./slice/StudentSlice"; // Update the path as needed
+import PdfSlice from "./slice/PdfSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     data: dataReducer,
     search: searchReducer,
     student: studentReducer,
+    pdf: PdfSlice,
   },
 });

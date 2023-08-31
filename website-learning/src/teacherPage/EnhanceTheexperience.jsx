@@ -77,7 +77,7 @@ const EnhanceTheexperience = () => {
       <h1>การเคลื่อนไหว - EnhanceTheexperience</h1><br></br>
      
       {showdata
-        .filter((data) => data.cont_id === 1) // Filter the data based on contV_id
+        .filter((data) => data.cont_id === 2) // Filter the data based on contV_id
         .map((data) => {
           const { video_detail, video_link, cont_id } = data;
         return (

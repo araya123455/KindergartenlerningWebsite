@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import axios from "axios";
 // กำหนดเป็นอะไรก็ได้
 const initialState = {
@@ -615,11 +616,11 @@ export const fetchPdf  = createAsyncThunk("fetchPdf", async () => {
   return response.data;
 });
 
-const dataSlice = createSlice({
-  name: 'data',
+const pdfSlice = createSlice({
+  name: "pdf",
   initialState: {
-    files: [], 
-  },
+    files: null,
+  }, 
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPdf.fulfilled, (state, action) => {
