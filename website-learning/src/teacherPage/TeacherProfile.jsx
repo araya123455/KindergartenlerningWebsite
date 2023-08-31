@@ -26,15 +26,15 @@ function TeacherProfile() {
   }, []);
   return (
     <div className="teacher-cards">
-      <h2>Welcome, {showdata.tch_Fname}</h2>
+      <h2>Welcome, {showdata?.tch_Fname || '-'}</h2>
       <div className="teacher-card">
         <h3>
-          {showdata.prefix} {showdata.tch_Fname} {showdata.tch_Lname}
+          {showdata?.prefix || '-'} {showdata?.tch_Fname || '-'} {showdata?.tch_Lname|| '-'}
         </h3>
-        <p>เลขประจำตัว: {showdata.tch_sn}</p>
-        <p>Username: {showdata.tch_user}</p>
-        <p>Status: {showdata.status}</p>
-        <p>แผนก: {showdata.tch_sect}</p>
+        <p>เลขประจำตัว: {showdata?.tch_sn || '-'}</p>
+        <p>Username: {showdata?.tch_user || '-'}</p>
+        <p>Status: {showdata?.status || '-'}</p>
+        <p>แผนก: {showdata?.tch_sect || '-'}</p>
       </div>
     </div>
   );

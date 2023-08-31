@@ -592,6 +592,41 @@ export const searchstuclass = createAsyncThunk("searchstuclass", async () => {
   });
   return response.data;
 });
+//slice irin
+// Learning video
+export const learningvideo = createAsyncThunk("learningvideo", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/learningvideo`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },   
+  });
+  return response.data;
+});
+//file PDF
+export const fetchPdf  = createAsyncThunk("fetchPdf", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/pdf`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
+const dataSlice = createSlice({
+  name: 'data',
+  initialState: {
+    files: [], 
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdf.fulfilled, (state, action) => {
+      state.files = action.payload; 
+    });
+  },
+});
 
 
 
@@ -959,6 +994,32 @@ export const dataTableSlice = createSlice({
     state.data = action.payload;
   },
   [register.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //linksvedio
+  [learningvideo.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [learningvideo.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [learningvideo.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //learningfilepdf
+  [fetchPdf.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [fetchPdf.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [fetchPdf.rejected]: (state, action) => {
     state.error = action.error;
     state.loading = false;
   },

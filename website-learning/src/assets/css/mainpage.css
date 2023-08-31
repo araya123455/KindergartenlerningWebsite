@@ -1,0 +1,77 @@
+.div{
+    background-color: red;
+    width: 50%;
+    height: 20rem;
+    font-weight: bold;
+    padding: 5px; 
+    content: '\e8c2'
+}
+.right{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'cursive', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.carousel-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  display: flex; /* Added this to enable centering */
+  justify-content: center; /* Added this to center horizontally */
+  align-items: center; /* Added this to center vertically */
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-slide img {
+  width: 100%; /* Ensure the image doesn't exceed the container width */
+  height: 100%; /* Ensure the image doesn't exceed the container height */
+  object-fit: cover;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  font-size: 16px;
+  color: rgb(3, 0, 3);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+  .image {
+    display: block; 
+    margin-left: 30%; 
+    margin-right: 40%; 
+    width: 40%; 
+    height: 40%;
+  }
+  
+  
+
+  

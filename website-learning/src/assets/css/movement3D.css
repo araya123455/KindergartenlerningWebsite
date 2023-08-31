@@ -1,0 +1,54 @@
+/* movement3D.css */
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .video-card {
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    perspective: 1000px;
+  }
+  
+  .video-card .video-thumbnail {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  
+  .video-card:hover .video-thumbnail {
+    transform: rotateY(180deg);
+  }
+  
+  .video-card .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .video-card .video-detail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+  }
+  
+  .video-card .video-detail h3 {
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  

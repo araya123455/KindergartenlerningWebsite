@@ -32,6 +32,14 @@ import ShowTestResult from "./studentPage/ShowTestResult";
 import Login from "../src/component/auth/Login";
 import ProtectedRoute from "./component/protected/ProtectedRoute";
 import PrivateRoutes from "./component/protected/PrivateRoutes";
+import Movement from "./teacherPage/movement";
+import Movement2 from "./teacherPage/Movement2";
+import EnhanceTheexperience from "./teacherPage/EnhanceTheexperience";
+import Artactivities from "./teacherPage/Artactivities";
+import Outdooractivities from "./teacherPage/Outdooractivities";
+import Freeactivities from "./teacherPage/Freeactivities";
+import LearningFile from "./teacherPage/LearningFile";
+
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -79,23 +87,31 @@ function App() {
         </Route>
 
         <Route
-          path="teacher"
-          element={
-            <ProtectedRoute isSignedIn={isSignedIn} signin={signin}>
-              <RouteTeacher signout={signout}/>
-            </ProtectedRoute>
-          }
+          // path="teacher"
           // element={
-          //   <PrivateRoutes>
-          //     <RouteTeacher />
-          //   </PrivateRoutes>
+          //   <ProtectedRoute isSignedIn={isSignedIn} signin={signin}>
+
+          //     <RouteTeacher signout={signout}/>
+          //   </ProtectedRoute>
           // }
+          element={
+           
+              <RouteTeacher />
+           
+          }
         >
           <Route path="teacher" element={<TeacherProfile />} />
           <Route index element={<Navigate to="teacher" replace />} />
           <Route path="learning" element={<LearningMaterials />} />
           <Route path="attendance" element={<StudentAttendance />} />
           <Route path="subjectScore" element={<SubjectScore />} />
+          <Route path="movenment" element={<Movement />} />
+          <Route path="movenment2" element={<Movement2 />} />
+          <Route path="learningFile" element={<LearningFile />} />
+          <Route path="enhanceTheexperience" element={< EnhanceTheexperience/>} />
+          <Route path="Artactivities" element={< Artactivities/>} />
+          <Route path="Outdooractivities" element={< Outdooractivities/>} />
+          <Route path="Freeactivities" element={< Freeactivities/>} />
           <Route path="test">
             <Route
               path="createChoice"
