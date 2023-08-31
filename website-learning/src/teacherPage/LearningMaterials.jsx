@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/css/learning.css";
+import "../assets/css/clouds.css";
 import { Container, Row, Col } from "react-bootstrap";
 // import movenment from "./Movement";
 
