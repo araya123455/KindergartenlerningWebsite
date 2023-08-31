@@ -71,7 +71,7 @@ const StartTest = () => {
         onInsertDe(index);
       })
     } else {
-      alert("Please answer all questions before submitting.");
+      alert("กรุณาทำแบบทดสอบให้ครบทุกข้อ!!");
     }
   };
 
@@ -154,10 +154,10 @@ const StartTest = () => {
     // onInsertDe(questionIndex);
     return (
       <div className={`answer-summary ${isCorrect ? "correct" : "incorrect"}`}>
-        <p>Your Answer: {selectedAnswer}</p>
-        {!isCorrect && <p>Correct Answer: {correctAnswer}</p>}
+        <p>คำตอบของคุณ: {selectedAnswer}</p>
+        {!isCorrect && <p>คำตอบที่ถูกต้อง: {correctAnswer}</p>}
         <p className="score">
-          Score: {isCorrect ? showques[questionIndex]?.score_ques : 0}
+          คะแนน: {isCorrect ? showques[questionIndex]?.score_ques : 0}
         </p>
       </div>
     );
@@ -170,18 +170,19 @@ const StartTest = () => {
           <div className="question">
             {showResults ? (
               <div>
-                <h2>Test Results</h2>
+                <h2>ผลลัพธ์</h2>
                 <p>
-                  Your score: {score} out of {calculateTotalPossibleScore()}{" "}
-                  points
+                  คะแนนที่ได้: {score}{" "}คะแนน
+                </p>
+                <p>
+                  คะแนนเต็ม: {calculateTotalPossibleScore()}{" "}คะแนน
                 </p>
                 {completionTime && (
-                  <p>You completed the test on {formattime}</p>
+                  <p>ส่งแบบทดสอบตอน {formattime}</p>
                 )}
                 {showques.map((question, index) => (
                   <div key={index}>
-                    <h3>Question {index + 1}</h3>
-                    <p>{showques[index].ques}</p>
+                    <h4>คำถาม {index + 1} {showques[index].ques}</h4>
                     {renderAnswerSummary(index)}
                   </div>
                 ))}
@@ -209,17 +210,17 @@ const StartTest = () => {
               currentQuestionIndex !== showques.length &&
               !showResults && (
                 <button className="buttn" onClick={handlePrevClick}>
-                  Previous
+                  ย้อนกลับ
                 </button>
               )}
             {!showResults && currentQuestionIndex !== showques.length - 1 && (
               <button className="buttn" onClick={handleNextClick}>
-                Next
+                ข้อถัดไป
               </button>
             )}
             {!showResults && currentQuestionIndex === showques.length - 1 && (
               <button className="buttn" onClick={handleNextClick}>
-                Submit
+                ส่งคำตอบ
               </button>
             )}
           </div>
