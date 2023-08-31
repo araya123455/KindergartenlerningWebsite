@@ -32,7 +32,7 @@ export const showquestion = createAsyncThunk(
 export const savetestresult = createAsyncThunk(
   "savetestresult",
   async (body) => {
-    console.log(body);
+    // console.log(body);
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API}/savetestresult`,
       body,
@@ -49,7 +49,7 @@ export const savetestresult = createAsyncThunk(
 export const savetestresultdetail = createAsyncThunk(
   "savetestresultdetail",
   async (body) => {
-    console.log(body);
+    // console.log(body);
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API}/savetestresultdetail`,
       body,
@@ -112,6 +112,20 @@ export const selectedtest = createAsyncThunk(
     try {
       const response = await axios.get("/selectedtest", {
         params: { test_id: testId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const finishedtest = createAsyncThunk(
+  "finishedtest",
+  async ({ stuid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/finishedtest", {
+        params: { stu_id: stuid },
       });
       return response.data;
     } catch (err) {

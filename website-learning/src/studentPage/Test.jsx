@@ -4,19 +4,18 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../LocalStorage/localstorage";
-import { showtest, testresult, testresultdetail } from "../slice/StudentSlice";
+import { showtest, finishedtest } from "../slice/StudentSlice";
 import { Outlet, Link } from "react-router-dom";
 
 function Test() {
   const dispatch = useDispatch();
   const [test, setTest] = useState([]);
+  const [finished, setFinished] = useState([]);
+  const [checked, setChecked] = useState(true); // Renamed to setChecked
   const auth = getFromLocalStorage("auth");
-  const [check, setCheck] = useState(true); // Set default value to true
-  const [showteRe, setShowteRe] = useState([]);
   const stuid = auth.stu_id;
 
   saveToLocalStorage("testId", null);
-
   const onClick = (id) => {
     saveToLocalStorage("testId", id);
   };
@@ -31,8 +30,25 @@ function Test() {
       });
   };
 
+  const loadFinished = () => {
+    dispatch(finishedtest({ stuid }))
+      .then((result) => {
+        setFinished(result.payload);
+        const message = result.payload.message;
+        // console.log(message);
+        if (message === "No available tests for the student") {
+          setChecked(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // console.log(checked);
+
   useEffect(() => {
     loadData();
+    loadFinished();
   }, []);
 
   return (
@@ -45,6 +61,24 @@ function Test() {
           </tr>
         </thead>
         <tbody>
+          {checked
+            ? finished.map((data) => {
+                const { test_detail, test_id } = data;
+                return (
+                  <tr key={test_id}>
+                    <td>{test_detail}</td>
+                    <td>
+                      <Link
+                        to="/student/showTestResult"
+                        onClick={() => onClick(test_id)}
+                      >
+                        ดูคะแนนแบบทดสอบ
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
+            : null}
           {test.map((data) => {
             const { test_detail, test_id } = data;
             return (
