@@ -274,7 +274,7 @@ function CreateChoice(props) {
 
   return (
     <div>
-      <Link to={"/teacher/test/CreateTest"} onClick={() => onClickId(0)}>
+      <Link to={"/test/CreateTest"} onClick={() => onClickId(0)}>
         <svg
           baseProfile="tiny"
           height="24px"

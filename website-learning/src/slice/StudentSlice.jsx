@@ -79,10 +79,10 @@ export const testresult = createAsyncThunk(
 
 export const testedresult = createAsyncThunk(
   "student/testedresult",
-  async ({ test_id, stuid }, { rejectWithValue }) => {
+  async ({ testId, stuid }, { rejectWithValue }) => {
     try {
       const response = await axios.get("/testedresult", {
-        params: { test_id, stu_id: stuid },
+        params: { test_id: testId, stu_id: stuid },
       });
       return response.data;
     } catch (err) {
@@ -90,7 +90,6 @@ export const testedresult = createAsyncThunk(
     }
   }
 );
-
 
 export const testresultdetail = createAsyncThunk(
   "student/testresultdetail",
