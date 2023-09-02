@@ -9,9 +9,10 @@ import { Outlet, Link } from "react-router-dom";
 
 function Test() {
   const dispatch = useDispatch();
-  const [test, setTest] = useState([]);
+  const [showTests, setShowTests] = useState([]); // Rename to showTests
   const [finished, setFinished] = useState([]);
-  const [checked, setChecked] = useState(true); // Renamed to setChecked
+  const [checked, setChecked] = useState(true);
+  const [checktest, setCheckTest] = useState(true); // Rename to setCheckTest
   const auth = getFromLocalStorage("auth");
   const stuid = auth.stu_id;
 
@@ -23,7 +24,11 @@ function Test() {
   const loadData = () => {
     dispatch(showtest({ stuid }))
       .then((result) => {
-        setTest(result.payload);
+        setShowTests(result.payload); // Updated variable name
+        const message = result.payload.message;
+        if (message === "No tests found for the student") {
+          setCheckTest(false); // Updated variable name
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +40,6 @@ function Test() {
       .then((result) => {
         setFinished(result.payload);
         const message = result.payload.message;
-        // console.log(message);
         if (message === "No available tests for the student") {
           setChecked(false);
         }
@@ -44,7 +48,6 @@ function Test() {
         console.log(err);
       });
   };
-  // console.log(checked);
 
   useEffect(() => {
     loadData();
@@ -62,7 +65,7 @@ function Test() {
         </thead>
         <tbody>
           {checked
-            ? finished.map((data) => {
+            ? finished?.map((data) => {
                 const { test_detail, test_id } = data;
                 return (
                   <tr key={test_id}>
@@ -79,22 +82,25 @@ function Test() {
                 );
               })
             : null}
-          {test.map((data) => {
-            const { test_detail, test_id } = data;
-            return (
-              <tr key={test_id}>
-                <td>{test_detail}</td>
-                <td>
-                  <Link
-                    to="/student/startTest"
-                    onClick={() => onClick(test_id)}
-                  >
-                    เริ่มทำแบบทดสอบ
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
+          {checktest
+            ? Array.isArray(showTests) &&
+              showTests.map((data) => {
+                const { test_detail, test_id } = data;
+                return (
+                  <tr key={test_id}>
+                    <td>{test_detail}</td>
+                    <td>
+                      <Link
+                        to="/student/startTest"
+                        onClick={() => onClick(test_id)}
+                      >
+                        เริ่มทำแบบทดสอบ
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
+            : null}
         </tbody>
       </table>
       <Outlet />

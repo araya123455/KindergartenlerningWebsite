@@ -3,8 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
 import { Outlet, Link } from "react-router-dom";
-import AddClassTest from "./AddClassTest";
-
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "../LocalStorage/localstorage";
 import {
   showtest,
   edittest,
@@ -121,6 +123,8 @@ function CreateTest(props) {
         console.log(err);
       });
   };
+  // set null
+  saveToLocalStorage("teaTest_id", null);
   const onClickId = (id) => {
     console.log("id: ", id);
     if (!props.data) {
@@ -128,6 +132,7 @@ function CreateTest(props) {
     } else {
       props.set(props.data * 0 + id);
     }
+    saveToLocalStorage("teaTest_id", id);
   };
   // reload
   useEffect(() => {
@@ -156,7 +161,7 @@ function CreateTest(props) {
                 <td>{test_detail}</td>
                 <td>
                   <Link
-                    to="/teacher/test/addClassTest"
+                    to="/test/addClassTest"
                     onClick={() => onClickId(test_id)}
                   >
                     Add class
@@ -164,7 +169,7 @@ function CreateTest(props) {
                 </td>
                 <td>
                   <Link
-                    to="/teacher/test/createChoice"
+                    to="/test/createChoice"
                     onClick={() => onClickId(test_id)}
                   >
                     Test detail

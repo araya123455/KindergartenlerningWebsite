@@ -240,7 +240,7 @@ function AddClassTest(props) {
       <div>
         <h1>Add Class</h1>
       </div>
-      <Link to={"/teacher/test/CreateTest"} onClick={() => onClickId(0)}>
+      <Link to={"/test/CreateTest"} onClick={() => onClickId(0)}>
         <svg
           baseProfile="tiny"
           height="24px"

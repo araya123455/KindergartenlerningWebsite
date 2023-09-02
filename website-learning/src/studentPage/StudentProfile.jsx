@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { showclass, showkinroom, getDataAll } from "../slice/DataSlice";
-import useInterval from "./useInterval ";
 
 function StudentProfile() {
   const dispatch = useDispatch();
@@ -63,14 +62,13 @@ function StudentProfile() {
         console.log(err);
       });
   };
-  console.log("Kinder Info:", kinderInfo);
-  console.log("Year Term Info:", yearTermInfo);
+  
+ 
   useEffect(() => {
     setshowdata(auth);
-    console.log(auth);
-    loadKinder();
-    loadYearTerm();
-    loadClass();
+    // loadKinder();
+    // loadYearTerm();
+    // loadClass();
   }, []);
   // useInterval(() => {
   //   // console.log("OUT");
