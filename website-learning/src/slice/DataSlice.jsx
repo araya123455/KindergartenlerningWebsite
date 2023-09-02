@@ -603,7 +603,7 @@ export const learningvideo = createAsyncThunk("learningvideo", async () => {
   });
   return response.data;
 });
-//file PDF
+//file PDF Learning
 export const fetchPdf  = createAsyncThunk("fetchPdf", async () => {
   const response = await axios.get(
     `${import.meta.env.VITE_APP_API}/pdf`,
@@ -628,7 +628,31 @@ const pdfSlice = createSlice({
     });
   },
 });
+//file PDF English
+export const fetchPdfEnglish  = createAsyncThunk("fetchPdfEnglish", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/pdf`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
 
+const pdfSliceEnglish = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  }, 
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfEnglish.fulfilled, (state, action) => {
+      state.files = action.payload; 
+    });
+  },
+});
 
 
 export const dataTableSlice = createSlice({
@@ -1021,6 +1045,19 @@ export const dataTableSlice = createSlice({
     state.data = action.payload;
   },
   [fetchPdf.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //subject English
+   [fetchPdfEnglish.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [fetchPdfEnglish.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [fetchPdfEnglish.rejected]: (state, action) => {
     state.error = action.error;
     state.loading = false;
   },

@@ -39,6 +39,10 @@ import Artactivities from "./teacherPage/Artactivities";
 import Outdooractivities from "./teacherPage/Outdooractivities";
 import Freeactivities from "./teacherPage/Freeactivities";
 import LearningFile from "./teacherPage/LearningFile";
+import SubjectFileEnglish from "./teacherPage/SubjectFileEnglish";
+import SubjectFileEnhance from "./teacherPage/SubjectFileEnhance";
+import SubjectFileMath from "./teacherPage/SubjectFileMath";
+import SubjectFileThai from "./teacherPage/SubjectFileThai";
 
 
 function App() {
@@ -112,6 +116,10 @@ function App() {
           <Route path="Artactivities" element={< Artactivities/>} />
           <Route path="Outdooractivities" element={< Outdooractivities/>} />
           <Route path="Freeactivities" element={< Freeactivities/>} />
+          <Route path="SubjectFileEnglish" element={< SubjectFileEnglish/>}/>
+          <Route path="SubjectFileEnhance" element={< SubjectFileEnhance/>}/>
+          <Route path="SubjectFileMath" element={< SubjectFileMath/>}/>
+          <Route path="SubjectFileThai" element={< SubjectFileThai/>}/>
           <Route path="test">
             <Route
               path="createChoice"

@@ -26,6 +26,7 @@ const LearningMaterials = () => {
               </a>
             </Col>
           </Row>
+          <br></br>
           <Row>
             <Col>
               <a href="EnhanceTheexperience">
@@ -35,6 +36,7 @@ const LearningMaterials = () => {
               </a>
             </Col>
           </Row>
+          <br></br>
           <Row>
             <Col>
               <a href="Freeactivities">
@@ -44,6 +46,7 @@ const LearningMaterials = () => {
               </a>
             </Col>
           </Row>
+          <br></br>
           <Row>
             <Col>
               <a href="Artactivities">
@@ -53,6 +56,7 @@ const LearningMaterials = () => {
               </a>
             </Col>
           </Row>
+          <br></br>
           <Row>
             <Col>
               <a href="Outdooractivities">
@@ -62,11 +66,52 @@ const LearningMaterials = () => {
               </a>
             </Col>
           </Row>
+          <br></br>
           <Row>
             <Col>
               <a href="LearningFile">
                 <button className="glow-on-hover" type="button">
                   Download PDF
+                </button>
+              </a>
+            </Col>
+          </Row>
+          <br></br>
+          <Row>
+            <Col>
+              <a href="SubjectFileEnglish">
+                <button className="glow-on-hover" type="button">
+                  Download PDF Subject English
+                </button>
+              </a>
+            </Col>
+          </Row>
+          <br></br>
+          <Row>
+            <Col>
+              <a href="SubjectFileThai">
+                <button className="glow-on-hover" type="button">
+                  Download PDF Subject Thai
+                </button>
+              </a>
+            </Col>
+          </Row>
+          <br></br>
+          <Row>
+            <Col>
+              <a href="SubjectFileMath">
+                <button className="glow-on-hover" type="button">
+                  Download PDF Subject Math
+                </button>
+              </a>
+            </Col>
+          </Row>
+          <br></br>
+          <Row>
+            <Col>
+              <a href="SubjectFileEnhance">
+                <button className="glow-on-hover" type="button">
+                  Download PDF Subject Enhance The Experience
                 </button>
               </a>
             </Col>
