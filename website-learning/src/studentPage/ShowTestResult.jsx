@@ -117,7 +117,7 @@ function ShowTestResult() {
               {showredetail.map((question, index) => (
                 <div key={index}>
                   <p>
-                    คำถาม {index + 1} {showques[index].ques}
+                    คำถาม {index + 1} {showques[index]?.ques || ''}
                   </p>
                   {
                     (isCorrect =
@@ -128,9 +128,9 @@ function ShowTestResult() {
                       isCorrect ? "correct" : "incorrect"
                     }`}
                   >
-                    <p>คำตอบของคุณ: {showredetail[index].ans_result}</p>
+                    <p>คำตอบของคุณ: {showredetail[index]?.ans_result || ''}</p>
                     {!isCorrect && (
-                      <p>คำตอบที่ถูกต้อง: {showques[index].answer}</p>
+                      <p>คำตอบที่ถูกต้อง: {showques[index]?.answer || ''}</p>
                     )}
                     <p className="score">
                       คะแนน: {isCorrect ? showques[index]?.score_ques : 0}

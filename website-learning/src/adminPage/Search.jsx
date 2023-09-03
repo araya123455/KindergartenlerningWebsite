@@ -12,6 +12,12 @@ function Search() {
   const studentData = useSelector((state) => state.data.studentData);
 
   const handleSearch = () => {
+    if (!searchQuery) {
+      alert("Please input data first"); // Display an alert message
+      setStudentResults("");
+      setTeacherResults("");
+      return;
+    }
     filterData();
   };
 
@@ -22,20 +28,21 @@ function Search() {
 
   const filterData = () => {
     // Filter teacher results
-    const filteredTeachers = teacherData?.filter((teacher) =>
-      teacher.tch_sn.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredTeachers = teacherData?.filter(
+      (teacher) => teacher.tch_sn.toLowerCase() === searchQuery.toLowerCase()
     );
     setTeacherResults(filteredTeachers);
 
     // Filter student results
-    const filteredStudents = studentData?.filter((student) =>
-      student.stu_sn.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredStudents = studentData?.filter(
+      (student) => student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
     );
     setStudentResults(filteredStudents);
   };
 
   return (
     <div>
+      <h5>วิธีการ: ใช้รหัสประจำตัวเพื่อค้นหาเท่านั้น!</h5>
       <input
         type="text"
         placeholder="Search for teachers and students..."
@@ -48,34 +55,39 @@ function Search() {
 
       {/* Display teacher search results */}
       <ul className="student-results">
-        {teacherResults?.map((teacher) => (
-          <li key={teacher.tch_id} className="student-item">
-            <h2>Teacher Results:</h2>
-            <div>Teacher sn: {teacher.tch_sn}</div>
-            <div>Prefix: {teacher.prefix}</div>
-            <div>Name: {teacher.tch_Fname} {teacher.tch_Lname}</div>
-            <div>Username: {teacher.tch_tch_user}</div>
-            <div>Status {teacher.status}</div>
-            <div>Sect: {teacher.sect}</div>
-          </li>
-
-        ))}
+        {teacherResults.length > 0
+          ? teacherResults?.map((teacher) => (
+              <li key={teacher.tch_id} className="student-item">
+                <h2>Teacher Results:</h2>
+                <div>Teacher sn: {teacher.tch_sn}</div>
+                <div>Prefix: {teacher.prefix}</div>
+                <div>
+                  Name: {teacher.tch_Fname} {teacher.tch_Lname}
+                </div>
+                <div>Username: {teacher.tch_user}</div>
+                <div>Status {teacher.status}</div>
+                <div>Sect: {teacher.tch_sect}</div>
+              </li>
+            ))
+          : null}
       </ul>
 
       {/* Display student search results */}
       <ul className="student-results">
-        {studentResults?.map((student) => (
-          <li key={student.stu_id} className="student-item">
-            <h2>Student Results:</h2>
-            <div>Student Sn: {student.stu_sn}</div>
-            <div>Prefix: {student.prefix}</div>
-            <div>
-              Name: {student.stu_Fname} {student.stu_Lname}
-            </div>
-            <div>Username: {student.stu_user}</div>
-            <div>Status: {student.status}</div>
-          </li>
-        ))}
+        {studentResults.length > 0
+          ? studentResults.map((student) => (
+              <li key={student.stu_id} className="student-item">
+                <h2>Student Results:</h2>
+                <div>Student Sn: {student.stu_sn}</div>
+                <div>Prefix: {student.prefix}</div>
+                <div>
+                  Name: {student.stu_Fname} {student.stu_Lname}
+                </div>
+                <div>Username: {student.stu_user}</div>
+                <div>Status: {student.status}</div>
+              </li>
+            ))
+          : null}
       </ul>
     </div>
   );

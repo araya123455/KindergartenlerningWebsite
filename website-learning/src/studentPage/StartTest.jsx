@@ -203,7 +203,6 @@ const StartTest = () => {
   const renderAnswerSummary = () => {
     loadTestdetail();
     loadShowtest();
-    loadTestdetail();
     loadTestresult();
     return (
       <div>

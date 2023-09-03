@@ -133,6 +133,34 @@ export const finishedtest = createAsyncThunk(
   }
 );
 
+// TestRultDetail
+export const testresultdetatil = createAsyncThunk(
+  "testresultdetatil",
+  async ({ testdeId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/testresultdetatil", {
+        params: { testDe_id: testdeId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const testresultdetatiled = createAsyncThunk(
+  "testresultdetatiled",
+  async ({ testdeId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/testresultdetatiled", {
+        params: { testDe_id: testdeId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const studentSlice = createSlice({
   name: "student",
   initialState: {

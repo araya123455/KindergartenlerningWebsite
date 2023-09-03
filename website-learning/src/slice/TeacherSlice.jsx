@@ -28,6 +28,7 @@ export const inserttest = createAsyncThunk("inserttest", async (body) => {
   );
   return response.data;
 });
+
 export const edittest = createAsyncThunk("edittest", async ({ id, body }) => {
   const response = await axios.patch(
     `${import.meta.env.VITE_APP_API}/testupdate/${id}`,
@@ -40,6 +41,7 @@ export const edittest = createAsyncThunk("edittest", async ({ id, body }) => {
   );
   return response.data;
 });
+
 export const deletetest = createAsyncThunk("deletetest", async (id, body) => {
   console.log(id, body);
   const response = await axios.delete(
@@ -88,6 +90,7 @@ export const edittestde = createAsyncThunk("edittestde", async ({ id, body }) =>
   );
   return response.data;
 });
+
 export const deletetestde = createAsyncThunk("deletetestde", async (id, body) => {
   console.log(id, body);
   const response = await axios.delete(
@@ -124,6 +127,7 @@ export const insertquestion = createAsyncThunk("insertquestion", async (body) =>
   );
   return response.data;
 });
+
 export const editquestion = createAsyncThunk("editquestion", async ({ id, body }) => {
   const response = await axios.patch(
     `${import.meta.env.VITE_APP_API}/questionupdate/${id}`,
@@ -136,6 +140,7 @@ export const editquestion = createAsyncThunk("editquestion", async ({ id, body }
   );
   return response.data;
 });
+
 export const deletequestion = createAsyncThunk("deletequestion", async (id, body) => {
   console.log(id, body);
   const response = await axios.delete(

@@ -21,6 +21,7 @@ import CreateTest from "./teacherPage/CreateTest";
 import AddClassTest from "./teacherPage/AddClassTest";
 import CreateChoice from "./teacherPage/CreateChoice";
 import TestResult from "./teacherPage/TestResult";
+import TestResultDetail from "./teacherPage/TestResultDetail";
 import TeaSearch from "./teacherPage/TeaSearch";
 import Report from "../src/teacherPage/Report";
 import RouteStudent from "./component/navbarStudent/RouteNavbar";
@@ -44,7 +45,6 @@ import SubjectFileEnhance from "./teacherPage/SubjectFileEnhance";
 import SubjectFileMath from "./teacherPage/SubjectFileMath";
 import SubjectFileThai from "./teacherPage/SubjectFileThai";
 
-
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [selectedId, setselectedId] = useState(0);
@@ -60,10 +60,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="login" replace />} />
         <Route index element={<Navigate to="login" replace />} />
-        <Route
-          path="login"
-          element={<Login signin={signin}/>}
-        />
+        <Route path="login" element={<Login signin={signin} />} />
         <Route path="main" element={<RouteNavbar />} />
         <Route
           path="admin"
@@ -98,11 +95,7 @@ function App() {
           //     <RouteTeacher signout={signout}/>
           //   </ProtectedRoute>
           // }
-          element={
-           
-              <RouteTeacher />
-           
-          }
+          element={<RouteTeacher />}
         >
           <Route path="teacher" element={<TeacherProfile />} />
           <Route index element={<Navigate to="teacher" replace />} />
@@ -112,14 +105,17 @@ function App() {
           <Route path="movenment" element={<Movement />} />
           <Route path="movenment2" element={<Movement2 />} />
           <Route path="learningFile" element={<LearningFile />} />
-          <Route path="enhanceTheexperience" element={< EnhanceTheexperience/>} />
-          <Route path="Artactivities" element={< Artactivities/>} />
-          <Route path="Outdooractivities" element={< Outdooractivities/>} />
-          <Route path="Freeactivities" element={< Freeactivities/>} />
-          <Route path="SubjectFileEnglish" element={< SubjectFileEnglish/>}/>
-          <Route path="SubjectFileEnhance" element={< SubjectFileEnhance/>}/>
-          <Route path="SubjectFileMath" element={< SubjectFileMath/>}/>
-          <Route path="SubjectFileThai" element={< SubjectFileThai/>}/>
+          <Route
+            path="enhanceTheexperience"
+            element={<EnhanceTheexperience />}
+          />
+          <Route path="Artactivities" element={<Artactivities />} />
+          <Route path="Outdooractivities" element={<Outdooractivities />} />
+          <Route path="Freeactivities" element={<Freeactivities />} />
+          <Route path="SubjectFileEnglish" element={<SubjectFileEnglish />} />
+          <Route path="SubjectFileEnhance" element={<SubjectFileEnhance />} />
+          <Route path="SubjectFileMath" element={<SubjectFileMath />} />
+          <Route path="SubjectFileThai" element={<SubjectFileThai />} />
           <Route path="test">
             <Route
               path="createChoice"
@@ -136,6 +132,7 @@ function App() {
             />
             <Route path="testRe" element={<TestResult />} />
           </Route>
+          <Route path="testResultDetail" element={<TestResultDetail />} />
           <Route path="teaSeacher" element={<TeaSearch />} />
           <Route path="report" element={<Report />} />
         </Route>
@@ -144,7 +141,7 @@ function App() {
           element={
             // <RouteStudent />
             <ProtectedRoute isSignedIn={isSignedIn}>
-              <RouteStudent signout={signout}/>
+              <RouteStudent signout={signout} />
             </ProtectedRoute>
           }
         >

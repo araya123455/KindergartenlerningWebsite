@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { showtest, showtestde } from "../slice/TeacherSlice";
-import { getFromLocalStorage } from "../LocalStorage/localstorage";
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "../LocalStorage/localstorage";
 import {
   showclass,
   showkinroom,
   getDataAll,
   searchclasstime,
 } from "../slice/DataSlice";
-import { Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 function TestResult() {
   const dispatch = useDispatch();
@@ -17,7 +20,6 @@ function TestResult() {
   const [showkinder, setShowKinder] = useState([]);
   const [showyear, setShowYear] = useState([]);
   const [showClass, setShowClass] = useState([]);
-  const testId = getFromLocalStorage("teaTest_id");
 
   const loadtest = () => {
     dispatch(showtest())
@@ -68,6 +70,12 @@ function TestResult() {
         console.log(err);
       });
   };
+
+  saveToLocalStorage("testde_id", null);
+  const onClick = (id) => {
+    saveToLocalStorage("testde_id", id);
+  };
+
   useEffect(() => {
     loadtest();
     loadtestdetail();
@@ -91,6 +99,7 @@ function TestResult() {
           {/* bcoz test can add to many class then use testdetail */}
           {showtestdetail?.map((data, index) => {
             // const { test_id, test_detail } = data;
+            const testde_id = showtestdetail[index]?.testDe_id;
             const testid = showtestname.find(
               (tes) => tes.test_id === showtestdetail[index]?.test_id
             );
@@ -116,7 +125,10 @@ function TestResult() {
                   {term}/{year}
                 </td>
                 <td>
-                  <Link to="/student/startTest" onClick={() => onClick(testid)}>
+                  <Link
+                    to="/testResultDetail"
+                    onClick={() => onClick(testde_id)}
+                  >
                     แบบทดสอบที่ถูกส่งมา
                   </Link>
                 </td>
@@ -125,6 +137,7 @@ function TestResult() {
           })}
         </tbody>
       </table>
+      <Outlet />
     </div>
   );
 }
