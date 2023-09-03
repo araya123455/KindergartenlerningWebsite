@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const pdfSlice = createSlice({
-  name: 'pdf',
+  name: 'pdff',
   initialState,
   reducers: {
     setpdfUrl: (state, action) => {

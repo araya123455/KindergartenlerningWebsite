@@ -11,7 +11,7 @@ import "../assets/css/clouds.css";
 
 function LearningFile() {
   const dispatch = useDispatch();
-  const pdfUrls = useSelector((state) => state.pdf.pdfUrl);
+  const pdfUrls = useSelector((state) => state.pdff.pdfUrl);
 
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 

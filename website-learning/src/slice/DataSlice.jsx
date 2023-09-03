@@ -653,8 +653,82 @@ const pdfSliceEnglish = createSlice({
     });
   },
 });
+//file PDF Enhance
+export const fetchPdfEnhance  = createAsyncThunk("fetchPdfEnhance", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/pdf`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
 
+const pdfSliceEnhance = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  }, 
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfEnhance.fulfilled, (state, action) => {
+      state.files = action.payload; 
+    });
+  },
+});
+//file PDF Math
+export const fetchPdfMath  = createAsyncThunk("fetchPdfMath", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/pdf`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
 
+const pdfSliceMath = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  }, 
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfMath.fulfilled, (state, action) => {
+      state.files = action.payload; 
+    });
+  },
+});
+//file PDF Thai
+export const fetchPdfThai  = createAsyncThunk("fetchPdfThai", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/pdf`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
+const pdfSliceThai = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  }, 
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfThai.fulfilled, (state, action) => {
+      state.files = action.payload; 
+    });
+  },
+});
+//---------------------End PDF-----------------------
 export const dataTableSlice = createSlice({
   name: "data",
   initialState,
@@ -1061,6 +1135,46 @@ export const dataTableSlice = createSlice({
     state.error = action.error;
     state.loading = false;
   },
+  //subject Enhance
+  [fetchPdfEnhance.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [fetchPdfEnhance.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [fetchPdfEnhance.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //subject Math
+  [fetchPdfMath.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [fetchPdfMath.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [fetchPdfMath.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //subject Thai
+  [fetchPdfThai.pending]: (state) => {
+    state.loading = true;
+    state.error = ""; 
+  },
+  [fetchPdfThai.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [fetchPdfThai.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //--------------------End PDF----------------------------
 });
 
 // Action creators are generated for each case reducer function
