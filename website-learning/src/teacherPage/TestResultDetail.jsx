@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
-import { testresultdetatil, testresultdetatiled } from "../slice/StudentSlice";
+import {
+  testresultdetatil,
+  testresultdetatiled,
+  testresultdetail,
+} from "../slice/StudentSlice";
+import StudentResultDetail from "./StudentResultDetail";
+import "../assets/css/testredetail.css";
 
 function TestResultDetail() {
   const dispatch = useDispatch();
   const [showtestre, setshowtestre] = useState([]);
   const [showtestred, setshowtestred] = useState([]);
   const testdeId = getFromLocalStorage("testde_id");
+  const testId = getFromLocalStorage("testedId");
   const [ckeckre, setckeckre] = useState(true);
   const [ckeckred, setckeckred] = useState(true);
+  const [showData, setshowData] = useState(false);
+  const [studentScores, setStudentScores] = useState({});
+  const [selectedStudentId, setSelectedStudentId] = useState(null); // Add this state to track selected student
 
-  console.log(testdeId);
-
-  //   Student haven't test
   const loadtestre = () => {
     dispatch(testresultdetatil({ testdeId }))
       .then((result) => {
         setshowtestre(result.payload);
-        let mess = result.payload.message;
-        if (mess === "No available tests for the student") {
+        const mess = result.payload.message;
+        if (mess === "No available for the student") {
           setckeckre(false);
         }
       })
@@ -33,21 +42,62 @@ function TestResultDetail() {
     dispatch(testresultdetatiled({ testdeId }))
       .then((result) => {
         setshowtestred(result.payload);
+        const mess = result.payload.message;
+        if (mess === "No available tests for the student") {
+          setckeckred(false);
+        }
+        result.payload.forEach((item) => {
+          const stuid = item.stu_id;
+          // Load the student scores for each student
+          loadTestdetail(stuid);
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const loadTestdetail = async (stuid) => {
+    dispatch(testresultdetail({ testId, stuid }))
+      .then((result) => {
+        if (Array.isArray(result.payload)) {
+          const totalScore = result.payload.reduce(
+            (acc, item) => acc + item.score,
+            0
+          );
+          // Store the student score in the state
+          setStudentScores((prevState) => ({
+            ...prevState,
+            [stuid]: totalScore,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const DataClose = () => {
+    setshowData(false);
+  };
+
+  const DataShow = (stuid) => {
+    setSelectedStudentId(stuid);
+    setshowData(true);
+  };
+
+  const onclick = () => {
+    console.log("");
+  };
+
   useEffect(() => {
-    loadtestre();
     loadtestred();
+    loadtestre();
   }, []);
 
   return (
     <div>
-      {" "}
-      <Link to={"/test/testRe"} onClick={() => onClickId()}>
+      <Link to={"/test/testRe"} onClick={() => onclick()}>
         <svg
           baseProfile="tiny"
           height="24px"
@@ -64,36 +114,64 @@ function TestResultDetail() {
       <div>
         <table>
           <thead>
-            <th>คำนำหน้า</th>
-            <th>ชื่อ</th>
-            <th>นามสกุล</th>
-            <th>Action</th>
+            <tr>
+              <th>คำนำหน้า</th>
+              <th>ชื่อ</th>
+              <th>นามสกุล</th>
+              <th>เลขประจะตัว</th>
+              <th>คะแนนที่ได้</th>
+              <th>สถานะ</th>
+            </tr>
           </thead>
           <tbody>
-            {showtestred.map((data) => {
-              const { stu_id, prefix, stu_Fname, stu_Lname } = data;
-              return (
-                <tr key={stu_id}>
-                  <td>{prefix}</td>
-                  <td>{stu_Fname}</td>
-                  <td>{stu_Lname}</td>
-                  <td></td>
-                </tr>
-              );
-            })}
-            {showtestre.map((data) => {
-              const { stu_id, prefix, stu_Fname, stu_Lname } = data;
-              return (
-                <tr key={stu_id}>
-                  <td>{prefix}</td>
-                  <td>{stu_Fname}</td>
-                  <td>{stu_Lname}</td>
-                  <td></td>
-                </tr>
-              );
-            })}
+            {ckeckred &&
+              showtestred.map((data) => {
+                const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
+                const totalScore = studentScores[stu_id] || 0;
+
+                return (
+                  <tr key={stu_id}>
+                    <td>{prefix}</td>
+                    <td>{stu_Fname}</td>
+                    <td>{stu_Lname}</td>
+                    <td>{stu_sn}</td>
+                    <td>
+                      {totalScore} (
+                      <button className="link-button" onClick={() => DataShow(stu_id)}>detail</button>)
+                    </td>
+                    <td>ส่งแล้ว</td>
+                  </tr>
+                );
+              })}
+            {ckeckre &&
+              showtestre.map((data) => {
+                const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
+                return (
+                  <tr key={stu_id}>
+                    <td>{prefix}</td>
+                    <td>{stu_Fname}</td>
+                    <td>{stu_Lname}</td>
+                    <td>{stu_sn}</td>
+                    <td>0</td>
+                    <td>ยังไม่ส่ง</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
+        <Modal show={showData} onHide={DataShow}>
+        <Modal.Body>
+          {/* Render the StudentResultDetail component with stu_id and test_id */}
+          {selectedStudentId && (
+            <StudentResultDetail stuid={selectedStudentId} testId={testId} />
+          )}
+        </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={DataClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
       <Outlet />
     </div>

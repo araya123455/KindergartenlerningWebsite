@@ -72,8 +72,11 @@ function TestResult() {
   };
 
   saveToLocalStorage("testde_id", null);
-  const onClick = (id) => {
-    saveToLocalStorage("testde_id", id);
+  saveToLocalStorage("testedId", null);
+  const onClick = (testde_id, testid) => {
+    const test_id = testid.test_id;
+    saveToLocalStorage("testde_id", testde_id);
+    saveToLocalStorage("testedId", test_id);
   };
 
   useEffect(() => {
@@ -127,7 +130,7 @@ function TestResult() {
                 <td>
                   <Link
                     to="/testResultDetail"
-                    onClick={() => onClick(testde_id)}
+                    onClick={() => onClick(testde_id, testid)}
                   >
                     แบบทดสอบที่ถูกส่งมา
                   </Link>

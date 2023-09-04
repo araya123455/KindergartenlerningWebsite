@@ -25,10 +25,7 @@ const StartTest = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const allQuestionsAnswered = selectedAnswers.every((answer) => answer !== "");
-  const [score, setScore] = useState(0);
-  const [completionTime, setCompletionTime] = useState(null);
   const [formattime, setformattime] = useState("");
-  const [indexque, setindexque] = useState(0);
 
   const loadData = () => {
     dispatch(showquestion({ testId }))
@@ -36,7 +33,6 @@ const StartTest = () => {
         setshowques(result.payload);
         // console.log("result.payload ", result.payload);
         setSelectedAnswers(Array(result.payload.length).fill(""));
-        setindexque(result.payload.length);
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +98,6 @@ const StartTest = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else if (allQuestionsAnswered) {
       const currentTime = new Date(); // Capture the current time
-      setCompletionTime(currentTime); // Set the completion time
       const formattedTime =
         currentTime &&
         `${currentTime.toLocaleDateString()} at ${currentTime.toLocaleTimeString()}`;

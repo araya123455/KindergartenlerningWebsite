@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import {
   selectedtest,
   showquestion,
@@ -9,18 +8,15 @@ import {
   finishedtest,
 } from "../slice/StudentSlice";
 import "../assets/css/starttest.css";
-import { Outlet, Link } from "react-router-dom";
 
-function ShowTestResult() {
+function StudentResultDetail({ stuid, testId }) {
   const dispatch = useDispatch();
   const [finished, setfinished] = useState([]);
   const [showtest, setshowtest] = useState([]);
   const [showques, setshowques] = useState([]);
   const [showresult, setshowresult] = useState([]);
   const [showredetail, setshowredetail] = useState([]);
-  const auth = getFromLocalStorage("auth");
-  const stuid = auth.stu_id;
-  const testId = getFromLocalStorage("testId");
+
   let score = 0,
     totalscore = 0,
     isCorrect = "";
@@ -117,7 +113,7 @@ function ShowTestResult() {
               {showredetail.map((question, index) => (
                 <div key={index}>
                   <p>
-                    คำถาม {index + 1} {showques[index]?.ques || ''}
+                    คำถาม {index + 1} {showques[index]?.ques || ""}
                   </p>
                   {
                     (isCorrect =
@@ -128,9 +124,9 @@ function ShowTestResult() {
                       isCorrect ? "correct" : "incorrect"
                     }`}
                   >
-                    <p>คำตอบของคุณ: {showredetail[index]?.ans_result || ''}</p>
+                    <p>คำตอบของคุณ: {showredetail[index]?.ans_result || ""}</p>
                     {!isCorrect && (
-                      <p>คำตอบที่ถูกต้อง: {showques[index]?.answer || ''}</p>
+                      <p>คำตอบที่ถูกต้อง: {showques[index]?.answer || ""}</p>
                     )}
                     <p className="score">
                       คะแนน: {isCorrect ? showques[index]?.score_ques : 0}
@@ -146,4 +142,4 @@ function ShowTestResult() {
   );
 }
 
-export default ShowTestResult;
+export default StudentResultDetail;
