@@ -8,6 +8,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import axios from "axios";
 import "../assets/css/learning.css";
 import "../assets/css/clouds.css";
+import "../assets/css/ButtonPink.css";
 
 function LearningFile() {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function LearningFile() {
             <div className="pdf-entry" key={index}>
               <p>{`PDF File : ${pdf.name}`}</p>
               <button 
-                className="glow-on-hover"
+                className="learn-more"
                 onClick={() => {
                   if (selectedPdfIndex === index && isViewerOpen) {
                     closeViewer();
