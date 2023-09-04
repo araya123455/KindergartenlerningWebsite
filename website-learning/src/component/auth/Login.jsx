@@ -14,6 +14,7 @@ function Login({ signin }) {
   const [passwordInput, setPasswordInput] = useState("");
   const [selectedRole, setSelectedRole] = useState("teacher"); // Default role: teacher
   // console.log("selectedRole", selectedRole);
+  saveToLocalStorage("auth", null);
   const onSubmit = (e) => {
     e.preventDefault();
     if (!usernameInput || !passwordInput) {

@@ -26,7 +26,7 @@ function Test() {
       .then((result) => {
         setShowTests(result.payload); // Updated variable name
         const message = result.payload.message;
-        if (message === "No tests found for the student") {
+        if (message === "Not found") {
           setCheckTest(false); // Updated variable name
         }
       })
@@ -40,7 +40,7 @@ function Test() {
       .then((result) => {
         setFinished(result.payload);
         const message = result.payload.message;
-        if (message === "No available tests for the student") {
+        if (message === "Not found") {
           setChecked(false);
         }
       })
