@@ -2,6 +2,7 @@ import React from "react";
 // import "../assets/css/learning.css";
 import "../assets/css/clouds.css";
 import "../assets/css/ButtonPink.css";
+import "../assets/css/Split.css";
 import { Container, Row, Col } from "react-bootstrap";
 
 
@@ -18,11 +19,14 @@ const LearningMaterials = () => {
              <div className="cloud x6"></div>
              <div className="cloud x7"></div>
            </div>
-          <Row>
+           <div className="split-screen">
+      <div className="left-side">
+      <Row>
             <Col md={6}>
+              <h1>วีดีโอสื่อการสอน</h1>
                {/* Left side */}
               <Row>
-                <Col>
+                <Col className="center-button" >
                 <a href="movenment">
                 <button className="learn-more" type="button">
                   เสริมประสบการณ์
@@ -32,7 +36,7 @@ const LearningMaterials = () => {
               </Row>
               <br></br>
               <Row>
-                <Col>
+                <Col className="center-button">
                 <a href="EnhanceTheexperience">
                 <button className="learn-more" type="button">
                   การเคลื่อนไหว
@@ -42,7 +46,7 @@ const LearningMaterials = () => {
               </Row>
               <br></br>
               <Row>
-                <Col>
+                <Col className="center-button">
                 <a href="Freeactivities">
                 <button className="learn-more" type="button">
                   กิจกรรมเสรี
@@ -52,7 +56,7 @@ const LearningMaterials = () => {
               </Row>
               <br></br>
               <Row>
-                <Col>
+                <Col className="center-button">
                 <a href="Artactivities">
                 <button className="learn-more" type="button">
                   กิจกรรมศิลปะ
@@ -62,7 +66,7 @@ const LearningMaterials = () => {
               </Row>
               <br></br>
               <Row>
-                <Col>
+                <Col className="center-button">
                 <a href="Outdooractivities">
                 <button className="learn-more" type="button">
                   กิจกรรมกลางเเจ้ง
@@ -72,14 +76,16 @@ const LearningMaterials = () => {
               </Row>
             </Col>
           </Row>
-          <br></br>
+      </div>
+      <div className="right-side">
+      <br></br>
           <Col md={6}>
-             {/* Right side */}
+          <h1>ไฟล์ PDF</h1>
              <Row>
               <Col>
                 <a href="LearningFile">
                   <button className="learn-more" type="button">
-                    Download PDF
+                    สื่อการสอน
                   </button>
                 </a>
               </Col>
@@ -89,7 +95,7 @@ const LearningMaterials = () => {
               <Col>
               <a href="SubjectFileEnglish">
                 <button className="learn-more" type="button">
-                  Download PDF Subject English
+                  วิชาภาษาอังกฤษ
                 </button>
               </a>
               </Col>
@@ -99,7 +105,7 @@ const LearningMaterials = () => {
               <Col>
               <a href="SubjectFileThai">
                 <button className="learn-more" type="button">
-                  Download PDF Subject Thai
+                  วิชาภาษาไทย
                 </button>
               </a>
               </Col>
@@ -109,7 +115,7 @@ const LearningMaterials = () => {
               <Col>
               <a href="SubjectFileMath">
                 <button className="learn-more" type="button">
-                  Download PDF Subject Math
+                  วิชาคณิตศาสตร์
                 </button>
               </a>
               </Col>
@@ -119,12 +125,16 @@ const LearningMaterials = () => {
               <Col>
               <a href="SubjectFileEnhance">
                 <button className="learn-more" type="button">
-                  Download PDF Subject Enhance The Experience
+                  เสริมประสบการณ์
                 </button>
               </a>
               </Col>
              </Row>
-          </Col>         
+          </Col>    
+      </div>
+    </div>
+        
+               
         </Container>
       </div>
   );

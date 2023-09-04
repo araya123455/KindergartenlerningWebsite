@@ -8,6 +8,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import axios from "axios";
 import "../assets/css/learning.css";
 import "../assets/css/clouds.css";
+import "../assets/css/Split.css";
 
 function SubjectFileEnhance() {
   const dispatch = useDispatch();
@@ -60,14 +61,14 @@ function SubjectFileEnhance() {
         <div className="cloud x6"></div>
         <div className="cloud x7"></div>
       </div>
-      <h1>File PDF Enhance Subject</h1>{" "}
+      <h1>เสริมประสบการณ์</h1>{" "}
       {pdfUrlEnhance && pdfUrlEnhance.length > 0 ? (
         <div className="pdf-row">
           {pdfUrlEnhance.map((pdfEnhanceTheExperience, index) => (
             <div className="pdf-entry" key={index}>
               <p>{`PDF File : ${pdfUrlEnhance[index]?.name}`}</p>
               <button
-                className="glow-on-hover"
+                className="learn-more"
                 onClick={() => {
                   if (selectedPdfIndex === index && isViewerOpen) {
                     closeViewer();

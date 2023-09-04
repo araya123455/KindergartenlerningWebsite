@@ -8,6 +8,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import axios from "axios";
 import "../assets/css/learning.css";
 import "../assets/css/clouds.css";
+import "../assets/css/Split.css";
 
 function SubjectFileEnglish() {
   const dispatch = useDispatch();
@@ -59,14 +60,14 @@ function SubjectFileEnglish() {
         <div className="cloud x6"></div>
         <div className="cloud x7"></div>
       </div>
-      <h1>File PDF English Subject</h1>{" "}
+      <h1>วิชาภาษาอังกฤษ</h1>{" "}
       {pdfUrlEnglish && pdfUrlEnglish.length > 0 ? (
         <div className="pdf-row">
           {pdfUrlEnglish.map((pdfEnglish, index) => (
             <div className="pdf-entry" key={index}>
               <p>{`PDF File : ${pdfEnglish.name}`}</p>
               <button
-                className="glow-on-hover"
+                className="learn-more"
                 onClick={() => {
                   if (selectedPdfIndex === index && isViewerOpen) {
                     closeViewer();

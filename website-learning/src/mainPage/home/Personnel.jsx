@@ -14,7 +14,7 @@ function Personnel() {
       <Carousel.Item>
         <img
           className="image"
-          src="1.jpg"
+          src="1.0.jpg"
           alt="First slide"
         />
         <Carousel.Caption>
