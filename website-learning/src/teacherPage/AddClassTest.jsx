@@ -359,17 +359,17 @@ function AddClassTest(props) {
                 <option value="">Choose Room/Level</option>
                 {showSearch.map((data) => {
                   const kinder = showkinder.find(
-                    (kin) => kin.kinder_id === data.kinder_id
+                    (kin) => kin?.kinder_id === data?.kinder_id
                   );
                   const kinderName = kinder
-                    ? `${kinder.kinde_level}/${kinder.Kinder_room}`
+                    ? `${kinder?.kinde_level}/${kinder?.Kinder_room}`
                     : "";
 
                   const yearTerm = showyear.find(
-                    (term) => term.yearTerm_id === data.yearterm_id
+                    (term) => term?.yearTerm_id === data?.yearterm_id
                   );
                   const termYearName = yearTerm
-                    ? `${yearTerm.term}/${yearTerm.year}`
+                    ? `${yearTerm?.term}/${yearTerm?.year}`
                     : "";
 
                   return (

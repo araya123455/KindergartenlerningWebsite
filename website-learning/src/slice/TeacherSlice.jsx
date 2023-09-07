@@ -155,6 +155,51 @@ export const deletequestion = createAsyncThunk("deletequestion", async (id, body
   return response.data;
 });
 
+export const attendance = createAsyncThunk("attendance", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/attendance`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
+
+export const attendancedetail = createAsyncThunk("attendancedetail", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/attendancedetail`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
+
+export const attendancedetailinsert = createAsyncThunk("attendancedetailinsert", async (body) => {
+  console.log(body);
+  const response = await axios.post(
+    `${import.meta.env.VITE_APP_API}/attendancedetailinsert`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
+export const attendancedetailupdate = createAsyncThunk("attendancedetailupdate", async ({ id, body }) => {
+  const response = await axios.patch(
+    `${import.meta.env.VITE_APP_API}/attendancedetailupdate/${id}`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
 export const TeacherSlice = createSlice({
   name: "data",
   initialState,
