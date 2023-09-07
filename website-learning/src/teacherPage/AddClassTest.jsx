@@ -10,12 +10,12 @@ import {
   edittestde,
   deletetestde,
 } from "../slice/TeacherSlice";
-import {
+import { //****************
   showclass,
   showkinroom,
   getDataAll,
   searchclasstime,
-} from "../slice/DataSlice";
+} from "../slice/DataSlice"; //*********** */
 
 function AddClassTest(props) {
   var testdetail_name;
@@ -298,7 +298,7 @@ function AddClassTest(props) {
             } else if (test_status === "1") {
               sta = "Open";
             }
-            return (
+            return ( //*********************************
               <tr key={testDe_id}>
                 <td>{sta}</td>
                 <td>

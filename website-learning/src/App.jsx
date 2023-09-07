@@ -44,6 +44,7 @@ import SubjectFileEnglish from "./teacherPage/SubjectFileEnglish";
 import SubjectFileEnhance from "./teacherPage/SubjectFileEnhance";
 import SubjectFileMath from "./teacherPage/SubjectFileMath";
 import SubjectFileThai from "./teacherPage/SubjectFileThai";
+import MgtAssessment from "./teacherPage/MgtAssessment";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -116,6 +117,7 @@ function App() {
           <Route path="SubjectFileEnhance" element={<SubjectFileEnhance />} />
           <Route path="SubjectFileMath" element={<SubjectFileMath />} />
           <Route path="SubjectFileThai" element={<SubjectFileThai />} />
+          <Route path="MgtAssessment" element={<MgtAssessment />}/>
           <Route path="test">
             <Route
               path="createChoice"

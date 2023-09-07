@@ -63,6 +63,11 @@ function NavbarHead({ signout }) {
             </NavLink>
           </div>
           <div className="navbarCon">
+            <NavLink to="MgtAssessment">
+              <i>แบบประเมิน</i>
+            </NavLink>
+          </div>
+          <div className="navbarCon">
             <NavLink to="/login">
               <i onClick={() => signOut()}>Sign Out</i>
               {/* {props.isSignedIn ? (
