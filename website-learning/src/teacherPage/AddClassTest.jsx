@@ -10,14 +10,15 @@ import {
   edittestde,
   deletetestde,
 } from "../slice/TeacherSlice";
-import { //****************
+import {
   showclass,
   showkinroom,
   getDataAll,
   searchclasstime,
-} from "../slice/DataSlice"; //*********** */
+} from "../slice/DataSlice";
+import { getFromLocalStorage } from "../LocalStorage/localstorage";
 
-function AddClassTest(props) {
+function AddClassTest() {
   var testdetail_name;
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
@@ -27,6 +28,7 @@ function AddClassTest(props) {
   const [showClass, setShowClass] = useState([]);
   const [showSearch, setshowsearch] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
+  const testId = getFromLocalStorage("teaTest_id");
   const [insert, setinsert] = useState({
     test_id: "",
     test_status: "",
@@ -41,7 +43,7 @@ function AddClassTest(props) {
     kinder_id: "",
     yearterm_id: "",
   });
-  const testid = showTest.find((tes) => tes.test_id === props.data);
+  const testid = showTest.find((tes) => tes.test_id === testId);
   const testname = testid ? testid.test_detail : "";
 
   const loadData = () => {
@@ -49,7 +51,7 @@ function AddClassTest(props) {
       .then((result) => {
         // Filter the data to show only the rows with the specific test_id
         const filteredData = result.payload.filter(
-          (data) => data.test_id === props.data
+          (data) => data.test_id === testId
         );
         setshowdata(filteredData);
       })
@@ -57,11 +59,7 @@ function AddClassTest(props) {
         console.log(err);
       });
   };
-  // console.log(props.data);
-  const onClickId = (id) => {
-    console.log("id: ", id);
-    props.set(props.data * id);
-  };
+  
   const loadTest = () => {
     dispatch(showtest())
       .then((result) => {
@@ -134,7 +132,7 @@ function AddClassTest(props) {
 
   const onInsert = () => {
     let body = {
-      test_id: props.data,
+      test_id: testId,
       test_status: insert.test_status,
       kinder_id: insert.kinder_id,
       yearterm_id: insert.yearterm_id,
@@ -240,7 +238,7 @@ function AddClassTest(props) {
       <div>
         <h1>Add Class</h1>
       </div>
-      <Link to={"/test/CreateTest"} onClick={() => onClickId(0)}>
+      <Link to={"/test/CreateTest"}>
         <svg
           baseProfile="tiny"
           height="24px"
@@ -278,7 +276,7 @@ function AddClassTest(props) {
           {showdata.map((data) => {
             const { testDe_id, test_id, test_status, kinder_id, yearterm_id } =
               data;
-            const testid = showTest.find((tes) => tes.test_id === props.data);
+            const testid = showTest.find((tes) => tes.test_id === testId);
             const testname = testid ? testid.test_detail : "";
             testdetail_name = testname;
             const kinder = showkinder.find(
@@ -298,7 +296,8 @@ function AddClassTest(props) {
             } else if (test_status === "1") {
               sta = "Open";
             }
-            return ( //*********************************
+            return (
+              //*********************************
               <tr key={testDe_id}>
                 <td>{sta}</td>
                 <td>

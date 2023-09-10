@@ -142,7 +142,7 @@ export const editquestion = createAsyncThunk("editquestion", async ({ id, body }
 });
 
 export const deletequestion = createAsyncThunk("deletequestion", async (id, body) => {
-  console.log(id, body);
+  // console.log(id, body);
   const response = await axios.delete(
     `${import.meta.env.VITE_APP_API}/questiondelete/${id}`,
     body,

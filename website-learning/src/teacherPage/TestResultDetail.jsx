@@ -86,10 +86,6 @@ function TestResultDetail() {
     setshowData(true);
   };
 
-  const onclick = () => {
-    console.log("");
-  };
-
   useEffect(() => {
     loadtestred();
     loadtestre();
@@ -97,7 +93,7 @@ function TestResultDetail() {
 
   return (
     <div>
-      <Link to={"/test/testRe"} onClick={() => onclick()}>
+      <Link to={"/test/testRe"}>
         <svg
           baseProfile="tiny"
           height="24px"

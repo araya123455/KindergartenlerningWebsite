@@ -15,6 +15,9 @@ import Search from "../src/adminPage/Search";
 import RouteTeacher from "./component/navbatTeacher/RouteNavbar";
 import TeacherProfile from "./teacherPage/TeacherProfile";
 import LearningMaterials from "../src/teacherPage/LearningMaterials";
+import StuAttendanceInsert from "./teacherPage/StuAttendanceInsert";
+import StuAttendanceUpdate from "./teacherPage/StuAttendanceUpdate";
+import StuAttendanceShow from "./teacherPage/StuAttendanceShow";
 import StudentAttendance from "../src/teacherPage/StudentAttendance";
 import SubjectScore from "../src/teacherPage/SubjectScore";
 import CreateTest from "./teacherPage/CreateTest";
@@ -48,14 +51,13 @@ import MgtAssessment from "./teacherPage/MgtAssessment";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
-  const [selectedId, setselectedId] = useState(0);
   const signin = () => {
     setIsSignedIn(true);
   };
   const signout = () => {
     setIsSignedIn(false);
   };
-  console.log(isSignedIn);
+  // console.log(isSignedIn);
   return (
     <BrowserRouter>
       <Routes>
@@ -102,7 +104,18 @@ function App() {
           <Route index element={<Navigate to="teacher" replace />} />
           <Route path="learning" element={<LearningMaterials />} />
           <Route path="attendance" element={<StudentAttendance />} />
-          <Route path="subjectScore" element={<SubjectScore />} />
+          <Route path="attendance">
+            <Route
+              path="stuAttendanceInsert"
+              element={<StuAttendanceInsert />}
+            />
+            <Route
+              path="stuAttendanceUpdate"
+              element={<StuAttendanceUpdate />}
+            />
+            <Route path="attendanceShow" element={<StuAttendanceShow />} />
+          </Route>
+          <Route path="subjectscore" element={<SubjectScore />} />
           <Route path="movenment" element={<Movement />} />
           <Route path="movenment2" element={<Movement2 />} />
           <Route path="learningFile" element={<LearningFile />} />
@@ -117,21 +130,12 @@ function App() {
           <Route path="SubjectFileEnhance" element={<SubjectFileEnhance />} />
           <Route path="SubjectFileMath" element={<SubjectFileMath />} />
           <Route path="SubjectFileThai" element={<SubjectFileThai />} />
-          <Route path="MgtAssessment" element={<MgtAssessment />}/>
+          <Route path="MgtAssessment" element={<MgtAssessment />} />
           <Route path="test">
-            <Route
-              path="createChoice"
-              element={<CreateChoice data={selectedId} set={setselectedId} />}
-            />
-            <Route
-              path="addClassTest"
-              element={<AddClassTest data={selectedId} set={setselectedId} />}
-            />
+            <Route path="createChoice" element={<CreateChoice />} />
+            <Route path="addClassTest" element={<AddClassTest />} />
             <Route index element={<Navigate to="test" replace />}></Route>
-            <Route
-              path="createTest"
-              element={<CreateTest data={selectedId} set={setselectedId} />}
-            />
+            <Route path="createTest" element={<CreateTest />} />
             <Route path="testRe" element={<TestResult />} />
           </Route>
           <Route path="testResultDetail" element={<TestResultDetail />} />

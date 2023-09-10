@@ -10,12 +10,14 @@ import {
   deletequestion,
   showtest,
 } from "../slice/TeacherSlice";
+import { getFromLocalStorage } from "../LocalStorage/localstorage";
 
-function CreateChoice(props) {
+function CreateChoice() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [showTest, setShowTest] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
+  const testId = getFromLocalStorage("teaTest_id");
   const [insert, setinsert] = useState({
     ques: "",
     choice1: "",
@@ -44,14 +46,14 @@ function CreateChoice(props) {
   const [ch3, setCh3] = useState("");
   const [ch4, setCh4] = useState("");
 
-  const testid = showTest.find((tes) => tes.test_id === props.data);
+  const testid = showTest.find((tes) => tes.test_id === testId);
   const testname = testid ? testid.test_detail : "";
 
   const loadData = () => {
     dispatch(showquestion())
       .then((result) => {
         const filteredData = result.payload.filter(
-          (data) => data.test_id === props.data
+          (data) => data.test_id === testId
         );
         setshowdata(filteredData);
       })
@@ -157,7 +159,7 @@ function CreateChoice(props) {
       choice4: insert.choice4,
       answer: insert.answer,
       score_ques: insert.score_ques,
-      test_id: props.data,
+      test_id: testId,
     };
 
     dispatch(insertquestion(body))
@@ -255,7 +257,7 @@ function CreateChoice(props) {
   };
   const onClickId = (id) => {
     console.log("id: ", id);
-    props.set(props.data * id);
+    props.set(testId * id);
   };
 
   useEffect(() => {
@@ -274,7 +276,7 @@ function CreateChoice(props) {
 
   return (
     <div>
-      <Link to={"/test/CreateTest"} onClick={() => onClickId(0)}>
+      <Link to={"/test/CreateTest"}>
         <svg
           baseProfile="tiny"
           height="24px"

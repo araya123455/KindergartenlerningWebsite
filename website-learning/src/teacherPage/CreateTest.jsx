@@ -3,10 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
 import { Outlet, Link } from "react-router-dom";
-import {
-  getFromLocalStorage,
-  saveToLocalStorage,
-} from "../LocalStorage/localstorage";
+import { saveToLocalStorage } from "../LocalStorage/localstorage";
+import "../assets/css/attendance.css";
 import {
   showtest,
   edittest,
@@ -14,7 +12,7 @@ import {
   inserttest,
 } from "../slice/TeacherSlice";
 
-function CreateTest(props) {
+function CreateTest() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -126,12 +124,6 @@ function CreateTest(props) {
   // set null
   saveToLocalStorage("teaTest_id", null);
   const onClickId = (id) => {
-    console.log("id: ", id);
-    if (!props.data) {
-      props.set(props.data + id);
-    } else {
-      props.set(props.data * 0 + id);
-    }
     saveToLocalStorage("teaTest_id", id);
   };
   // reload
@@ -161,6 +153,7 @@ function CreateTest(props) {
                 <td>{test_detail}</td>
                 <td>
                   <Link
+                    className="linkadd"
                     to="/test/addClassTest"
                     onClick={() => onClickId(test_id)}
                   >
@@ -169,6 +162,7 @@ function CreateTest(props) {
                 </td>
                 <td>
                   <Link
+                    className="linkcreate"
                     to="/test/createChoice"
                     onClick={() => onClickId(test_id)}
                   >

@@ -1,0 +1,63 @@
+.linkshow {
+  color: darkblue;
+  background-color: rgb(168, 175, 202);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.linkshow:hover {
+  color: rgb(27, 27, 210);
+}
+
+.linkinsert {
+  color: rgb(30, 110, 18);
+  background-color: rgb(186, 215, 197);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.linkinsert:hover {
+  color: rgb(31, 168, 11);
+}
+
+/* Test */
+.linkadd {
+  color: darkblue;
+  background-color: rgb(168, 175, 202);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+}
+.linkadd:hover {
+  color: rgb(27, 27, 210);
+}
+
+.linkcreate {
+  color: rgb(30, 110, 18);
+  background-color: rgb(186, 215, 197);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+}
+.linkcreate:hover {
+  color: rgb(35, 194, 11);
+}
+
+.linkupdate {
+  color: rgb(150, 143, 13);
+  background-color: rgb(229, 223, 122);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.linkupdate:hover {
+  color: rgb(126, 118, 8);
+}

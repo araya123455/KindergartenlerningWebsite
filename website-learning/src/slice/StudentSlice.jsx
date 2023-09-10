@@ -160,6 +160,33 @@ export const testresultdetatiled = createAsyncThunk(
     }
   }
 );
+export const studentattendance = createAsyncThunk(
+  "studentattendance",
+  async ({ crtId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/studentattendance", {
+        params: { crt_id: crtId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const searceattendance = createAsyncThunk(
+  "searceattendance",
+  async ({ crtId, stuid, selectedDate }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/searceattendance", {
+        params: { crt_id: crtId, stu_id: stuid, date: selectedDate },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 const studentSlice = createSlice({
   name: "student",

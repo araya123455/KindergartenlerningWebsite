@@ -2,21 +2,15 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
+import { saveToLocalStorage } from "../LocalStorage/localstorage";
+import "../assets/css/attendance.css";
 import {
   showclass,
-  showstudent,
-  showclasstime,
   showkinroom,
   getDataAll,
   searchclasstime,
 } from "../slice/DataSlice";
-import {
-  attendance,
-  attendancedetail,
-  attendancedetailinsert,
-  attendancedetailupdate,
-} from "../slice/TeacherSlice";
+import { Link, Route } from "react-router-dom";
 
 function StudentAttendance() {
   const dispatch = useDispatch();
@@ -62,13 +56,11 @@ function StudentAttendance() {
       });
   };
 
-  const onShow = (id) => {
-
-  }
-
-  const onInsert = (id) => {
-
-  }
+  saveToLocalStorage("crtId", null);
+  const onClick = (id) => {
+    // console.log(id);
+    saveToLocalStorage("crtId", id);
+  };
 
   useEffect(() => {
     loadSearch();
@@ -105,22 +97,32 @@ function StudentAttendance() {
               ? `${yearTerm.term}/${yearTerm.year}`
               : "";
             return (
-              <tr>
+              <tr key={crt_id}>
                 <td>{kinderName}</td>
                 <td>{termYearName}</td>
-                <td><Button
-                    variant="btn btn-primary"
-                    onClick={() => onShow(crt_id)}
+                <td>
+                  <Link
+                    className="linkshow"
+                    to={"attendanceShow"}
+                    onClick={() => onClick(crt_id)}
                   >
                     ดูประวัติ
-                  </Button>
-                  <Button
-                    className="buttonD"
-                    variant="btn btn-warning"
-                    onClick={() => onInsert(crt_id)}
+                  </Link>
+                  <Link
+                    className="linkinsert"
+                    to={"stuAttendanceInsert"}
+                    onClick={() => onClick(crt_id)}
                   >
                     เช็คชื่อ
-                  </Button></td>
+                  </Link>
+                  <Link
+                    className="linkupdate"
+                    to={"stuAttendanceUpdate"}
+                    onClick={() => onClick(crt_id)}
+                  >
+                    แก้ไข
+                  </Link>
+                </td>
               </tr>
             );
           })}
