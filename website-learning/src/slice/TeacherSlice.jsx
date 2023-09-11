@@ -200,6 +200,20 @@ export const attendancedetailupdate = createAsyncThunk("attendancedetailupdate",
   return response.data;
 });
 
+export const attendancedelete = createAsyncThunk("attendancedelete", async (id, body) => {
+  // console.log(id, body);
+  const response = await axios.delete(
+    `${import.meta.env.VITE_APP_API}/attendancedelete/${id}`,
+    body,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
 export const TeacherSlice = createSlice({
   name: "data",
   initialState,

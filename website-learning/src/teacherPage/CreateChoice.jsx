@@ -255,16 +255,13 @@ function CreateChoice() {
         console.log(err);
       });
   };
-  const onClickId = (id) => {
-    console.log("id: ", id);
-    props.set(testId * id);
-  };
 
   useEffect(() => {
     loadData();
     loadTest();
   }, []);
 
+  // set value for answer
   useEffect(() => {
     if (showEdit) {
       setCh1(datamodal.choice1);

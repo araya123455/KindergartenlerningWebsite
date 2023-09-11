@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, FormLabel } from "react-bootstrap";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/attendance.css";
-import {
-  showclass,
-  showstudent,
-  showclasstime,
-  showkinroom,
-  getDataAll,
-  searchclasstime,
-} from "../slice/DataSlice";
-import { attendance, attendancedetail } from "../slice/TeacherSlice";
+import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
+import { attendance } from "../slice/TeacherSlice";
 import { fetchStudentData } from "../slice/TchStuSlice";
 import { studentattendance, searceattendance } from "../slice/StudentSlice";
-import { Link, Route } from "react-router-dom";
 
 function StuAttendanceShow() {
   const dispatch = useDispatch();
@@ -58,7 +48,7 @@ function StuAttendanceShow() {
     dispatch(searceattendance({ crtId, stuid, selectedDate }))
       .then((result) => {
         setshowattende(result.payload.data);
-        console.log(result.payload.data);
+        // console.log(result.payload.data);
       })
       .catch((err) => {
         console.log(err);
@@ -109,7 +99,7 @@ function StuAttendanceShow() {
     if (!searchQuery) {
       // alert("Please input data first");
       setStudentResults("");
-      console.log(selectedDate);
+      // console.log(selectedDate);
       loadattendancede();
       return;
     }
@@ -200,7 +190,7 @@ function StuAttendanceShow() {
                     {prefix} {stuname} {stuLname}
                   </td>
                   <td>{stusn}</td>
-                  <td>{new Date(date).toISOString().split("T")[0]}</td>
+                  <td>{new Date(date).toLocaleDateString("en-US")}</td>
                   <td>{attdd}</td>
                 </tr>
               );

@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
-import { Form, Button, FormLabel } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/attendance.css";
-import {
-  showclass,
-  showstudent,
-  showclasstime,
-  showkinroom,
-  getDataAll,
-  searchclasstime,
-} from "../slice/DataSlice";
-import {
-  attendance,
-  attendancedetail,
-  attendancedetailinsert,
-  attendancedetailupdate,
-} from "../slice/TeacherSlice";
+import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
+import { attendance, attendancedetailinsert } from "../slice/TeacherSlice";
 import { studentattendance } from "../slice/StudentSlice";
-import { Link, Route } from "react-router-dom";
 
 function StuAttendanceInsert() {
   const dispatch = useDispatch();
@@ -41,6 +29,7 @@ function StuAttendanceInsert() {
           result.payload.map((student) => ({
             stu_id: student.stu_id,
             attd_id: "",
+            date: "",
           }))
         );
       })
@@ -91,7 +80,6 @@ function StuAttendanceInsert() {
 
   const handleStatusChange = (index, attd_id) => {
     // Update the statusRecords array with the selected status for the specific student.
-    // console.log(index, attd_id);
     setStatusRecords((prevStatusRecords) => {
       const updatedStatusRecords = [...prevStatusRecords];
       updatedStatusRecords[index] = {
@@ -105,19 +93,33 @@ function StuAttendanceInsert() {
 
   const onInsert = () => {
     // Iterate through statusRecords and send each attendance record to the server.
-    statusRecords.forEach((record) => {
-      const { date, stu_id, attd_id } = record;
-      if (date && stu_id && attd_id) {
-        const body = { date, stu_id, attd_id };
-        dispatch(attendancedetailinsert(body))
-          .then((result) => {
-            // console.log(result);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    });
+    Promise.all(
+      statusRecords.map((record) => {
+        const { date, stu_id, attd_id } = record;
+        if (date && stu_id && attd_id) {
+          const body = { date, stu_id, attd_id };
+          return dispatch(attendancedetailinsert(body));
+        }
+        return Promise.resolve(); // Skip invalid records
+      })
+    )
+      .then(() => {
+        toast.success("Attendance records inserted successfully");
+        // Clear the status and date for each student individually
+        setStatusRecords((prevStatusRecords) => {
+          const updatedStatusRecords = prevStatusRecords.map((record) => ({
+            ...record,
+            attd_id: "",
+            date: "",
+          }));
+          return updatedStatusRecords;
+        });
+        setSelectedDate(new Date()); // Reset the date
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to insert attendance records");
+      });
   };
 
   const crt_Id = showSearch.find((data) => data?.crt_id === crtId);
@@ -150,7 +152,7 @@ function StuAttendanceInsert() {
         <label>Filter by Date:</label>
         <input
           type="date"
-          value={selectedDate.toISOString().split("T")[0]}
+          value={new Date(selectedDate).toISOString().split("T")[0]}
           onChange={(e) => setSelectedDate(new Date(e.target.value))}
         />
       </div>
@@ -172,10 +174,11 @@ function StuAttendanceInsert() {
                   {prefix} {stu_Fname} {stu_Lname}
                 </td>
                 <td>{stu_sn}</td>
-                <td>{selectedDate.toISOString().split("T")[0]}</td>
+                <td>{new Date(selectedDate).toLocaleDateString("en-US")}</td>
                 <td>
                   <select
                     onChange={(e) => handleStatusChange(index, e.target.value)}
+                    value={statusRecords[index]?.attd_id || ""}
                   >
                     <option>Select status</option>
                     {showatten?.map((data) => {
@@ -194,6 +197,17 @@ function StuAttendanceInsert() {
         </tbody>
       </table>
       <Button onClick={() => onInsert()}>บันทึก</Button>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
