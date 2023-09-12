@@ -729,6 +729,58 @@ const pdfSliceThai = createSlice({
   },
 });
 //---------------------End PDF-----------------------
+
+//--------------assessment----------------
+export const showassessment = createAsyncThunk("showassessment", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/assessment`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
+
+export const insertassessment = createAsyncThunk("insertassessment", async (body) => {
+  console.log(body);
+  const response = await axios.post(
+    `${import.meta.env.VITE_APP_API}/assessmentinsert`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
+export const editassessment = createAsyncThunk("editassessment", async ({ id, body }) => {
+  const response = await axios.patch(
+    `${import.meta.env.VITE_APP_API}/assessmentupdate/${id}`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
+export const deleteassessment = createAsyncThunk("deleteassessment", async (id, body) => {
+  console.log(id, body);
+  const response = await axios.delete(
+    `${import.meta.env.VITE_APP_API}/testassessment/${id}`,
+    body,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+});
+//----------end assessment-------------
 export const dataTableSlice = createSlice({
   name: "data",
   initialState,
@@ -1175,6 +1227,56 @@ export const dataTableSlice = createSlice({
     state.loading = false;
   },
   //--------------------End PDF----------------------------
+  //---------assessment-----------
+  [showassessment.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [showassessment.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [showassessment.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  [insertassessment.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [insertassessment.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [insertassessment.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  [editassessment.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [editassessment.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [editassessment.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  [deleteassessment.pending]: (state) => {
+    state.loading = true;
+    state.error = "";
+  },
+  [deleteassessment.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.data = action.payload;
+  },
+  [deleteassessment.rejected]: (state, action) => {
+    state.error = action.error;
+    state.loading = false;
+  },
+  //---------end assessment------------
 });
 
 // Action creators are generated for each case reducer function
