@@ -1,0 +1,10 @@
+@media print {
+    .report {
+      margin: 0;
+    }
+  
+    .no-print {
+      display: none;
+    }
+  }
+  
