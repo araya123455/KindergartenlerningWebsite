@@ -1,0 +1,25 @@
+.assclass {
+  color: darkblue;
+  background-color: rgb(168, 175, 202);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.assclass:hover {
+  color: rgb(27, 27, 210);
+}
+
+.assstudent {
+  color: rgb(106, 44, 13);
+  background-color: rgb(197, 135, 104);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.assstudent:hover {
+  color: rgb(120, 42, 0);
+}
