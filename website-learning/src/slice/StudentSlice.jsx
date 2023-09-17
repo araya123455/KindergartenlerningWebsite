@@ -188,6 +188,34 @@ export const searceattendance = createAsyncThunk(
   }
 );
 
+export const findstudent = createAsyncThunk(
+  "findstudent",
+  async ({ yeartermid, kinderid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/findstudent", {
+        params: { yearterm_id: yeartermid, kinder_id: kinderid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const findassessment = createAsyncThunk(
+  "findassessment",
+  async ({ yeartermid, kinderid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/findassessment", {
+        params: { yearterm_id: yeartermid, kinder_id: kinderid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const studentSlice = createSlice({
   name: "student",
   initialState: {
@@ -205,6 +233,5 @@ const studentSlice = createSlice({
       });
   },
 });
-
 
 export default studentSlice.reducer;
