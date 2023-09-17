@@ -188,6 +188,34 @@ export const searceattendance = createAsyncThunk(
   }
 );
 
+export const findstudent = createAsyncThunk(
+  "findstudent",
+  async ({ kinderid, yeartermid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/findstudent", {
+        params: { kinder_id: kinderid, yearterm_id: yeartermid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const findassessment = createAsyncThunk(
+  "findassessment",
+  async ({ kinderid, yeartermid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/findassessment", {
+        params: { kinder_id: kinderid, yearterm_id: yeartermid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const studentSlice = createSlice({
   name: "student",
   initialState: {

@@ -61,3 +61,9 @@
 .linkupdate:hover {
   color: rgb(126, 118, 8);
 }
+
+.block {
+  pointer-events: none;
+  background-color: gray; /* Change the button's background color to indicate it's disabled */
+  color: white; /* Change the text color for better visibility */
+}

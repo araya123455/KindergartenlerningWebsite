@@ -360,22 +360,19 @@ export const showsubject = createAsyncThunk("showsubject", async () => {
   });
   return response.data;
 });
-export const insertsubject = createAsyncThunk(
-  "insertsubject",
-  async (body) => {
-    console.log(body);
-    const response = await axios.post(
-      `${import.meta.env.VITE_APP_API}/subjectinsert`,
-      body,
-      {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-      }
-    );
-    return response.data;
-  }
-);
+export const insertsubject = createAsyncThunk("insertsubject", async (body) => {
+  console.log(body);
+  const response = await axios.post(
+    `${import.meta.env.VITE_APP_API}/subjectinsert`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
 export const editsubject = createAsyncThunk(
   "editsubject",
   async ({ id, body }) => {
@@ -408,11 +405,14 @@ export const deletesubject = createAsyncThunk(
   }
 );
 export const showclasstime = createAsyncThunk("showclasstime", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/classtime`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/classtime`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
   return response.data;
 });
 export const insertclasstime = createAsyncThunk(
@@ -470,66 +470,63 @@ export const showclass = createAsyncThunk("showclass", async () => {
   });
   return response.data;
 });
-export const insertclass = createAsyncThunk(
-  "insertclass",
-  async (body) => {
-    console.log(body);
-    const response = await axios.post(
-      `${import.meta.env.VITE_APP_API}/classinsert`,
-      body,
-      {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-      }
-    );
-    return response.data;
-  }
-);
-export const editclass = createAsyncThunk(
-  "editclass",
-  async ({ id, body }) => {
-    const response = await axios.patch(
-      `${import.meta.env.VITE_APP_API}/classupdate/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-      }
-    );
-    return response.data;
-  }
-);
-export const deleteclass = createAsyncThunk(
-  "deleteclass",
-  async (id, body) => {
-    console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/classdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  }
-);
-
-export const showqualification = createAsyncThunk("showqualification", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/qualification`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
+export const insertclass = createAsyncThunk("insertclass", async (body) => {
+  console.log(body);
+  const response = await axios.post(
+    `${import.meta.env.VITE_APP_API}/classinsert`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
   return response.data;
 });
+export const editclass = createAsyncThunk("editclass", async ({ id, body }) => {
+  const response = await axios.patch(
+    `${import.meta.env.VITE_APP_API}/classupdate/${id}`,
+    body,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+export const deleteclass = createAsyncThunk("deleteclass", async (id, body) => {
+  console.log(id, body);
+  const response = await axios.delete(
+    `${import.meta.env.VITE_APP_API}/classdelete/${id}`,
+    body,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
+export const showqualification = createAsyncThunk(
+  "showqualification",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_API}/qualification`,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 // qualification **************
 export const insertqualification = createAsyncThunk(
   "insertqualification",
-  async ({id, body}) => {
+  async ({ id, body }) => {
     console.log(body);
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API}/qualificationinsert/${id}`,
@@ -576,43 +573,49 @@ export const deletequalification = createAsyncThunk(
 );
 // searchclasstime
 export const searchclasstime = createAsyncThunk("searchclasstime", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/searchclasstime`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
-  return response.data;
-});
-
-// searchstuclass
-export const searchstuclass = createAsyncThunk("searchstuclass", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/searchstuclass`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
-  return response.data;
-});
-//slice irin
-// Learning video
-export const learningvideo = createAsyncThunk("learningvideo", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/learningvideo`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },   
-  });
-  return response.data;
-});
-//file PDF Learning
-export const fetchPdf  = createAsyncThunk("fetchPdf", async () => {
   const response = await axios.get(
-    `${import.meta.env.VITE_APP_API}/pdf`,
+    `${import.meta.env.VITE_APP_API}/searchclasstime`,
     {
       headers: {
         "Content-Type": "Application/json",
       },
     }
   );
+  return response.data;
+});
+
+// searchstuclass
+export const searchstuclass = createAsyncThunk("searchstuclass", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/searchstuclass`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+//slice irin
+// Learning video
+export const learningvideo = createAsyncThunk("learningvideo", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/learningvideo`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+//file PDF Learning
+export const fetchPdf = createAsyncThunk("fetchPdf", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/pdf`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
   return response.data;
 });
 
@@ -620,119 +623,17 @@ const pdfSlice = createSlice({
   name: "pdf",
   initialState: {
     files: null,
-  }, 
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPdf.fulfilled, (state, action) => {
-      state.files = action.payload; 
+      state.files = action.payload;
     });
   },
 });
 //file PDF English
-export const fetchPdfEnglish  = createAsyncThunk("fetchPdfEnglish", async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_API}/pdf`,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
-
-const pdfSliceEnglish = createSlice({
-  name: "pdf",
-  initialState: {
-    files: null,
-  }, 
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchPdfEnglish.fulfilled, (state, action) => {
-      state.files = action.payload; 
-    });
-  },
-});
-//file PDF Enhance
-export const fetchPdfEnhance  = createAsyncThunk("fetchPdfEnhance", async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_API}/pdf`,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
-
-const pdfSliceEnhance = createSlice({
-  name: "pdf",
-  initialState: {
-    files: null,
-  }, 
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchPdfEnhance.fulfilled, (state, action) => {
-      state.files = action.payload; 
-    });
-  },
-});
-//file PDF Math
-export const fetchPdfMath  = createAsyncThunk("fetchPdfMath", async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_API}/pdf`,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
-
-const pdfSliceMath = createSlice({
-  name: "pdf",
-  initialState: {
-    files: null,
-  }, 
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchPdfMath.fulfilled, (state, action) => {
-      state.files = action.payload; 
-    });
-  },
-});
-//file PDF Thai
-export const fetchPdfThai  = createAsyncThunk("fetchPdfThai", async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_API}/pdf`,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
-
-const pdfSliceThai = createSlice({
-  name: "pdf",
-  initialState: {
-    files: null,
-  }, 
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchPdfThai.fulfilled, (state, action) => {
-      state.files = action.payload; 
-    });
-  },
-});
-//---------------------End PDF-----------------------
-
-//--------------assessment----------------
-export const showassessment = createAsyncThunk("showassessment", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/assessment`, {
+export const fetchPdfEnglish = createAsyncThunk("fetchPdfEnglish", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/pdf`, {
     headers: {
       "Content-Type": "Application/json",
     },
@@ -740,11 +641,90 @@ export const showassessment = createAsyncThunk("showassessment", async () => {
   return response.data;
 });
 
-export const insertassessment = createAsyncThunk("insertassessment", async (body) => {
-  console.log(body);
-  const response = await axios.post(
-    `${import.meta.env.VITE_APP_API}/assessmentinsert`,
-    body,
+const pdfSliceEnglish = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfEnglish.fulfilled, (state, action) => {
+      state.files = action.payload;
+    });
+  },
+});
+//file PDF Enhance
+export const fetchPdfEnhance = createAsyncThunk("fetchPdfEnhance", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/pdf`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
+
+const pdfSliceEnhance = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfEnhance.fulfilled, (state, action) => {
+      state.files = action.payload;
+    });
+  },
+});
+//file PDF Math
+export const fetchPdfMath = createAsyncThunk("fetchPdfMath", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/pdf`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
+
+const pdfSliceMath = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfMath.fulfilled, (state, action) => {
+      state.files = action.payload;
+    });
+  },
+});
+//file PDF Thai
+export const fetchPdfThai = createAsyncThunk("fetchPdfThai", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/pdf`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
+
+const pdfSliceThai = createSlice({
+  name: "pdf",
+  initialState: {
+    files: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPdfThai.fulfilled, (state, action) => {
+      state.files = action.payload;
+    });
+  },
+});
+//---------------------End PDF-----------------------
+
+//--------------assessment----------------
+export const showassessment = createAsyncThunk("showassessment", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/assessment`,
     {
       headers: {
         "Content-Type": "Application/json",
@@ -754,32 +734,121 @@ export const insertassessment = createAsyncThunk("insertassessment", async (body
   return response.data;
 });
 
-export const editassessment = createAsyncThunk("editassessment", async ({ id, body }) => {
-  const response = await axios.patch(
-    `${import.meta.env.VITE_APP_API}/assessmentupdate/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const insertassessment = createAsyncThunk(
+  "insertassessment",
+  async (body) => {
+    console.log(body);
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_API}/assessmentinsert`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
-export const deleteassessment = createAsyncThunk("deleteassessment", async (id, body) => {
-  console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/testassessment/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const editassessment = createAsyncThunk(
+  "editassessment",
+  async ({ id, body }) => {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/assessmentupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const deleteassessment = createAsyncThunk(
+  "deleteassessment",
+  async (id, body) => {
+    console.log(id, body);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/testassessment/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+export const showassessmentstu = createAsyncThunk(
+  "showassessmentstu",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_API}/assessmentstu`,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const assessmentstuinsert = createAsyncThunk(
+  "assessmentstuinsert",
+  async (body) => {
+    // console.log(body);
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_API}/assessmentstuinsert`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const assessmentstuupdate = createAsyncThunk(
+  "assessmentstuupdate",
+  async ({ id, body }) => {
+    // console.log(id);
+    // console.log(body);
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/assessmentstuupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const assessmentstudelete = createAsyncThunk(
+  "assessmentstudelete",
+  async (id, body) => {
+    // console.log(id);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/assessmentstudelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 //----------end assessment-------------
 export const dataTableSlice = createSlice({
   name: "data",
@@ -1175,7 +1244,7 @@ export const dataTableSlice = createSlice({
     state.loading = false;
   },
   //subject English
-   [fetchPdfEnglish.pending]: (state) => {
+  [fetchPdfEnglish.pending]: (state) => {
     state.loading = true;
     state.error = "";
   },
@@ -1216,7 +1285,7 @@ export const dataTableSlice = createSlice({
   //subject Thai
   [fetchPdfThai.pending]: (state) => {
     state.loading = true;
-    state.error = ""; 
+    state.error = "";
   },
   [fetchPdfThai.fulfilled]: (state, action) => {
     state.loading = false;

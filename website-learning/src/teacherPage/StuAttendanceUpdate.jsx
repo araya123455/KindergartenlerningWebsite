@@ -163,6 +163,7 @@ function StuAttendanceUpdate() {
       },
     };
     // Dispatch an action to update the attendance status
+    console.log(body);
     dispatch(attendancedetailupdate(body))
       .then((result) => {
         // console.log(result);
@@ -184,6 +185,7 @@ function StuAttendanceUpdate() {
   };
 
   const onDelete = (id) => {
+    // console.log(id);
     dispatch(attendancedelete(id))
       .then((result) => {
         if (result.payload && result.payload.error) {

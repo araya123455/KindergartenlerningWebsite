@@ -346,7 +346,7 @@ function MgtClass() {
 
               return (
                 <option
-                  key={data.id}
+                  key={data.kinder_id}
                   value={`${data.kinder_id} ${data.yearterm_id}`}
                 >
                   {kinderName} - {termYearName}

@@ -23,3 +23,20 @@
 .assstudent:hover {
   color: rgb(120, 42, 0);
 }
+
+/* AssesStudentScore */
+/* StudentAssessment.css */
+.table-header {
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  /* text-overflow: ellipsis; Show ellipsis (...) for overflowed text */
+  max-width: 150px; /* Adjust the maximum width as needed */
+}
+
+.th {
+  font-size: 15px;
+}
+
+.td {
+  font-size: 15px;
+}
