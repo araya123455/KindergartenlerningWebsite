@@ -413,7 +413,7 @@ function AddClassTest() {
                 <option value="Open">Open</option>
                 <option value="Close">Close</option>
               </Form.Control>
-            </Form.Group>
+            </Form.Group>-
             <Form.Group className="mb-3" controlId="edit_kinder_id">
               <Form.Label>ชั้น/ห้อง - เทอม/ปี</Form.Label>
               <Form.Control

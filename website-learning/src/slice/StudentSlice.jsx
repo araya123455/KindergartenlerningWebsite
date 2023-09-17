@@ -188,6 +188,7 @@ export const searceattendance = createAsyncThunk(
   }
 );
 
+
 const studentSlice = createSlice({
   name: "student",
   initialState: {
@@ -205,5 +206,6 @@ const studentSlice = createSlice({
       });
   },
 });
+
 
 export default studentSlice.reducer;
