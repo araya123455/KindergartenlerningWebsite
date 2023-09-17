@@ -57,13 +57,11 @@ function SubjectScore() {
       });
   };
 
-  saveToLocalStorage("kinassid", null);
-  saveToLocalStorage("yearassid", null);
+  saveToLocalStorage("kinscoreid", null);
+  saveToLocalStorage("yearscoreid", null);
   const onClick = (kinder_id, yearterm_id) => {
-    saveToLocalStorage("kinassid", kinder_id);
-    saveToLocalStorage("yearassid", yearterm_id);
-    // console.log(kinder_id);
-    // console.log(yearterm_id);
+    saveToLocalStorage("kinscoreid", kinder_id);
+    saveToLocalStorage("yearscoreid", yearterm_id);
   };
 
   useEffect(() => {
@@ -107,17 +105,10 @@ function SubjectScore() {
                 <td>
                   <Link
                     className="assclass"
-                    to={"/mgtAssessmentClass"}
+                    to={"/stuSubjectScoreInsert"}
                     onClick={() => onClick(kinder_id, yearterm_id)}
                   >
-                    สร้างแบบประเมิน
-                  </Link>
-                  <Link
-                    className="assstudent"
-                    to={"/studentAssessment"}
-                    onClick={() => onClick(kinder_id, yearterm_id)}
-                  >
-                    ประเมินนักเรียน
+                    ให้คะแนนนักเรียน
                   </Link>
                 </td>
               </tr>

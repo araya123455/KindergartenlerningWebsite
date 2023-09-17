@@ -14,6 +14,7 @@ import {
   showkinroom,
   getDataAll,
 } from "../slice/DataSlice";
+import { findassessment } from "../slice/StudentSlice";
 
 function MgtAssessmentClass() {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ function MgtAssessmentClass() {
   };
 
   const loadassessment = () => {
-    dispatch(showassessment())
+    dispatch(findassessment({ yeartermid, kinderid }))
       .then((result) => {
         setshowasses(result.payload);
       })
@@ -144,9 +145,7 @@ function MgtAssessmentClass() {
             ? datamodal.assess_name
             : update.assess_name,
         full_score:
-          update.full_score === "" 
-          ? datamodal.full_score 
-          : update.full_score,
+          update.full_score === "" ? datamodal.full_score : update.full_score,
       },
     };
     dispatch(editassessment(body))

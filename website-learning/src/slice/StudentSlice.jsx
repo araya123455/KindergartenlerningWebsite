@@ -216,6 +216,34 @@ export const findassessment = createAsyncThunk(
   }
 );
 
+export const shownamesyllabus = createAsyncThunk(
+  "shownamesyllabus",
+  async ({ yeartermid, kinderid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/shownamesyllabus", {
+        params: { yearterm_id: yeartermid, kinder_id: kinderid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const shownamesubject = createAsyncThunk(
+  "shownamesubject",
+  async ({ yeartermid, kinderid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/shownamesubject", {
+        params: { yearterm_id: yeartermid, kinder_id: kinderid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const studentSlice = createSlice({
   name: "student",
   initialState: {

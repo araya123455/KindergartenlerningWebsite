@@ -78,32 +78,38 @@ export const inserttestde = createAsyncThunk("inserttestde", async (body) => {
   );
   return response.data;
 });
-export const edittestde = createAsyncThunk("edittestde", async ({ id, body }) => {
-  const response = await axios.patch(
-    `${import.meta.env.VITE_APP_API}/testdeupdate/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const edittestde = createAsyncThunk(
+  "edittestde",
+  async ({ id, body }) => {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/testdeupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
-export const deletetestde = createAsyncThunk("deletetestde", async (id, body) => {
-  console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/testdedelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const deletetestde = createAsyncThunk(
+  "deletetestde",
+  async (id, body) => {
+    console.log(id, body);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/testdedelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 export const showquestion = createAsyncThunk("showquestion", async () => {
   const response = await axios.get(`${import.meta.env.VITE_APP_API}/question`, {
@@ -114,70 +120,59 @@ export const showquestion = createAsyncThunk("showquestion", async () => {
   return response.data;
 });
 
-export const insertquestion = createAsyncThunk("insertquestion", async (body) => {
-  console.log(body);
-  const response = await axios.post(
-    `${import.meta.env.VITE_APP_API}/questioninsert`,
-    body,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const insertquestion = createAsyncThunk(
+  "insertquestion",
+  async (body) => {
+    console.log(body);
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_API}/questioninsert`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
-export const editquestion = createAsyncThunk("editquestion", async ({ id, body }) => {
-  const response = await axios.patch(
-    `${import.meta.env.VITE_APP_API}/questionupdate/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const editquestion = createAsyncThunk(
+  "editquestion",
+  async ({ id, body }) => {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/questionupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
-export const deletequestion = createAsyncThunk("deletequestion", async (id, body) => {
-  // console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/questiondelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const deletequestion = createAsyncThunk(
+  "deletequestion",
+  async (id, body) => {
+    // console.log(id, body);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/questiondelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 export const attendance = createAsyncThunk("attendance", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/attendance`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
-  return response.data;
-});
-
-export const attendancedetail = createAsyncThunk("attendancedetail", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/attendancedetail`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
-  return response.data;
-});
-
-export const attendancedetailinsert = createAsyncThunk("attendancedetailinsert", async (body) => {
-  console.log(body);
-  const response = await axios.post(
-    `${import.meta.env.VITE_APP_API}/attendancedetailinsert`,
-    body,
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/attendance`,
     {
       headers: {
         "Content-Type": "Application/json",
@@ -187,12 +182,76 @@ export const attendancedetailinsert = createAsyncThunk("attendancedetailinsert",
   return response.data;
 });
 
-export const attendancedetailupdate = createAsyncThunk("attendancedetailupdate", async ({ id, body }) => {
-  // console.log(id);
-  // console.log(body);
-  const response = await axios.patch(
-    `${import.meta.env.VITE_APP_API}/attendancedetailupdate/${id}`,
-    body,
+export const attendancedetail = createAsyncThunk(
+  "attendancedetail",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_API}/attendancedetail`,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const attendancedetailinsert = createAsyncThunk(
+  "attendancedetailinsert",
+  async (body) => {
+    console.log(body);
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_API}/attendancedetailinsert`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const attendancedetailupdate = createAsyncThunk(
+  "attendancedetailupdate",
+  async ({ id, body }) => {
+    // console.log(id);
+    // console.log(body);
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/attendancedetailupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const attendancedelete = createAsyncThunk(
+  "attendancedelete",
+  async (id, body) => {
+    // console.log(id);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/attendancedelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const showstusubscore = createAsyncThunk("showstusubscore", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/showstusubscore`,
     {
       headers: {
         "Content-Type": "Application/json",
@@ -202,19 +261,55 @@ export const attendancedetailupdate = createAsyncThunk("attendancedetailupdate",
   return response.data;
 });
 
-export const attendancedelete = createAsyncThunk("attendancedelete", async (id, body) => {
-  // console.log(id);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/attendancedelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const subjectscoreinsert = createAsyncThunk(
+  "subjectscoreinsert",
+  async (body) => {
+    console.log(body);
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_API}/subjectscoreinsert`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const subjectscoreupdate = createAsyncThunk(
+  "subjectscoreupdate",
+  async ({ id, body }) => {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/subjectscoreupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const subjectscoredelete = createAsyncThunk(
+  "subjectscoredelete",
+  async (id, body) => {
+    console.log(id, body);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/subjectscoredelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 export const TeacherSlice = createSlice({
   name: "data",
