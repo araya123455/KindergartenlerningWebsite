@@ -188,6 +188,8 @@ export const attendancedetailinsert = createAsyncThunk("attendancedetailinsert",
 });
 
 export const attendancedetailupdate = createAsyncThunk("attendancedetailupdate", async ({ id, body }) => {
+  // console.log(id);
+  // console.log(body);
   const response = await axios.patch(
     `${import.meta.env.VITE_APP_API}/attendancedetailupdate/${id}`,
     body,
@@ -201,7 +203,7 @@ export const attendancedetailupdate = createAsyncThunk("attendancedetailupdate",
 });
 
 export const attendancedelete = createAsyncThunk("attendancedelete", async (id, body) => {
-  // console.log(id, body);
+  // console.log(id);
   const response = await axios.delete(
     `${import.meta.env.VITE_APP_API}/attendancedelete/${id}`,
     body,
