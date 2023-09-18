@@ -51,6 +51,8 @@ import SubjectFileThai from "./teacherPage/SubjectFileThai";
 import MgtAssessment from "./teacherPage/MgtAssessment";
 import MgtAssessmentClass from "./teacherPage/MgtAssessmentClass";
 import StudentAssessment from "./teacherPage/StudentAssessment";
+import ReportLearning from "./teacherPage/ReportLearning";
+import ReportSubject from "./teacherPage/ReportSubject";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -137,6 +139,8 @@ function App() {
           <Route path="MgtAssessment" element={<MgtAssessment />} />
           <Route path="mgtAssessmentClass" element={<MgtAssessmentClass />} />
           <Route path="studentAssessment" element={<StudentAssessment />} />
+          <Route path="ReportLearning" element={<ReportLearning />} />
+          <Route path="ReportSubject" element={<ReportSubject />} />
           <Route path="test">
             <Route path="createChoice" element={<CreateChoice />} />
             <Route path="addClassTest" element={<AddClassTest />} />

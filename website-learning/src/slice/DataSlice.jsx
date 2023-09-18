@@ -769,8 +769,8 @@ export const editassessment = createAsyncThunk(
 
 export const deleteassessment = createAsyncThunk("deleteassessment", async (id, body) => {
   console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/testassessment/${id}`,
+  const response = await axios.patch(
+    `${import.meta.env.VITE_APP_API}/assessmentupdate/${id}`,
     body,
     {
       headers: {

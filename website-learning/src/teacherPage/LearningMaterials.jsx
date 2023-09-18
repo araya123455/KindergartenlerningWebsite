@@ -132,9 +132,7 @@ const LearningMaterials = () => {
              </Row>
           </Col>    
       </div>
-    </div>
-        
-               
+    </div>      
         </Container>
       </div>
   );
