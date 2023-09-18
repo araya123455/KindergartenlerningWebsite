@@ -235,7 +235,7 @@ export const showstusubreport = createAsyncThunk(
   async ({ substuId }, { rejectWithValue }) => {
     try {
       const response = await axios.get("/showstusubreport", {
-        params: { stu_id: subtuId },
+        params: { stu_id: substuId },
       });
       return response.data;
     } catch (err) {
