@@ -230,6 +230,34 @@ export const shownamesyllabus = createAsyncThunk(
   }
 );
 
+export const showstusubreport = createAsyncThunk(
+  "showstusubreport",
+  async ({ substuId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/showstusubreport", {
+        params: { stu_id: subtuId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const assessmentreport = createAsyncThunk(
+  "assessmentreport",
+  async ({ assstuId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/assessmentreport", {
+        params: { stu_id: assstuId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const shownamesubject = createAsyncThunk(
   "shownamesubject",
   async ({ yeartermid, kinderid }, { rejectWithValue }) => {
