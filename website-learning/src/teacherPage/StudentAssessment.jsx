@@ -26,7 +26,6 @@ function StudentAssessment() {
   const [fullScores, setFullScores] = useState({});
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
-  var check;
 
   const loadshowasses = () => {
     dispatch(findstudent({ yeartermid, kinderid }))
@@ -145,7 +144,7 @@ function StudentAssessment() {
     if (valid(datamodal)) {
       Promise.all(body.map((item) => dispatch(assessmentstuupdate(item))))
         .then((results) => {
-          console.log(results);
+          // console.log(results);
           setshowEdit(false);
           loadshowasses();
           loadshowstudata();
@@ -232,9 +231,7 @@ function StudentAssessment() {
             const studentAssessmentScores = showasses?.filter(
               (score) => score?.stu_id === stu_id
             );
-            check = studentAssessmentScores;
-            // console.log(check);
-            // console.log(check.length);
+          
             return (
               <tr key={stu_id}>
                 <td className="td">

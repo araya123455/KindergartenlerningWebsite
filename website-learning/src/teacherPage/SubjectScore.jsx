@@ -73,7 +73,7 @@ function SubjectScore() {
 
   return (
     <div>
-      <h1>แบบประเมินนักเรียน</h1>
+      <h1>แบบให้คะแนนนักเรียนแต่ละวิชา</h1>
       <table>
         <thead>
           <tr>
