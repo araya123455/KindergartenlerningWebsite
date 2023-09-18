@@ -264,7 +264,7 @@ export const showstusubscore = createAsyncThunk("showstusubscore", async () => {
 export const subjectscoreinsert = createAsyncThunk(
   "subjectscoreinsert",
   async (body) => {
-    console.log(body);
+    // console.log(body);
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API}/subjectscoreinsert`,
       body,
@@ -281,6 +281,8 @@ export const subjectscoreinsert = createAsyncThunk(
 export const subjectscoreupdate = createAsyncThunk(
   "subjectscoreupdate",
   async ({ id, body }) => {
+    // console.log(id);
+    // console.log(body);
     const response = await axios.patch(
       `${import.meta.env.VITE_APP_API}/subjectscoreupdate/${id}`,
       body,
