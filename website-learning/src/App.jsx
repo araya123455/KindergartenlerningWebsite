@@ -53,6 +53,8 @@ import MgtAssessmentClass from "./teacherPage/MgtAssessmentClass";
 import StudentAssessment from "./teacherPage/StudentAssessment";
 import ReportLearning from "./teacherPage/ReportLearning";
 import ReportSubject from "./teacherPage/ReportSubject";
+import PageReportLearning from "./teacherPage/PageReportLearning";
+import PageReportSubject from "./teacherPage/PageReportSubject";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -141,6 +143,8 @@ function App() {
           <Route path="studentAssessment" element={<StudentAssessment />} />
           <Route path="ReportLearning" element={<ReportLearning />} />
           <Route path="ReportSubject" element={<ReportSubject />} />
+          <Route path="PageReportLearning" element={<PageReportLearning />} />
+          <Route path="PageReportSubject" element={<PageReportSubject />} />
           <Route path="test">
             <Route path="createChoice" element={<CreateChoice />} />
             <Route path="addClassTest" element={<AddClassTest />} />
