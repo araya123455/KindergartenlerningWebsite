@@ -23,11 +23,11 @@ function Report() {
                {/* Left side */}
               <Row>
                 <Col className="center-button" >
-                <a href="ReportLearning">
+                <Link to="ReportLearning">
                 <button className="learn-more" type="button">
                   พัฒนาการ 5 ด้าน
                 </button><br></br>
-                </a>
+                </Link>
                 </Col>
               </Row>
             </Col>
@@ -39,11 +39,11 @@ function Report() {
           <h1>ไฟล์ PDF</h1>
              <Row>
               <Col>
-              <a href="ReportSubject">
+              <Link to="ReportSubject">
                 <button className="learn-more" type="button">
                   ผลการเรียน
                 </button>
-              </a>
+              </Link>
               </Col>
              </Row>
           </Col>    
