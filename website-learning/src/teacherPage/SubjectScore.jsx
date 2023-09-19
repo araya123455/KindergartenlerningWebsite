@@ -63,6 +63,12 @@ function SubjectScore() {
     saveToLocalStorage("kinscoreid", kinder_id);
     saveToLocalStorage("yearscoreid", yearterm_id);
   };
+  saveToLocalStorage("kinfullid", null);
+  saveToLocalStorage("yearfullid", null);
+  const onClickF = (kinder_id, yearterm_id) => {
+    saveToLocalStorage("kinfullid", kinder_id);
+    saveToLocalStorage("yearfullid", yearterm_id);
+  };
 
   useEffect(() => {
     loadSearch();
@@ -103,6 +109,13 @@ function SubjectScore() {
                 <td>{kinderName}</td>
                 <td>{termYearName}</td>
                 <td>
+                  <Link
+                    className="assclass"
+                    to={"/subjectFullScore"}
+                    onClick={() => onClickF(kinder_id, yearterm_id)}
+                  >
+                    กำหนดคะแนนเต็ม
+                  </Link>
                   <Link
                     className="assclass"
                     to={"/stuSubjectScoreInsert"}

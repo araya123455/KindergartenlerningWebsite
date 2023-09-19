@@ -313,6 +313,24 @@ export const subjectscoredelete = createAsyncThunk(
   }
 );
 
+export const subfullscoretupdate = createAsyncThunk(
+  "subfullscoretupdate",
+  async ({ id, body }) => {
+    // console.log(id);
+    // console.log(body);
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_API}/subfullscoretupdate/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
 export const TeacherSlice = createSlice({
   name: "data",
   initialState,

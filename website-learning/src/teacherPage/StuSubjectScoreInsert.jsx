@@ -16,7 +16,6 @@ import {
   shownamesubject,
 } from "../slice/StudentSlice";
 import "../assets/css/attendance.css";
-import { th } from "date-fns/locale";
 
 function StuSubjectScoreInsert() {
   const dispatch = useDispatch();
@@ -32,6 +31,7 @@ function StuSubjectScoreInsert() {
   const [stuid, setstuid] = useState([]);
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
+  const [fullScores, setFullScores] = useState({});
 
   const loadshowstudent = () => {
     dispatch(findstudent({ yeartermid, kinderid }))
@@ -73,6 +73,18 @@ function StuSubjectScoreInsert() {
       });
   };
 
+  const valid = (body) => {
+    // console.log(body);
+    return body.every((scoreObj) => {
+      const score = parseInt(scoreObj.subscore);
+      // console.log(scoreObj);
+      const fullScore = parseInt(fullScores[scoreObj.sub_id]);
+      // console.log(fullScore);
+      // Ensure that score is not NaN and within the valid range
+      return !isNaN(score) && score >= 0 && score <= fullScore;
+    });
+  };
+
   const AddClose = () => {
     setShowAdd(false);
   };
@@ -98,20 +110,23 @@ function StuSubjectScoreInsert() {
       stu_id: stuid,
     }));
     // console.log(body);
-
-    Promise.all(body.map((item) => dispatch(subjectscoreinsert(item))))
-      .then((result) => {
-        // console.log(body);
-        // console.log(result);
-        setinsert({});
-        loadsubject();
-        loadsyllabus();
-        loadsubscore();
-        setShowAdd(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (valid(body)) {
+      Promise.all(body.map((item) => dispatch(subjectscoreinsert(item))))
+        .then((result) => {
+          // console.log(body);
+          // console.log(result);
+          setinsert({});
+          loadsubject();
+          loadsyllabus();
+          loadsubscore();
+          setShowAdd(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("กรุณากรอกคะแนนให้อยู่ในช่วงของคะแนนเต็ม!!");
+    }
   };
 
   const EditClose = () => {
@@ -142,16 +157,20 @@ function StuSubjectScoreInsert() {
       },
     }));
 
-    Promise.all(body.map((item) => dispatch(subjectscoreupdate(item))))
-      .then(() => {
-        setshowEdit(false);
-        loadsubject();
-        loadsyllabus();
-        loadsubscore();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (valid(datamodal)) {
+      Promise.all(body.map((item) => dispatch(subjectscoreupdate(item))))
+        .then(() => {
+          setshowEdit(false);
+          loadsubject();
+          loadsyllabus();
+          loadsubscore();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("กรุณากรอกคะแนนให้อยู่ในช่วงของคะแนนเต็ม!!");
+    }
   };
 
   const onDelete = (studentsubscore) => {
@@ -172,6 +191,15 @@ function StuSubjectScoreInsert() {
         });
     }
   };
+
+  useEffect(() => {
+    const fullScoreObj = {};
+    showsubject?.forEach((data) => {
+      console.log(data);
+      fullScoreObj[data.sub_id] = data.fullscore;
+    });
+    setFullScores(fullScoreObj);
+  }, [showsubject]);
 
   useEffect(() => {
     loadshowstudent();
@@ -205,10 +233,10 @@ function StuSubjectScoreInsert() {
             <th className="table-header th">ชื่อ-นามสกุล</th>
             <th className="table-header th">รหัสประจำตัว</th>
             {showsubject?.map((data) => {
-              const { sub_id, sub_name } = data;
+              const { sub_id, sub_name, fullscore } = data;
               return (
                 <th className="table-header th" key={sub_id}>
-                  {sub_name}
+                  {sub_name}({fullscore})
                 </th>
               );
             })}
@@ -277,14 +305,14 @@ function StuSubjectScoreInsert() {
         <Modal.Body>
           <Form>
             {showsubject?.map((data) => {
-              const { sub_id, sub_name } = data;
+              const { sub_id, sub_name, fullscore } = data;
               return (
                 <Form.Group
                   className="mb-3"
                   controlId={`subject_score_${sub_id}`}
                   key={sub_id}
                 >
-                  <Form.Label>ป้อนคะแนนวิชา {sub_name}</Form.Label>
+                  <Form.Label>ป้อนคะแนนวิชา {sub_name}  คะแนนเต็ม {fullscore}</Form.Label>
                   <Form.Control
                     className="input-line"
                     type="number"
@@ -317,7 +345,7 @@ function StuSubjectScoreInsert() {
         <Modal.Body>
           <Form>
             {showsubject?.map((data) => {
-              const { sub_id, sub_name } = data;
+              const { sub_id, sub_name, fullscore } = data;
               const subjectScore = datamodal.find((s) => s?.sub_id === sub_id);
               return (
                 <Form.Group
@@ -325,7 +353,7 @@ function StuSubjectScoreInsert() {
                   controlId="exampleForm.ControlInput1"
                   key={sub_id}
                 >
-                  <Form.Label>ป้อนคะแนนวิชา {sub_name}</Form.Label>
+                  <Form.Label>ป้อนคะแนนวิชา {sub_name} คะแนนเต็ม {fullscore}</Form.Label>
                   <Form.Control
                     className="input-line"
                     type="number"
