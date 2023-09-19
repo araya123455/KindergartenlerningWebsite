@@ -1,6 +1,8 @@
 import React from 'react'
 import "../assets/css/clouds.css";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from 'react-router-dom';
+
 
 
 function Report() {
@@ -23,7 +25,7 @@ function Report() {
                {/* Left side */}
               <Row>
                 <Col className="center-button" >
-                <Link to="ReportLearning">
+                <Link to={"/ReportLearning"} >
                 <button className="learn-more" type="button">
                   พัฒนาการ 5 ด้าน
                 </button><br></br>
@@ -39,7 +41,7 @@ function Report() {
           <h1>ไฟล์ PDF</h1>
              <Row>
               <Col>
-              <Link to="ReportSubject">
+              <Link to={"/ReportSubject"}>
                 <button className="learn-more" type="button">
                   ผลการเรียน
                 </button>

@@ -45,10 +45,12 @@ function ReportLearning() {
                 <td>{stu_sn}</td>
                 <td>{status}</td>
                 <td>
-                  <Link to={"/PageReportLearning"}>
-                    <Button className="buttonD" variant="btn btn-success">
-                      REPORT
-                    </Button>
+                <Link
+                    className="assclass"
+                    to={"/PageReportLearning"}
+                    onClick={() => onClickF(stu_id)}
+                  >
+                    Report
                   </Link>
                 </td>
               </tr>
