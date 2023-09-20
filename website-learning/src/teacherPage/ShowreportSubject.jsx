@@ -137,15 +137,12 @@ function ShowreportSubject() {
             const showsubjectname = showsubname?.find(
               (data) => data?.sub_id === sub_id
             );
-            const showfullscore = showsubscore?.find(
-              (data) => data.sub_id === sub_id
-            );
+        
 
             return (
               <tr key={subscore_id}>
                 <td>{showsubjectname?.sub_name}</td>
-                {/* <td>{showfullscore?.fullscore}</td> */}
-                <td></td>
+                <td>{showsubjectname?.fullscore}</td>
                 <td>{subscore}</td>
                 <td></td>
               </tr>
