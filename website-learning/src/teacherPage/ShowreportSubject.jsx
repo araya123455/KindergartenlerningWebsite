@@ -96,9 +96,9 @@ function ShowreportSubject() {
 
   const findId = showclassstu?.find((c) => c.stu_id === substuId);
   const showyeart = showyearterm?.find(
-    (y) => y.yearTerm_id === findId.yearterm_id
+    (y) => y?.yearTerm_id === findId?.yearterm_id
   );
-  const showkinr = showkinder?.find((k) => k.kinder_id === findId.kinder_id);
+  const showkinr = showkinder?.find((k) => k?.kinder_id === findId?.kinder_id);
   const showdata = `ภาคเรียนที่ ${showyeart?.term} ปีการศึกษา ${showyeart?.year} ชั้นอนุบาลปีที่ ${showkinr?.kinde_level}/${showkinr?.Kinder_room}`;
 
   const findStu = showstu?.find((s) => s?.stu_id === substuId);
