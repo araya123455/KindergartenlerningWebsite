@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { showstusubreport } from "../slice/StudentSlice";
+import "../assets/css/Report.css";
 import {
   showkinroom,
   getDataAll,
@@ -23,6 +24,9 @@ function ShowreportSubject() {
   const [showclassstu, setshowclassstu] = useState([]);
   const [showstu, setshowstu] = useState([]);
   const [showyearterm, setyearterm] = useState([]);
+  const thSarabunPSKStyle = {
+    fontFamily: "TH SarabunPSK, sans-serif",
+  };
 
   const loadsubreport = () => {
     dispatch(showstusubreport({ substuId }))
@@ -116,13 +120,17 @@ function ShowreportSubject() {
   }, []);
 
   return (
-    <div>
+    <div className="report-container" style={{ ...thSarabunPSKStyle, textAlign: "center", fontSize: 17 }}>
+      <img src="/images/logo.jpg" alt="Your Image Alt Text" />
+      <br></br>
+      <br></br>
       <p>รายงานผลการเรียน</p>
       <p>{showdata}</p>
       <p>โรงเรียนสุเหร่าคลองสิบ สำนักงานเขตหนองจอก กรุงเทพมหานคร</p>
       <div>
-        <p>ชื่อ-สกุล {namestu}</p>
-        <p>เลขประจำตัว {snstu}</p>
+        <p>
+          ชื่อ-สกุล {namestu} เลขประจำตัว {snstu}
+        </p>
       </div>
       <table>
         <thead>
@@ -137,19 +145,25 @@ function ShowreportSubject() {
             const showsubjectname = showsubname?.find(
               (data) => data?.sub_id === sub_id
             );
-        
 
             return (
               <tr key={subscore_id}>
                 <td>{showsubjectname?.sub_name}</td>
                 <td>{showsubjectname?.fullscore}</td>
                 <td>{subscore}</td>
-                <td></td>
+                <td>ีะพีัะพัะพั</td>
               </tr>
             );
           })}
         </tbody>
       </table>
+      <br></br>
+      <h5 style={{textAlign: "right", fontSize: 17}}>ลงชื่อ ครูประจำชั้น</h5>
+      <h5 style={{textAlign: "right", fontSize: 17}}>( นางสาวศรีนวล ธรรมศาสตร์ )</h5>
+      <h5 style={{textAlign: "right", fontSize: 17}}>ครู คศ.1</h5>
+      <h5 style={{textAlign: "right", fontSize: 17}}>ลงชื่อ ผู้บริหาร</h5>
+      <h5 style={{textAlign: "right", fontSize: 17}}>( นางวิภา โต๊ะเหม )</h5>
+      <h5 style={{textAlign: "right", fontSize: 17}}>ผู้อำนวยการโรงเรียนสุเหร่าคลองสิบ</h5>
     </div>
   );
 }
