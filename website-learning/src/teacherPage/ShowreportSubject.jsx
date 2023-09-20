@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
