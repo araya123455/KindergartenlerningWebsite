@@ -1,0 +1,13 @@
+/* Add this to your CSS file */
+.report-container {
+    font-family: "TH SarabunPSK, sans-serif";
+    text-align: center;
+    font-size: 17px;
+    page-break-before: always; /* Ensure each report starts on a new page */
+    max-width: 210mm; /* A4 width in mm */
+    margin: 0 auto; /* Center the content on the page */
+    padding: 20mm; /* Add some padding to keep content away from edges */
+    background-color: white; /* Set a white background for the report */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Add a light shadow for visual separation */
+  }
+  
