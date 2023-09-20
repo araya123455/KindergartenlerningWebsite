@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
-import { assessmentreport } from "../slice/StudentSlice";
+import { assessmentreport, findassessment } from "../slice/StudentSlice";
 import { saveToLocalStorage } from "../LocalStorage/localstorage";
 import { useDispatch } from "react-redux";
 import { showstudent } from "../slice/DataSlice";
@@ -8,11 +8,12 @@ import { showstudent } from "../slice/DataSlice";
 function PageReportLearning() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
+  const [showasss, setshowasss] = useState([]);
   const thSarabunPSKStyle = {
     fontFamily: "TH SarabunPSK, sans-serif",
   };
   const assstuId = getFromLocalStorage("restuId");
-  
+
   saveToLocalStorage("restuId", null);
   const onClick = (id) => {
     saveToLocalStorage("restuId", id);
@@ -21,7 +22,7 @@ function PageReportLearning() {
   const assessmentreport = () => {
     dispatch(findassessment({ assstuId }))
       .then((result) => {
-        setshowaeesedata(result.payload);
+        setshowasss(result.payload);
       })
       .catch((err) => {
         console.log(err);
@@ -42,12 +43,13 @@ function PageReportLearning() {
   };
 
   return (
-    
-    <div style={{...thSarabunPSKStyle, textAlign: "center", fontSize: 10 }}>
+    <div style={{ ...thSarabunPSKStyle, textAlign: "center", fontSize: 10 }}>
       {showdata?.map((data) => {
-            const { stu_id, stu_Fname, stu_Lname } = data;
-          })}
-      <img src="/images/logo.jpg" alt="Your Image Alt Text" /><br></br><br></br>
+        const { stu_id, stu_Fname, stu_Lname } = data;
+      })}
+      <img src="/images/logo.jpg" alt="Your Image Alt Text" />
+      <br></br>
+      <br></br>
       <h5>รายงานประเมินพัฒนาการ 5 ด้าน</h5>
       <h5>ภาคเรียนที่ {yeartermid} ปีการศึกษา 2565 ชั้นอนุบาลปีที่ 2</h5>
       <h5>โรงเรียนสุเหร่าคลองสิบ สำนักงานเขตหนองจอก กรุงเทพมหานคร</h5>

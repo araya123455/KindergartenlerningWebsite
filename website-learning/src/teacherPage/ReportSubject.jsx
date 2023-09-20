@@ -57,7 +57,7 @@ function ReportSubject() {
                 <td>{status}</td>
                 <td>
                   <Link
-                    to={"/showreportSubject"}
+                    to={"stuAttendanceUpdate"}
                     onClick={() => onClick(stu_id)}
                   >
                     แสดงรายงาน
