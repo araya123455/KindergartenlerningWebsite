@@ -7,11 +7,13 @@ import {
   insertteacher,
   editteacher,
   deleteteacher,
+  showteacherposi,
 } from "../slice/DataSlice";
 
 function MgtTeacher() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
+  const [showposition, setshowposition] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [insert, setinsert] = useState({
     prefix: "",
@@ -32,7 +34,29 @@ function MgtTeacher() {
     tch_pass: "",
     status: "",
     tch_sect: "",
+    position_id: "",
   });
+
+  const loadData = () => {
+    dispatch(showteacher())
+      .then((result) => {
+        setshowdata(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadteacherposition = () => {
+    dispatch(showteacherposi())
+      .then((result) => {
+        setshowposition(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const AddClose = () => {
     setShowAdd(false);
     loadData();
@@ -49,6 +73,7 @@ function MgtTeacher() {
       [name]: value,
     });
   };
+
   //   on click insert value
   const onInsrt = () => {
     let body = {
@@ -60,11 +85,11 @@ function MgtTeacher() {
       tch_pass: insert.tch_pass,
       status: insert.status,
       tch_sect: insert.tch_sect,
+      position_id: insert.position_id,
     };
 
     dispatch(insertteacher(body))
       .then((result) => {
-        setShow(false);
         setShowAdd({
           prefix: "",
           tch_Fname: "",
@@ -74,9 +99,10 @@ function MgtTeacher() {
           tch_pass: "",
           status: "",
           tch_sect: "",
+          position_id: "",
         });
         loadData();
-        AddClose();
+        setShowAdd(false);
         // show success notification
         // notify();
       })
@@ -84,22 +110,6 @@ function MgtTeacher() {
         console.log(err);
       });
   };
-  useEffect(() => {
-    loadData();
-  }, []);
-  const loadData = () => {
-    dispatch(showteacher())
-      .then((result) => {
-        setshowdata(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  // reload
-  useEffect(() => {
-    loadData();
-  }, []);
 
   const EditClose = () => {
     setshowEdit(false);
@@ -130,12 +140,15 @@ function MgtTeacher() {
         tch_pass: update.tch_pass === "" ? datamodal.tch_pass : update.tch_pass,
         status: update.status === "" ? datamodal.status : update.status,
         tch_sect: update.tch_sect === "" ? datamodal.tch_sect : update.tch_sect,
+        position_id:
+          update.position_id === ""
+            ? datamodal.position_id
+            : update.position_id,
       },
     };
 
     dispatch(editteacher(body))
       .then((result) => {
-        setshowEdit(false);
         setupdate({
           prefix: "",
           tch_Fname: "",
@@ -143,8 +156,10 @@ function MgtTeacher() {
           tch_pass: "",
           status: "",
           tch_sect: "",
+          position_id: "",
         });
         loadData();
+        setshowEdit(false);
         // notify();
       })
       .catch((err) => {
@@ -165,6 +180,12 @@ function MgtTeacher() {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    loadData();
+    loadteacherposition();
+  }, []);
+
   return (
     <>
       <Button className="button" variant="primary" onClick={AddShow}>
@@ -173,14 +194,13 @@ function MgtTeacher() {
       <table>
         <thead>
           <tr>
-            <th>คำนำหน้า</th>
-            <th>ชื่อ</th>
-            <th>นามสกุล</th>
+            <th>ชื่อ-นามสกุล</th>
             <th>เลขประจำตัว</th>
             <th>username</th>
             <th>password</th>
             <th>สถานะ</th>
             <th>แผนก</th>
+            <th>ตำแหน่ง</th>
             <th>confix</th>
           </tr>
         </thead>
@@ -196,17 +216,22 @@ function MgtTeacher() {
               tch_pass,
               status,
               tch_sect,
+              position_id,
             } = data;
+            const posi = showposition?.find(
+              (p) => p.position_id === position_id
+            );
             return (
               <tr key={tch_id}>
-                <td>{prefix}</td>
-                <td>{tch_Fname}</td>
-                <td>{tch_Lname}</td>
+                <td>
+                  {prefix} {tch_Fname} {tch_Lname}
+                </td>
                 <td>{tch_sn}</td>
                 <td>{tch_user}</td>
                 <td>{tch_pass}</td>
                 <td>{status}</td>
                 <td>{tch_sect}</td>
+                <td>{posi?.position}</td>
                 <td>
                   <Button
                     variant="btn btn-secondary"
@@ -314,6 +339,25 @@ function MgtTeacher() {
                 onChange={(e) => handleInsert(e)}
               />
             </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>ตำแหน่ง</Form.Label>
+              <Form.Control
+                as="select"
+                className="input-line"
+                name="position_id"
+                onChange={(e) => handleInsert(e)}
+              >
+                <option value="">เลือกตำแหน่ง</option>
+                {showposition?.map((data) => {
+                  const { position_id, position } = data;
+                  return (
+                    <option value={position_id} key={position_id}>
+                      {position}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -391,6 +435,26 @@ function MgtTeacher() {
                 onChange={(e) => handleChange(e)}
                 name={"tch_sect"}
               />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>ตำแหน่ง</Form.Label>
+              <Form.Control
+                as="select"
+                className="input-line"
+                placeholder={datamodal.position_id}
+                onChange={(e) => handleChange(e)}
+                name={"position_id"}
+              >
+                <option value="">เลือกตำแหน่ง</option>
+                {showposition?.map((data) => {
+                  const { position_id, position } = data;
+                  return (
+                    <option value={position_id} key={position_id}>
+                      {position}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>

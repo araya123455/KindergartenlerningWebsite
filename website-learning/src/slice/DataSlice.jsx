@@ -189,8 +189,16 @@ export const showteacher = createAsyncThunk("showteacher", async () => {
   });
   return response.data;
 });
+export const showteacherposi = createAsyncThunk("showteacherposi", async () => {
+  const response = await axios.get(`${import.meta.env.VITE_APP_API}/teacherposi`, {
+    headers: {
+      "Content-Type": "Application/json",
+    },
+  });
+  return response.data;
+});
 export const insertteacher = createAsyncThunk("insertteacher", async (body) => {
-  console.log(body);
+  // console.log(body);
   const response = await axios.post(
     `${import.meta.env.VITE_APP_API}/teacherinsert`,
     body,
@@ -220,7 +228,7 @@ export const editteacher = createAsyncThunk(
 export const deleteteacher = createAsyncThunk(
   "deleteteacher",
   async (id, body) => {
-    console.log(id, body);
+    // console.log(id, body);
     const response = await axios.delete(
       `${import.meta.env.VITE_APP_API}/teacherdelete/${id}`,
       body,
