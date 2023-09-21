@@ -93,7 +93,7 @@ function StudentAssessment() {
 
     // Check if the scores are within the valid range
     if (valid(body)) {
-      dispatch(assessmentstuinsert(body))
+      Promise.all(body.map((item) => dispatch(assessmentstuinsert(item))))
         .then((result) => {
           // console.log(body);
           // console.log(result);
@@ -231,7 +231,7 @@ function StudentAssessment() {
             const studentAssessmentScores = showasses?.filter(
               (score) => score?.stu_id === stu_id
             );
-          
+
             return (
               <tr key={stu_id}>
                 <td className="td">
