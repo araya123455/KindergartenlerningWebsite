@@ -21,7 +21,7 @@ function Report() {
       <div className="left-side">
       <Row>
             <Col md={6}>
-              <h1>วีดีโอสื่อการสอน</h1>
+              <h1>พัฒนาการ 5 ด้าน</h1>
                {/* Left side */}
               <Row>
                 <Col className="center-button" >
@@ -38,7 +38,7 @@ function Report() {
       <div className="right-side">
       <br></br>
           <Col md={6}>
-          <h1>ไฟล์ PDF</h1>
+          <h1>ผลการเรียน</h1>
              <Row>
               <Col>
               <Link to={"/ReportSubject"}>
