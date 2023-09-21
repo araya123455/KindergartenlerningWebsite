@@ -4,13 +4,12 @@ import { Button } from "react-bootstrap";
 import "../assets/css/tableinsert.css";
 import { Link } from "react-router-dom";
 import { showstudent } from "../slice/DataSlice";
+import { saveToLocalStorage } from "../LocalStorage/localstorage";
 
 function ReportLearning() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
-  useEffect(() => {
-    loadData();
-  }, []);
+  
   const loadData = () => {
     dispatch(showstudent())
       .then((result) => {
@@ -20,6 +19,16 @@ function ReportLearning() {
         console.log(err);
       });
   };
+
+  saveToLocalStorage("assreId", null);
+  const onClick = (id) => {
+    saveToLocalStorage("assreId", id);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <>
       <table>
@@ -48,7 +57,7 @@ function ReportLearning() {
                 <Link
                     className="assclass"
                     to={"/PageReportLearning"}
-                    onClick={() => onClickF(stu_id)}
+                    onClick={() => onClick(stu_id)}
                   >
                     Report
                   </Link>
