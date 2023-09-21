@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { showstusubreport } from "../slice/StudentSlice";
+
 import "../assets/css/Report.css";
 import {
   showkinroom,
@@ -97,7 +98,9 @@ function ShowreportSubject() {
         console.log(err);
       });
   };
-
+  const handlePrint = () => {
+    window.print();
+  };
   const findId = showclassstu?.find((c) => c.stu_id === substuId);
   const showyeart = showyearterm?.find(
     (y) => y?.yearTerm_id === findId?.yearterm_id
@@ -120,7 +123,12 @@ function ShowreportSubject() {
   }, []);
 
   return (
-    <div className="report-container" style={{ ...thSarabunPSKStyle, textAlign: "center", fontSize: 17 }}>
+    <div
+      className="report-container"
+      style={{ ...thSarabunPSKStyle, textAlign: "center", fontSize: 17 }}
+      
+    >
+       
       <img src="/images/logo.jpg" alt="Your Image Alt Text" />
       <br></br>
       <br></br>
@@ -134,10 +142,10 @@ function ShowreportSubject() {
       </div>
       <table>
         <thead>
-          <th>วิชา</th>
-          <th>คะแนนเต็ม</th>
-          <th>คะแนนที่ได้</th>
-          <th>หมายเหตุ</th>
+          <th style={{ fontSize: 17 }}>วิชา</th>
+          <th style={{ fontSize: 17 }}>คะแนนเต็ม</th>
+          <th style={{ fontSize: 17 }}>คะแนนที่ได้</th>
+          <th style={{ fontSize: 17 }}>หมายเหตุ</th>
         </thead>
         <tbody>
           {showsubre?.map((data) => {
@@ -148,22 +156,32 @@ function ShowreportSubject() {
 
             return (
               <tr key={subscore_id}>
-                <td>{showsubjectname?.sub_name}</td>
-                <td>{showsubjectname?.fullscore}</td>
-                <td>{subscore}</td>
-                <td>ีะพีัะพัะพั</td>
+                <td style={{ fontSize: 17 }}>{showsubjectname?.sub_name}</td>
+                <td style={{ fontSize: 17 }}>{showsubjectname?.fullscore}</td>
+                <td style={{ fontSize: 17 }}>{subscore}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
       <br></br>
-      <h5 style={{textAlign: "right", fontSize: 17}}>ลงชื่อ ครูประจำชั้น</h5>
-      <h5 style={{textAlign: "right", fontSize: 17}}>( นางสาวศรีนวล ธรรมศาสตร์ )</h5>
-      <h5 style={{textAlign: "right", fontSize: 17}}>ครู คศ.1</h5>
-      <h5 style={{textAlign: "right", fontSize: 17}}>ลงชื่อ ผู้บริหาร</h5>
-      <h5 style={{textAlign: "right", fontSize: 17}}>( นางวิภา โต๊ะเหม )</h5>
-      <h5 style={{textAlign: "right", fontSize: 17}}>ผู้อำนวยการโรงเรียนสุเหร่าคลองสิบ</h5>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <h5 style={{ fontSize: 17 }}>ลงชื่อ ครูประจำชั้น</h5>
+          <h5 style={{ fontSize: 17 }}>( นางสาวศรีนวล ธรรมศาสตร์ )</h5>
+          <h5 style={{ fontSize: 17 }}>ครู คศ.1</h5>
+          <h5 style={{ fontSize: 17 }}>ลงชื่อ ผู้บริหาร</h5>
+          <h5 style={{ fontSize: 17 }}>( นางวิภา โต๊ะเหม )</h5>
+          <h5 style={{ fontSize: 17 }}>ผู้อำนวยการโรงเรียนสุเหร่าคลองสิบ</h5>
+        </div>
+        
+      </div>
     </div>
   );
 }
