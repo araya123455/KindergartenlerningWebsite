@@ -4,6 +4,8 @@ import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { showstusubreport } from "../slice/StudentSlice";
+import { useSelector } from "react-redux";
+
 
 import "../assets/css/Report.css";
 import {
@@ -25,9 +27,11 @@ function ShowreportSubject() {
   const [showclassstu, setshowclassstu] = useState([]);
   const [showstu, setshowstu] = useState([]);
   const [showyearterm, setyearterm] = useState([]);
+  const pdfUrls = useSelector((state) => state.pdff.pdfUrl);
   const thSarabunPSKStyle = {
     fontFamily: "TH SarabunPSK, sans-serif",
   };
+  // const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   const loadsubreport = () => {
     dispatch(showstusubreport({ substuId }))
@@ -125,10 +129,8 @@ function ShowreportSubject() {
   return (
     <div
       className="report-container"
-      style={{ ...thSarabunPSKStyle, textAlign: "center", fontSize: 17 }}
-      
+      style={{ ...thSarabunPSKStyle, textAlign: "center", fontSize: 17 }}      
     >
-       
       <img src="/images/logo.jpg" alt="Your Image Alt Text" />
       <br></br>
       <br></br>
@@ -180,7 +182,7 @@ function ShowreportSubject() {
           <h5 style={{ fontSize: 17 }}>( นางวิภา โต๊ะเหม )</h5>
           <h5 style={{ fontSize: 17 }}>ผู้อำนวยการโรงเรียนสุเหร่าคลองสิบ</h5>
         </div>
-        
+           
       </div>
     </div>
   );
