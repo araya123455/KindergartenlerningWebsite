@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@auth0/auth0-react": "^2.1.0",
+    "@mui/x-data-grid": "^6.15.0",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",

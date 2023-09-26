@@ -1,0 +1,17 @@
+.headerC {
+    font-size: 17px;
+    /* font-weight: bold; */
+  }
+  
+  .hstatus {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  .green {
+    color: #4caf50; /* Green border for correct answer */
+  }
+  
+  .red {
+    color: #ff5722; /* Red border for incorrect answer */
+  }

@@ -103,7 +103,7 @@ function StudentAttendance() {
                 <td>
                   <Link
                     className="linkshow"
-                    to={"attendanceShow"}
+                    to={"stuAttendanceShowTotal"}
                     onClick={() => onClick(crt_id)}
                   >
                     ดูประวัติ
@@ -116,7 +116,7 @@ function StudentAttendance() {
                     เช็คชื่อ
                   </Link>
                   <Link
-                    className="linkupdate"
+                    className="linkshow"
                     to={"stuAttendanceUpdate"}
                     onClick={() => onClick(crt_id)}
                   >

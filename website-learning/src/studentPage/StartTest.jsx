@@ -83,7 +83,9 @@ const StartTest = () => {
 
   const handleAnswerSelect = (event) => {
     const newSelectedAnswers = [...selectedAnswers];
+    // console.log(newSelectedAnswers);
     newSelectedAnswers[currentQuestionIndex] = event.target.value;
+    // console.log(event.target.value);
     setSelectedAnswers(newSelectedAnswers);
   };
 

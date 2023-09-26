@@ -18,6 +18,7 @@ import LearningMaterials from "../src/teacherPage/LearningMaterials";
 import StuAttendanceInsert from "./teacherPage/StuAttendanceInsert";
 import StuAttendanceUpdate from "./teacherPage/StuAttendanceUpdate";
 import StuAttendanceShow from "./teacherPage/StuAttendanceShow";
+import StuAttendanceShowTotal from "./teacherPage/StuAttendanceShowTotal";
 import StudentAttendance from "../src/teacherPage/StudentAttendance";
 import SubjectScore from "../src/teacherPage/SubjectScore";
 import SubjectFullScore from "./teacherPage/SubjectFullScore";
@@ -123,6 +124,7 @@ function App() {
               element={<StuAttendanceUpdate />}
             />
             <Route path="attendanceShow" element={<StuAttendanceShow />} />
+            <Route path="stuAttendanceShowTotal" element={<StuAttendanceShowTotal />} />
           </Route>
           <Route path="subjectscore" element={<SubjectScore />} />
           <Route path="subjectFullScore" element={<SubjectFullScore />} />

@@ -67,3 +67,111 @@
   background-color: gray; /* Change the button's background color to indicate it's disabled */
   color: white; /* Change the text color for better visibility */
 }
+
+/* Radio button styles */
+.radiot-label {
+  position: relative;
+  margin-left: 10px;
+  padding-left: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+.radiot-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.radiot-label::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #ffcece;
+  border-radius: 50%;
+  display: none;
+}
+
+/* StartTest.css */
+.radiot-input:checked + .radiot-label::before {
+  display: block;
+  background-color: #55aaff;
+  border-color: #306191;
+}
+
+.radiot-input {
+  display: none;
+}
+
+/* .inputt[type="radio"]:checked {
+  display: block;
+  background-color: #55aaff;
+  border-color: #306191;
+} */
+
+/* Add this CSS to your stylesheet */
+.radiot-label.selected::before {
+  background-color: #55aaff;
+  border-color: #306191;
+}
+
+.radiot-label.selected::after {
+  display: block;
+  background-color: #ffcece;
+}
+
+/* Add this CSS to your stylesheet */
+/* .radiot-input:checked + .radiot-label::before {
+  background-color: #55aaff;
+  border-color: #306191;
+}
+
+.radiot-input:checked + .radiot-label::after {
+  display: block;
+  background-color: #ffcece;
+} */
+
+/* Add this CSS for the deselected state */
+.radiot-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="radio"]:checked + .radio-label::before {
+  background-color: #55aaff;
+  border-color: #306191;
+}
+
+.radiot-label::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #ffcece;
+  border-radius: 50%;
+  display: none;
+}

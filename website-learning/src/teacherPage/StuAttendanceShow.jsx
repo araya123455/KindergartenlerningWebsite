@@ -6,17 +6,24 @@ import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
 import { attendance } from "../slice/TeacherSlice";
 import { fetchStudentData } from "../slice/TchStuSlice";
 import { studentattendance, searceattendance } from "../slice/StudentSlice";
+import { Link } from "react-router-dom";
 
 function StuAttendanceShow() {
   const dispatch = useDispatch();
   const crtId = getFromLocalStorage("crtId");
+  const fdate = getFromLocalStorage("fdate");
+
+  // Assuming fdate is in the format '9/23/2023' to '2023-09-23'
+  const parts = fdate.split('/');
+  const formattedDate = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+
   const [showstu, setshowstu] = useState([]);
   const [showatten, setshowatten] = useState([]);
   const [showattende, setshowattende] = useState([]);
   const [showkinder, setShowKinder] = useState([]);
   const [showyear, setShowYear] = useState([]);
   const [showSearch, setshowsearch] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(formattedDate); // Initialize with formatted date
   const [searchQuery, setSearchQuery] = useState("");
   const [studentResults, setStudentResults] = useState([]);
   let stuid;
@@ -48,7 +55,6 @@ function StuAttendanceShow() {
     dispatch(searceattendance({ crtId, stuid, selectedDate }))
       .then((result) => {
         setshowattende(result.payload.data);
-        // console.log(result.payload.data);
       })
       .catch((err) => {
         console.log(err);
@@ -97,10 +103,7 @@ function StuAttendanceShow() {
 
   const handleSearch = () => {
     if (!searchQuery) {
-      // alert("Please input data first");
       setStudentResults("");
-      // console.log(selectedDate);
-      loadattendancede();
       return;
     }
     filterData();
@@ -111,17 +114,12 @@ function StuAttendanceShow() {
   }, [dispatch]);
 
   const filterData = () => {
-    // Filter student results with an exact match on stu_sn
-    // console.log("123");
-    // console.log(studentData);
     const filteredStudents = studentData?.filter(
       (student) => student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
     );
     stuid = filteredStudents[0].stu_id;
     setStudentResults(filteredStudents[0].stu_id);
     loadattendancede();
-    // console.log(filteredStudents[0].stu_id);
-    // console.log(stuid);S
   };
 
   useEffect(() => {
@@ -131,23 +129,29 @@ function StuAttendanceShow() {
     loadSearch();
     loadKinder();
     loadYearTerm();
-  }, []);
+  }, [selectedDate]);
 
   return (
     <div>
+      <Link to={"/attendance/stuAttendanceShowTotal"}>
+        <svg
+          baseProfile="tiny"
+          height="24px"
+          id="Layer_1"
+          version="1.2"
+          viewBox="0 0 24 24"
+          width="24px"
+        >
+          <g>
+            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
+          </g>
+        </svg>
+      </Link>
       <div>
         <h1>
           การเช็คชื่อเข้าห้องเรียนห้องอนุบาล {getkin}/{getroom} ปีการศึกษา{" "}
           {getyear} เทอม {getterm}
         </h1>
-      </div>
-      <div>
-        <label>Filter by Date:</label>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
       </div>
       <h5>วิธีการ: ใช้รหัสประจำตัวนักเรียนเพื่อค้นหาเท่านั้น!</h5>
       <div>
@@ -159,12 +163,14 @@ function StuAttendanceShow() {
         />
       </div>
       <button onClick={handleSearch}>Search</button>
+      <br />
+      <br />
       <table>
         <thead>
           <tr>
             <th>ชื่อ-นามสกุล</th>
             <th>รหัสประจำตัว</th>
-            <th>ปี-เดือน-วัน</th>
+            <th>เดือน-วัน-ปี</th>
             <th>สถานะ</th>
           </tr>
         </thead>
@@ -176,9 +182,7 @@ function StuAttendanceShow() {
               const attdid = showattende[index].attd_id;
               const attd = showatten.find((att) => att.attd_id === attdid);
               const attdd = attd ? attd?.attd_name : "";
-              // console.log(stuid);
               const student = showstu.find((stu) => stu.stu_id === stuid);
-              // console.log(student);
               const prefix = student ? student?.prefix : "";
               const stuname = student ? student?.stu_Fname : "";
               const stuLname = student ? student?.stu_Lname : "";
