@@ -745,7 +745,7 @@ export const showassessment = createAsyncThunk("showassessment", async () => {
 export const insertassessment = createAsyncThunk(
   "insertassessment",
   async (body) => {
-    console.log(body);
+    // console.log(body);
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API}/assessmentinsert`,
       body,
@@ -776,9 +776,9 @@ export const editassessment = createAsyncThunk(
 );
 
 export const deleteassessment = createAsyncThunk("deleteassessment", async (id, body) => {
-  console.log(id, body);
-  const response = await axios.patch(
-    `${import.meta.env.VITE_APP_API}/assessmentupdate/${id}`,
+  // console.log(id, body);
+  const response = await axios.delete(
+    `${import.meta.env.VITE_APP_API}/assessmentdelete/${id}`,
     body,
     {
       headers: {
@@ -788,6 +788,7 @@ export const deleteassessment = createAsyncThunk("deleteassessment", async (id, 
   );
   return response.data;
 });
+
 export const showassessmentstu = createAsyncThunk("showassessmentstu", async () => {
   const response = await axios.get(
     `${import.meta.env.VITE_APP_API}/assessmentstu`,
@@ -803,7 +804,7 @@ export const showassessmentstu = createAsyncThunk("showassessmentstu", async () 
 export const assessmentstuinsert = createAsyncThunk(
   "assessmentstuinsert",
   async (body) => {
-    console.log(body);
+    // console.log(body);
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API}/assessmentstuinsert`,
       body,

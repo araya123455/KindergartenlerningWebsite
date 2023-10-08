@@ -10,7 +10,9 @@ function Personnel() {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+    <Carousel activeIndex={index} onSelect={handleSelect} id="personnel">
+      <br />
+      <br />
       <Carousel.Item>
         <img
           className="image"

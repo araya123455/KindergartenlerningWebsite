@@ -5,6 +5,13 @@ import {
   getFromLocalStorage,
 } from "../LocalStorage/localstorage";
 // import "../assets/css/assesment.css";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import {
   showclass,
   showkinroom,
@@ -79,56 +86,68 @@ function SubjectScore() {
 
   return (
     <div>
-      <h1>แบบให้คะแนนนักเรียนแต่ละวิชา</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ชั้น/ห้อง</th>
-            <th>เทอม/ปีการศึกษา</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showSearch?.map((data) => {
-            const { crt_id, kinder_id, yearterm_id } = data;
-            const kinder = showkinder.find(
-              (kin) => kin?.kinder_id === kinder_id
-            );
-            const kinderName = kinder
-              ? `${kinder?.kinde_level}/${kinder?.Kinder_room}`
-              : "";
+      <h1 className="h2">แบบให้คะแนนนักเรียนแต่ละวิชา</h1>
+      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชั้น/ห้อง</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">เทอม/ปีการศึกษา</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Action</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {showSearch?.map((data) => {
+              const { crt_id, kinder_id, yearterm_id } = data;
+              const kinder = showkinder.find(
+                (kin) => kin?.kinder_id === kinder_id
+              );
+              const kinderName = kinder
+                ? `${kinder?.kinde_level}/${kinder?.Kinder_room}`
+                : "";
 
-            const yearTerm = showyear.find(
-              (term) => term?.yearTerm_id === yearterm_id
-            );
-            const termYearName = yearTerm
-              ? `${yearTerm.term}/${yearTerm.year}`
-              : "";
-            return (
-              <tr key={crt_id}>
-                <td>{kinderName}</td>
-                <td>{termYearName}</td>
-                <td>
-                  <Link
-                    className="assclass"
-                    to={"/subjectFullScore"}
-                    onClick={() => onClickF(kinder_id, yearterm_id)}
-                  >
-                    กำหนดคะแนนเต็ม
-                  </Link>
-                  <Link
-                    className="assclass"
-                    to={"/stuSubjectScoreInsert"}
-                    onClick={() => onClick(kinder_id, yearterm_id)}
-                  >
-                    ให้คะแนนนักเรียน
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              const yearTerm = showyear.find(
+                (term) => term?.yearTerm_id === yearterm_id
+              );
+              const termYearName = yearTerm
+                ? `${yearTerm.term}/${yearTerm.year}`
+                : "";
+              return (
+                <TableRow key={crt_id}>
+                  <TableCell>
+                    <p>{kinderName}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>{termYearName}</p>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      className="assclass"
+                      to={"/subjectFullScore"}
+                      onClick={() => onClickF(kinder_id, yearterm_id)}
+                    >
+                      กำหนดคะแนนเต็ม
+                    </Link>
+                    <Link
+                      className="assclass"
+                      to={"/stuSubjectScoreInsert"}
+                      onClick={() => onClick(kinder_id, yearterm_id)}
+                    >
+                      ให้คะแนนนักเรียน
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

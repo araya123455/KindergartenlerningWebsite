@@ -7,7 +7,7 @@ import "../../assets/css/index.css";
 
 const SchoolHistory = () => {
   return ( 
-    <div className="d-flex justify-content-around">
+    <div className="d-flex justify-content-around" id="schoolHistory">
       <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src="pic_school.jpg" />
         <Card.Body>

@@ -6,6 +6,7 @@
   margin: 10px;
   text-decoration: none;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Mali", cursive;
 }
 .assclass:hover {
   color: rgb(27, 27, 210);
@@ -19,6 +20,7 @@
   margin: 10px;
   text-decoration: none;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Mali", cursive;
 }
 .assstudent:hover {
   color: rgb(120, 42, 0);
@@ -40,3 +42,19 @@
 .td {
   font-size: 15px;
 }
+
+/* input */
+.score-input{
+  width: 50px;
+}
+/* Hide the up and down arrows for input type number */
+.score-input input[type="number"]::-webkit-inner-spin-button,
+.score-input input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+ /* Firefox */
+/* .score-input input[type="number"] {
+  -moz-appearance: textfield;
+} */

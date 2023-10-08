@@ -5,6 +5,14 @@ import { Form, Button, FormLabel } from "react-bootstrap";
 import { Outlet, Link } from "react-router-dom";
 import { saveToLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/attendance.css";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   showtest,
   edittest,
@@ -136,22 +144,23 @@ function CreateTest() {
       <Button className="button" variant="primary" onClick={AddShow}>
         ADD
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>ชื่อแบบทดสอบ</th>
-            <th>เพิ่มห้องเรียน</th>
-            <th>Details</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
+      <TableContainer component={Paper}>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell><p className="headerC">ชื่อแบบทดสอบ</p></TableCell>
+            <TableCell><p className="headerC">เพิ่มห้องเรียน</p></TableCell>
+            <TableCell><p className="headerC">Details</p></TableCell>
+            <TableCell><p className="headerC">Confix</p></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {showdata?.map((data) => {
             const { test_id, test_detail } = data;
             return (
-              <tr key={test_id}>
-                <td>{test_detail}</td>
-                <td>
+              <TableRow key={test_id}>
+                <TableCell><p>{test_detail}</p></TableCell>
+                <TableCell>
                   <Link
                     className="linkadd"
                     to="/test/addClassTest"
@@ -159,8 +168,8 @@ function CreateTest() {
                   >
                     Add class
                   </Link>
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                   <Link
                     className="linkcreate"
                     to="/test/createChoice"
@@ -168,7 +177,7 @@ function CreateTest() {
                   >
                     Test detail
                   </Link>
-                </td>
+                </TableCell>
                 <td>
                   <Button
                     variant="btn btn-secondary"
@@ -185,11 +194,12 @@ function CreateTest() {
                     DELETE
                   </Button>
                 </td>
-              </tr>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+      </TableContainer>
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
           <Modal.Title>INSERT DATA</Modal.Title>

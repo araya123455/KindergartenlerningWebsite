@@ -1,18 +1,17 @@
 /* SplitScreen.css */
 .split-screen {
-    display: flex;
-    height: 100vh; /* Set the height to the full viewport height */
-  }
-  
-  .left-side {
-    flex: 1; /* Make the left side take up half of the available space */
-   
-    padding: 20px;
-  }
-  
-  .right-side {
-    flex: 1; /* Make the right side take up half of the available space */
-   
-    padding: 20px;
-  }
-  
+  display: flex;
+  height: 100vh; /* Set the height to the full viewport height */
+}
+
+.left-side {
+  flex: 1; /* Make the left side take up half of the available space */
+
+  padding: 20px;
+}
+
+.right-side {
+  flex: 1; /* Make the right side take up half of the available space */
+
+  /* padding: 20px; */
+}

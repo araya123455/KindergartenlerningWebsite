@@ -39,6 +39,7 @@ function StuAttendanceShowTotal() {
     dispatch(attendance())
       .then((result) => {
         setshowatten(result.payload);
+        // console.log(showatten);
       })
       .catch((err) => {
         console.log(err);
@@ -49,6 +50,7 @@ function StuAttendanceShowTotal() {
     dispatch(searceattendance({ crtId, selectedDate }))
       .then((result) => {
         setshowattende(result.payload.data);
+        // console.log(result);
         // Count status occurrences for each date
         const counts = result.payload.data.reduce((acc, item) => {
           const date = new Date(item.date).toLocaleDateString("en-US");
@@ -64,7 +66,6 @@ function StuAttendanceShowTotal() {
           return acc;
         }, {});
         setStatusCounts(counts);
-
         // Calculate the total number of students for each date
         const totalStudents = result.payload.data.reduce((acc, item) => {
           const date = new Date(item.date).toLocaleDateString("en-US");
@@ -117,32 +118,38 @@ function StuAttendanceShowTotal() {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
+  // console.log(displayedDates.length);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
+    // console.log("Rows per page changed:", event.target.value);
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
   return (
     <div>
-      <Link to={"/attendance"}>
-        <svg
-          baseProfile="tiny"
-          height="24px"
-          id="Layer_1"
-          version="1.2"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <g>
-            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
-          </g>
-        </svg>
-      </Link>
+       <button className="btn-back" role="button">
+        <Link to={"/attendance"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
       <div>
         <label>เลือกวันที่:</label>
         <input
@@ -152,11 +159,11 @@ function StuAttendanceShowTotal() {
         />
       </div>
       <br />
-      <button onClick={handleSearch}>Search</button>
+      <button className="buttonN buttnN" onClick={handleSearch}>Search</button>
       <br />
       <br />
       <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table className="custom-table" stickyHeader aria-label="sticky table">
           <TableHead className="TableHead">
             <TableRow>
               <TableCell
@@ -180,7 +187,6 @@ function StuAttendanceShowTotal() {
                     </TableCell>
                   );
                 })}
-
               <TableCell>
                 <p className="headerC">Detail</p>
               </TableCell>
@@ -189,7 +195,9 @@ function StuAttendanceShowTotal() {
           <TableBody>
             {displayedDates.map((date) => (
               <TableRow hover role="checkbox" tabIndex={-1} key={date}>
-                <TableCell>{date}</TableCell>
+                <TableCell>
+                  <p>{date}</p>
+                </TableCell>
                 <TableCell>
                   <p className="hstatus">{totalstu[date] || 0}</p>
                 </TableCell>
@@ -220,23 +228,23 @@ function StuAttendanceShowTotal() {
                 </TableCell>
               </TableRow>
             ))}
-            {emptyRows > 0 && (
+            {/* {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
                 <TableCell colSpan={4} />
               </TableRow>
-            )}
+            )} */}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={sortedDates.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={sortedDates.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </div>
   );
 }

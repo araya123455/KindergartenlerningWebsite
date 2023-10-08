@@ -39,6 +39,9 @@ button {
 }
 
 button.learn-more {
+  font-family: "Mali", cursive;
+  margin-bottom: 10px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
   text-transform: uppercase;
@@ -49,6 +52,7 @@ button.learn-more {
   transform-style: preserve-3d;
   transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
     background 150ms cubic-bezier(0, 0, 0.58, 1);
+  width: 200px; /* Adjust the width as per your design */
 }
 
 button.learn-more::before {
@@ -92,4 +96,3 @@ button.learn-more:active::before {
   display: flex;
   justify-content: center;
 }
-

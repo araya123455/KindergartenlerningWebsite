@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import {
   showkinroom,
   insertkinroom,
@@ -17,46 +22,7 @@ function MgtKindergartenroomlevel() {
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
   const [update, setupdate] = useState({ kinde_level: "", Kinder_room: "" });
-  const AddClose = () => {
-    setShowAdd(false);
-  };
-  const AddShow = () => {
-    setShowAdd(true);
-  };
-  //   recomment
-  const handleInsert = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    setinsert({
-      ...insert,
-      [name]: value,
-    });
-  };
-  //   on click insert value
-  const onInsrt = () => {
-    let body = {
-      kinde_level: insert.kinde_level,
-      Kinder_room: insert.Kinder_room,
-    };
 
-    dispatch(insertkinroom(body))
-      .then((result) => {
-        setShow(false);
-        setShowAdd({
-          kinde_level: "",
-          Kinder_room: "",
-        });
-        loadData();
-        // show success notification
-        // notify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    loadData();
-  }, []);
   const loadData = () => {
     dispatch(showkinroom())
       .then((result) => {
@@ -66,10 +32,49 @@ function MgtKindergartenroomlevel() {
         console.log(err);
       });
   };
-  // reload
-  useEffect(() => {
-    loadData();
-  }, []);
+
+  const AddClose = () => {
+    setShowAdd(false);
+  };
+  const AddShow = () => {
+    setShowAdd(true);
+  };
+
+  //   recomment
+  const handleInsert = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setinsert({
+      ...insert,
+      [name]: value,
+    });
+  };
+
+  //   on click insert value
+  const onInsrt = () => {
+    if (!insert.kinde_level || !insert.Kinder_room) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
+    let body = {
+      kinde_level: insert.kinde_level,
+      Kinder_room: insert.Kinder_room,
+    };
+
+    dispatch(insertkinroom(body))
+      .then((result) => {
+        setinsert({
+          kinde_level: "",
+          Kinder_room: "",
+        });
+        loadData();
+        setShowAdd(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const EditClose = () => {
     setshowEdit(false);
   };
@@ -113,42 +118,56 @@ function MgtKindergartenroomlevel() {
         console.log(err);
       });
   };
+
   //   Delete
   const onDelete = (id) => {
-    dispatch(deletekinroom(id))
-      .then((result) => {
-        if (result.payload && result.payload.error) {
-          console.log(result.payload.error); // You can log the error or show it to the user
-        } else {
-          // Deletion successful, reload the data
-          loadData();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };  
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deletekinroom(id))
+        .then((result) => {
+          if (result.payload && result.payload.error) {
+            console.log(result.payload.error); // You can log the error or show it to the user
+          } else {
+            // Deletion successful, reload the data
+            loadData();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <>
       <Button className="button" variant="primary" onClick={AddShow}>
         ADD
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>Level</th>
-            <th>Room</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell>
+              <p className="headerC">Level</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Room</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Confix</p>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {showdata.map((data) => {
             const { kinder_id, kinde_level, Kinder_room } = data;
             return (
-              <tr key={kinder_id}>
-                <td>{kinde_level}</td>
-                <td>{Kinder_room}</td>
-                <td>
+              <TableRow key={kinder_id}>
+                <TableCell>{kinde_level}</TableCell>
+                <TableCell>{Kinder_room}</TableCell>
+                <TableCell>
                   <Button
                     variant="btn btn-secondary"
                     onClick={() => EditShow(data)}
@@ -162,12 +181,12 @@ function MgtKindergartenroomlevel() {
                   >
                     DELETE
                   </Button>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>

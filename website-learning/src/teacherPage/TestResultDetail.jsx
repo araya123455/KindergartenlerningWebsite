@@ -4,6 +4,14 @@ import { Outlet, Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   testresultdetatil,
   testresultdetatiled,
@@ -23,6 +31,8 @@ function TestResultDetail() {
   const [showData, setshowData] = useState(false);
   const [studentScores, setStudentScores] = useState({});
   const [selectedStudentId, setSelectedStudentId] = useState(null); // Add this state to track selected student
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
 
   const loadtestre = () => {
     dispatch(testresultdetatil({ testdeId }))
@@ -91,84 +101,120 @@ function TestResultDetail() {
     loadtestre();
   }, []);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Reset to the first page when the rows per page changes
+  };
+
+  const startIndex = page * rowsPerPage;
+  // console.log(rowsPerPage);
+  // console.log(page);
+  const endIndex = startIndex + rowsPerPage;
+  // console.log(endIndex);
+
   return (
     <div>
-      <Link to={"/test/testRe"}>
-        <svg
-          baseProfile="tiny"
-          height="24px"
-          id="Layer_1"
-          version="1.2"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <g>
-            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
-          </g>
-        </svg>
-      </Link>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>คำนำหน้า</th>
-              <th>ชื่อ</th>
-              <th>นามสกุล</th>
-              <th>เลขประจะตัว</th>
-              <th>คะแนนที่ได้</th>
-              <th>สถานะ</th>
-            </tr>
-          </thead>
-          <tbody>
+      <button className="btn-back" role="button">
+        <Link to={"/test/testRe"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
+      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชื่อ-นามสกุล</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">รหัสประจำตัว</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">คะแนนที่ได้</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">สถานะ</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {ckeckred &&
               showtestred.map((data) => {
                 const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
                 const totalScore = studentScores[stu_id] || 0;
 
                 return (
-                  <tr key={stu_id}>
-                    <td>{prefix}</td>
-                    <td>{stu_Fname}</td>
-                    <td>{stu_Lname}</td>
-                    <td>{stu_sn}</td>
-                    <td>
-                      {totalScore} (
-                      <button className="link-button" onClick={() => DataShow(stu_id)}>detail</button>)
-                    </td>
-                    <td>ส่งแล้ว</td>
-                  </tr>
+                  <TableRow key={stu_id}>
+                    <TableCell>
+                      {prefix} {stu_Fname} {stu_Lname}
+                    </TableCell>
+                    <TableCell>{stu_sn}</TableCell>
+                    <TableCell>
+                      <p className="hstatus green">
+                        {totalScore}{" "}
+                        <Link
+                          className="link-button"
+                          onClick={() => DataShow(stu_id)}
+                        >
+                          (detail)
+                        </Link>
+                      </p>
+                    </TableCell>
+                    <TableCell>
+                      <p className="hstatus green">ส่งแล้ว</p>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
             {ckeckre &&
               showtestre.map((data) => {
                 const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
                 return (
-                  <tr key={stu_id}>
-                    <td>{prefix}</td>
-                    <td>{stu_Fname}</td>
-                    <td>{stu_Lname}</td>
-                    <td>{stu_sn}</td>
-                    <td>0</td>
-                    <td>ยังไม่ส่ง</td>
-                  </tr>
+                  <TableRow key={stu_id}>
+                    <TableCell>
+                      {prefix} {stu_Fname} {stu_Lname}
+                    </TableCell>
+                    <TableCell>{stu_sn}</TableCell>
+                    <TableCell>
+                      <p className="hstatus red">0</p>
+                    </TableCell>
+                    <TableCell>
+                      <p className="hstatus red">ยังไม่ส่ง</p>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
-          </tbody>
-        </table>
-        <Modal show={showData} onHide={DataShow}>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Modal show={showData} onHide={DataShow}>
         <Modal.Body>
           {/* Render the StudentResultDetail component with stu_id and test_id */}
           {selectedStudentId && (
             <StudentResultDetail stuid={selectedStudentId} testId={testId} />
           )}
         </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={DataClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+        <Modal.Footer>
+          <Button onClick={DataClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
       <Outlet />
     </div>
   );

@@ -3,6 +3,15 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
 import { Outlet, Link } from "react-router-dom";
+import "../assets/css/test.css";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   showtest,
   showtestde,
@@ -59,7 +68,7 @@ function AddClassTest() {
         console.log(err);
       });
   };
-  
+
   const loadTest = () => {
     dispatch(showtest())
       .then((result) => {
@@ -235,97 +244,117 @@ function AddClassTest() {
 
   return (
     <div>
+      <button className="btn-back" role="button">
+        <Link to={"/test/CreateTest"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
       <div>
-        <h1>Add Class</h1>
-      </div>
-      <Link to={"/test/CreateTest"}>
-        <svg
-          baseProfile="tiny"
-          height="24px"
-          id="Layer_1"
-          version="1.2"
-          viewBox="0 0 24 24"
-          width="24px"
-          //   xml:space="preserve"
-          //   xmlns="http://www.w3.org/2000/svg"
-          //   xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g>
-            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
-          </g>
-        </svg>
-      </Link>
-      <div>
-        <h2>{testname}</h2>
+        <h2 className="h2">ประกาศแบบทดสอบไปยังห้องเรียน</h2>
+        <h2 className="h2">{testname}</h2>
       </div>
       <div>
         <Button className="button" variant="primary" onClick={AddShow}>
           ADD
         </Button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>สถานะ</th>
-            <th>ชั้น/ห้อง</th>
-            <th>ปี/เทอม</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showdata.map((data) => {
-            const { testDe_id, test_id, test_status, kinder_id, yearterm_id } =
-              data;
-            const testid = showTest.find((tes) => tes.test_id === testId);
-            const testname = testid ? testid.test_detail : "";
-            testdetail_name = testname;
-            const kinder = showkinder.find(
-              (kin) => kin.kinder_id === kinder_id
-            );
-            const kinderLevel = kinder ? kinder.kinde_level : "";
-            const kinderRoom = kinder ? kinder.Kinder_room : "";
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">สถานะ</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ชั้น/ห้อง</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ปี/เทอม</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Confix</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {showdata.map((data) => {
+              const {
+                testDe_id,
+                test_id,
+                test_status,
+                kinder_id,
+                yearterm_id,
+              } = data;
+              const testid = showTest.find((tes) => tes.test_id === testId);
+              const testname = testid ? testid.test_detail : "";
+              testdetail_name = testname;
+              const kinder = showkinder.find(
+                (kin) => kin.kinder_id === kinder_id
+              );
+              const kinderLevel = kinder ? kinder.kinde_level : "";
+              const kinderRoom = kinder ? kinder.Kinder_room : "";
 
-            const yearTerm = showyear.find(
-              (term) => term.yearTerm_id === yearterm_id
-            );
-            const year = yearTerm ? yearTerm.year : "";
-            const term = yearTerm ? yearTerm.term : "";
-            var sta;
-            if (test_status === "0") {
-              sta = "Close";
-            } else if (test_status === "1") {
-              sta = "Open";
-            }
-            return (
-              //*********************************
-              <tr key={testDe_id}>
-                <td>{sta}</td>
-                <td>
-                  {kinderLevel}/{kinderRoom}
-                </td>
-                <td>
-                  {term}/{year}
-                </td>
-                <td>
-                  <Button
-                    variant="btn btn-secondary"
-                    onClick={() => EditShow(data)}
-                  >
-                    EDIT
-                  </Button>
-                  <Button
-                    className="buttonD"
-                    variant="btn btn-danger"
-                    onClick={() => onDelete(testDe_id)}
-                  >
-                    DELETE
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              const yearTerm = showyear.find(
+                (term) => term.yearTerm_id === yearterm_id
+              );
+              const year = yearTerm ? yearTerm.year : "";
+              const term = yearTerm ? yearTerm.term : "";
+              var sta;
+              if (test_status === "0") {
+                sta = "Close";
+              } else if (test_status === "1") {
+                sta = "Open";
+              }
+              return (
+                //*********************************
+                <TableRow key={testDe_id}>
+                  <TableCell>
+                    <p>{sta}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>
+                      {kinderLevel}/{kinderRoom}
+                    </p>
+                  </TableCell>
+                  <TableCell>
+                    <p>
+                      {term}/{year}
+                    </p>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="btn btn-secondary"
+                      onClick={() => EditShow(data)}
+                    >
+                      EDIT
+                    </Button>
+                    <Button
+                      className="buttonD"
+                      variant="btn btn-danger"
+                      onClick={() => onDelete(testDe_id)}
+                    >
+                      DELETE
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
@@ -373,7 +402,7 @@ function AddClassTest() {
 
                   return (
                     <option
-                      key={data.id}
+                      key={data.kinder_id}
                       value={`${data.kinder_id} ${data.yearterm_id}`}
                     >
                       {kinderName} - {termYearName}
@@ -413,7 +442,8 @@ function AddClassTest() {
                 <option value="Open">Open</option>
                 <option value="Close">Close</option>
               </Form.Control>
-            </Form.Group>-
+            </Form.Group>
+            -
             <Form.Group className="mb-3" controlId="edit_kinder_id">
               <Form.Label>ชั้น/ห้อง - เทอม/ปี</Form.Label>
               <Form.Control

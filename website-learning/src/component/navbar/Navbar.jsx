@@ -23,7 +23,7 @@ function NavbarHead() {
             <a href="#contact">Contact</a>
           </div>
           <div className="navbarCon">
-            <a href="#personel">Personel</a>
+            <a href="#personnel">Personnel</a>
           </div>
           <div className="navbarCon">
             <a href="#schoolHistory">School History</a>

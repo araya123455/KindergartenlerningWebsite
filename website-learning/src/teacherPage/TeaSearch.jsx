@@ -38,7 +38,7 @@ function TeaSearch() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button className="buttnN buttonN" onClick={handleSearch}>Search</button>
       <ul className="student-results">
         {studentResults.length > 0 ? (
           studentResults.map((student) => (

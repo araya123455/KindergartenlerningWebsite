@@ -63,10 +63,10 @@ import "../../assets/css/index.css";
 // };
 const Contact = () => {
   return (
-    
     <div
       className=" p-3 mb-8 shadow-5-strong rounded-0"
       style={{ backgroundColor: "#fff" }}
+      id="contact"
     >
       <div className="row">
         <div className="col-md-3"></div>
