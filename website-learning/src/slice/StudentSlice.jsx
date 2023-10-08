@@ -244,6 +244,7 @@ export const showstusubreport = createAsyncThunk(
   }
 );
 
+//assessmentreport
 export const assessmentreport = createAsyncThunk(
   "assessmentreport",
   async ({ assstuId }, { rejectWithValue }) => {
@@ -252,6 +253,7 @@ export const assessmentreport = createAsyncThunk(
         params: { stu_id: assstuId },
       });
       return response.data;
+
     } catch (err) {
       return rejectWithValue(err.response.data);
     }

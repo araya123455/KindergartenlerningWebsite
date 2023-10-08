@@ -1,35 +1,50 @@
+import "../assets/css/clouds.css";
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import { RemindFill } from "@rsuite/icons";
-import "../assets/css/tableinsert.css";
-import { showstudent } from "../slice/DataSlice";
-import { saveToLocalStorage } from "../LocalStorage/localstorage";
 import { Link } from "react-router-dom";
-// import { useSelector } from "react-redux";
-
+import { saveToLocalStorage } from "../LocalStorage/localstorage";
 import {
   showclass,
+  showstudent,
+  showclasstime,
   showkinroom,
   getDataAll,
+  searchclasstime,
+  showteacher,
+  showsubject,
 } from "../slice/DataSlice";
 import { searchstuclass } from "../slice/searchSlice";
 
-function ReportSubject() {
+function ReportSubjectYearTerm() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
+  const [showstu, setshowstu] = useState([]);
+  const [classroomTimetableData, setClassroomTimetableData] = useState([]);
   const [showkinder, setShowKinder] = useState([]);
   const [showyear, setShowYear] = useState([]);
-  
-  const [filteredData, setFilteredData] = useState([]);
-  const [Todisplay, setTodisplay] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState("");
   const [showSearch, setshowsearch] = useState([]);
+  const [showclasss, setshowclasss] = useState([])
+
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("");
+
   const loadData = () => {
     dispatch(showstudent())
       .then((result) => {
-        setshowdata(result.payload);
+        setshowstu(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadClass = () => {
+    dispatch(showclass())
+      .then((result) => {
+        setshowclasss(result.payload);
+        // console.log(result);
       })
       .catch((err) => {
         console.log(err);
@@ -40,6 +55,7 @@ function ReportSubject() {
     dispatch(showkinroom())
       .then((result) => {
         setShowKinder(result.payload);
+        // console.log(result);
       })
       .catch((err) => {
         console.log(err);
@@ -50,6 +66,19 @@ function ReportSubject() {
     dispatch(getDataAll())
       .then((result) => {
         setShowYear(result.payload);
+        // console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // load search classtime
+  const loadSearch = () => {
+    dispatch(searchclasstime())
+      .then((result) => {
+        setshowsearch(result.payload);
+        // console.log(result.payload);
       })
       .catch((err) => {
         console.log(err);
@@ -58,12 +87,15 @@ function ReportSubject() {
 
   const handleFilter = () => {
     if (!selectedFilter) {
-      loadData();
+      loadClass();
+      // console.error("Please select a filter value.");
       return;
     }
 
+    // Split the selected option value to get kinder_id and yearterm_id
     const [selectedKinderId, selectedYeartermId] = selectedFilter.split(" ");
 
+    // Convert the IDs to integers (if needed)
     const selectedKinderIdInt = parseInt(selectedKinderId, 10);
     const selectedYeartermIdInt = parseInt(selectedYeartermId, 10);
 
@@ -76,6 +108,7 @@ function ReportSubject() {
       return;
     }
 
+    // Dispatch the action to fetch filtered data based on selected filters
     dispatch(
       searchstuclass({
         kinder_id: selectedKinderIdInt,
@@ -90,25 +123,41 @@ function ReportSubject() {
       });
   };
 
-  const getAvailableStudents = () => {
-    const addedStudentIds = Todisplay.map((data) => data.stu_id);
-    return showstu.filter((stu) => !addedStudentIds.includes(stu.stu_id));
-  };
   saveToLocalStorage("restuId", null);
   const onClick = (id) => {
+    // console.log(id);
     saveToLocalStorage("restuId", id);
   };
 
   useEffect(() => {
+    // Load all the data and store it in both state variables
     loadData();
     loadKinder();
     loadYearTerm();
-    // loadSearch();
+    loadSearch();
+    loadClass();
+    // Fetch the original data for filtering (remove this part from here)
   }, []);
 
+  // Update Todisplay whenever filteredData changes
+  useEffect(() => {
+    setshowclasss(filteredData.length > 0 ? filteredData : showclasss);
+    // console.log(filteredData);
+  }, [filteredData]);
+
   return (
-    <>
-    <Form>
+    <div>
+      <h1>ผลการเรียน</h1>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
+      <Form>
         <Form.Group className="mb-3" controlId="filter_kinder_id">
           <Form.Label>Filter by Kinder/YearTerm</Form.Label>
           <Form.Control
@@ -152,35 +201,46 @@ function ReportSubject() {
       <table>
         <thead>
           <tr>
-            <th>คำนำหน้า</th>
-            <th>ชื่อ</th>
-            <th>นามสกุล</th>
+            <th>ชั้น/ห้อง</th>
+            <th>เทอม/ปี</th>
+            <th>ชื่อ-นามสกุล</th>
             <th>รหัสประจำตัว</th>
-            <th>สถานะ</th>
             <th>Confix</th>
           </tr>
         </thead>
         <tbody>
-          {showdata?.map((data) => {
-            const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn, status, kinder_id, yearterm_id } = data;
-            const kinder = showkinder.find(
-              (kin) => kin.kinder_id === kinder_id
-            );
-            const kinderLevel = kinder ? kinder.kinde_level : "";
-            const kinderRoom = kinder ? kinder.Kinder_room : "";
+          {showclasss?.map((data) => {
+             const { class_id, kinder_id, yearterm_id, stu_id } = data;
 
-            const yearTerm = showyear.find(
-              (term) => term.yearTerm_id === yearterm_id
-            );
-            const year = yearTerm ? yearTerm.year : "";
-            const term = yearTerm ? yearTerm.term : "";
+             const student = showstu.find((stu) => stu.stu_id === stu_id);
+             const studentFName = student ? student.stu_Fname : "";
+             const studentLName = student ? student.stu_Lname : "";
+             const studentprefix = student ? student.prefix : "";
+             const studentsn = student ? student.stu_sn : "";
+             const kinder = showkinder.find(
+               (kin) => kin.kinder_id === kinder_id
+             );
+            //  console.log(kinder);
+             const kinderLevel = kinder ? kinder.kinde_level : "";
+             const kinderRoom = kinder ? kinder.Kinder_room : "";
+ 
+             const yearTerm = showyear.find(
+               (term) => term.yearTerm_id === yearterm_id
+             );
+             const year = yearTerm ? yearTerm.year : "";
+             const term = yearTerm ? yearTerm.term : "";
             return (
-              <tr key={stu_id}>
-                <td>{prefix}</td>
-                <td>{stu_Fname}</td>
-                <td>{stu_Lname}</td>
-                <td>{stu_sn}</td>
-                <td>{status}</td>
+              <tr key={class_id}>
+                <td>
+                  {kinderLevel}/{kinderRoom}
+                </td>
+                <td>
+                  {term}/{year}
+                </td>
+                <td>
+                  {studentprefix} {studentFName} {studentLName}
+                </td>
+                <td>{studentsn}</td>
                 <td>
                   <Link
                     to={"/showreportSubject"}
@@ -194,8 +254,8 @@ function ReportSubject() {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
 
-export default ReportSubject;
+export default ReportSubjectYearTerm;

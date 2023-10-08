@@ -261,6 +261,18 @@ export const showstusubscore = createAsyncThunk("showstusubscore", async () => {
   return response.data;
 });
 
+export const assessmentstu = createAsyncThunk("showassessmentstu", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/showassessmentstu`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
+
 export const subjectscoreinsert = createAsyncThunk(
   "subjectscoreinsert",
   async (body) => {
@@ -389,6 +401,7 @@ export const TeacherSlice = createSlice({
     state.error = action.error;
     state.loading = false;
   },
+  
 });
 // Action creators are generated for each case reducer function
 export const { SET_VALUE } = TeacherSlice.actions;
