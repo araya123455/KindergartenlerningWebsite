@@ -3,8 +3,6 @@ import "../assets/css/clouds.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
-
-
 function Report() {
   return (
     <div>
@@ -41,7 +39,7 @@ function Report() {
           <h1>ผลการเรียน</h1>
              <Row>
               <Col>
-              <Link to={"/ReportSubject"}>
+              <Link to={"/ReportSubjectYearTerm"}>
                 <button className="learn-more" type="button">
                   ผลการเรียน
                 </button>
