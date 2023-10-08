@@ -4,6 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import "../assets/css/attendance.css";
 import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
 import {
@@ -34,7 +42,8 @@ function StuAttendanceUpdate() {
   const [updatedata, setupdatedata] = useState({
     attd_id: "",
   });
-
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Set your desired initial rows per page
   let stuid;
 
   // Use useSelector to access studentData from Redux store
@@ -211,22 +220,41 @@ function StuAttendanceUpdate() {
     loadYearTerm();
   }, []);
 
+  // Handle page change
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  // Handle rows per page change
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Reset the page when rows per page changes
+  };
+
+  // Calculate the start and end index for the displayed rows
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+
   return (
     <div>
-      <Link to={"/attendance"}>
-        <svg
-          baseProfile="tiny"
-          height="24px"
-          id="Layer_1"
-          version="1.2"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <g>
-            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
-          </g>
-        </svg>
-      </Link>
+       <button className="btn-back" role="button">
+        <Link to={"/attendance"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
       <div>
         <h1>
           การเช็คชื่อเข้าห้องเรียนห้องอนุบาล {getkin}/{getroom} ปีการศึกษา{" "}
@@ -250,66 +278,89 @@ function StuAttendanceUpdate() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <button onClick={handleSearch}>Search</button>
+      <button className="buttnN buttonN" onClick={handleSearch}>Search</button>
       <br />
       <br />
-      <table>
-        <thead>
-          <tr>
-            <th>ชื่อ-นามสกุล</th>
-            <th>รหัสประจำตัว</th>
-            <th>เดือน-วัน-ปี</th>
-            <th>สถานะ</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(showattende) &&
-            showattende?.map((data, index) => {
-              const attdt_id = showattende[index].attdDt_id;
-              // console.log(attdt_id);
-              const stuid = showattende[index].stu_id;
-              const date = showattende[index].date;
-              const attdid = showattende[index].attd_id;
-              const attd = showatten.find((att) => att.attd_id === attdid);
-              const attdd = attd ? attd?.attd_name : "";
-              // console.log(stuid);
-              const student = showstu.find((stu) => stu.stu_id === stuid);
-              // console.log(student);
-              const prefix = student ? student?.prefix : "";
-              const stuname = student ? student?.stu_Fname : "";
-              const stuLname = student ? student?.stu_Lname : "";
-              const stusn = student ? student?.stu_sn : "";
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชื่อ-นามสกุล</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">รหัสประจำตัว</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">เดือน-วัน-ปี</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">สถานะ</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Confix</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Array?.isArray(showattende) &&
+              showattende?.slice(startIndex, endIndex)?.map((data, index) => {
+                const attdt_id = showattende[index].attdDt_id;
+                // console.log(attdt_id);
+                const stuid = showattende[index].stu_id;
+                const date = showattende[index].date;
+                const attdid = showattende[index].attd_id;
+                const attd = showatten.find((att) => att.attd_id === attdid);
+                const attdd = attd ? attd?.attd_name : "";
+                // console.log(stuid);
+                const student = showstu.find((stu) => stu.stu_id === stuid);
+                // console.log(student);
+                const prefix = student ? student?.prefix : "";
+                const stuname = student ? student?.stu_Fname : "";
+                const stuLname = student ? student?.stu_Lname : "";
+                const stusn = student ? student?.stu_sn : "";
 
-              return (
-                <tr key={index}>
-                  <td>
-                    {prefix} {stuname} {stuLname}
-                  </td>
-                  <td>{stusn}</td>
-                  <td>{new Date(date).toLocaleDateString("en-US")}</td>
-                  <td>{attdd}</td>
-                  <td>
-                    <Button
-                      variant="btn btn-secondary"
-                      onClick={() => EditShow(data)}
-                      // ส่งค่าผ่าน function ใช้ =>
-                    >
-                      EDIT
-                    </Button>
-                    <Button
-                      className="buttonD"
-                      variant="btn btn-danger"
-                      onClick={() => handleDeleteConfirmation(attdt_id)}
-                    >
-                      DELETE
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+                return (
+                  <TableRow key={index}>
+                    <TableCell>
+                      {prefix} {stuname} {stuLname}
+                    </TableCell>
+                    <TableCell>{stusn}</TableCell>
+                    <TableCell>
+                      {new Date(date).toLocaleDateString("en-US")}
+                    </TableCell>
+                    <TableCell>{attdd}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="btn btn-secondary"
+                        onClick={() => EditShow(data)}
+                        // ส่งค่าผ่าน function ใช้ =>
+                      >
+                        EDIT
+                      </Button>
+                      <Button
+                        className="buttonD"
+                        variant="btn btn-danger"
+                        onClick={() => handleDeleteConfirmation(attdt_id)}
+                      >
+                        DELETE
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]} // Define the rows per page options
+          component="div"
+          count={showattende.length} // Total number of rows
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
       <Modal show={showEdit} onHide={EditClose}>
         <Modal.Header closeButton>
           <Modal.Title>EDIT DATA</Modal.Title>

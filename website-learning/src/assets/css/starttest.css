@@ -6,11 +6,11 @@ body, h1, h2, h3, p {
 
 /* Body styles */
 .body {
-  font-family: Arial, sans-serif;
+  font-family: "Mali", cursive;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   /* background-color: #f6f6f6; */
 }
 
@@ -34,8 +34,11 @@ body, h1, h2, h3, p {
 
 .question h2 {
   font-size: 24px;
-  color: #ff6b6b;
-  margin-bottom: 10px;
+  color: #3e3e3e;
+  /* font-weight: bold; */
+  margin-bottom: 30px;
+  font-family: "Mali", cursive;
+  text-align: left;
 }
 
 .question p {
@@ -51,7 +54,8 @@ body, h1, h2, h3, p {
   margin-top: 20px;
 }
 
-button {
+.button {
+  font-family: "Mali", cursive;
   background-color: #ff6b6b;
   color: white;
   border: none;
@@ -66,7 +70,7 @@ button {
   border-radius: 5px;
 }
 
-button:hover {
+.button:hover {
   background-color: #ff4f4f;
 }
 
@@ -116,6 +120,7 @@ input[type="radio"] {
   padding-left: 30px;
   cursor: pointer;
   color: #333;
+  font-size: 19px;
 }
 
 .radio-label::before {
@@ -133,8 +138,8 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked + .radio-label::before {
-  background-color: #55aaff;
-  border-color: #306191;
+  background-color: #ff6955;
+  border-color: #913030;
 }
 
 .radio-label::after {

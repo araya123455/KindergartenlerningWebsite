@@ -272,6 +272,34 @@ export const shownamesubject = createAsyncThunk(
   }
 );
 
+export const selectsubject = createAsyncThunk(
+  "selectsubject",
+  async ({ syllaId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/selectsubject", {
+        params: { sylla_id: syllaId },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const searcstudent = createAsyncThunk(
+  "searcstudent",
+  async ({ stuid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/searcstudent", {
+        params: { stu_id: stuid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const studentSlice = createSlice({
   name: "student",
   initialState: {

@@ -5,6 +5,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/attendance.css";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
 import { attendance, attendancedetailinsert } from "../slice/TeacherSlice";
 import { studentattendance } from "../slice/StudentSlice";
@@ -20,25 +25,25 @@ function StuAttendanceInsert() {
   const [showkinder, setShowKinder] = useState([]);
   const [showyear, setShowYear] = useState([]);
   const [showSearch, setshowsearch] = useState([]);
+  // const [sta, setsta] = useState([]);
 
   const loadstudent = () => {
     dispatch(studentattendance({ crtId }))
       .then((result) => {
+        const defaultAttdId = getAttdIdByStatus("มา"); // Default status for all students
+        const initialStatusRecords = result.payload.map((student) => ({
+          stu_id: student.stu_id,
+          attd_id: defaultAttdId,
+          date: new Date(selectedDate).toISOString().split("T")[0],
+        }));
         setshowstu(result.payload);
-        // Initialize statusRecords array with default values for each student.
-        setStatusRecords(
-          result.payload.map((student) => ({
-            stu_id: student.stu_id,
-            attd_id: "",
-            date: "",
-          }))
-        );
+        // console.log(result);
+        setStatusRecords(initialStatusRecords);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   const loadattendance = () => {
     dispatch(attendance())
       .then((result) => {
@@ -81,18 +86,55 @@ function StuAttendanceInsert() {
 
   const handleStatusChange = (index, attd_id) => {
     // Update the statusRecords array with the selected status for the specific student.
+    // console.log(index);
     setStatusRecords((prevStatusRecords) => {
       const updatedStatusRecords = [...prevStatusRecords];
       updatedStatusRecords[index] = {
         ...updatedStatusRecords[index],
         attd_id: attd_id,
-        date: selectedDate.toISOString().split("T")[0],
+        date: new Date(selectedDate).toISOString().split("T")[0],
       };
       return updatedStatusRecords;
     });
   };
 
+  const handleStatusDate = (date) => {
+    // Get the selected status for each student
+    const selectedStatus = statusRecords.map((record) => record.attd_id);
+
+    // Update the statusRecords array with the selected status and the new date
+    setStatusRecords((prevStatusRecords) => {
+      const updatedStatusRecords = prevStatusRecords.map((record, index) => ({
+        ...record,
+        attd_id: selectedStatus[index] || getAttdIdByStatus("มา"),
+        date: date,
+      }));
+      setSelectedDate(new Date(date).toISOString().split("T")[0]);
+      return updatedStatusRecords;
+    });
+  };
+
   const onInsert = () => {
+    // Check if all status and date are set to default values
+    const isDefaultValues = statusRecords.every((record) => {
+      return (
+        record.attd_id === getAttdIdByStatus("มา") &&
+        record.date === new Date(selectedDate).toISOString().split("T")[0]
+      );
+    });
+
+    if (isDefaultValues) {
+      // User didn't change anything, set status and date to default
+      setStatusRecords((prevStatusRecords) => {
+        const updatedStatusRecords = prevStatusRecords.map((record) => ({
+          ...record,
+          attd_id: getAttdIdByStatus("มา"),
+          date: new Date(selectedDate).toISOString().split("T")[0],
+        }));
+        return updatedStatusRecords;
+      });
+    }
+
     // Iterate through statusRecords and send each attendance record to the server.
     Promise.all(
       statusRecords.map((record) => {
@@ -133,6 +175,14 @@ function StuAttendanceInsert() {
   const getkin = kinroom ? kinroom?.kinde_level : "";
   const getroom = kinroom ? kinroom?.Kinder_room : "";
 
+  function getAttdIdByStatus(status) {
+    const matchingStatus = showatten?.find(
+      (data) => data?.attd_name === status
+    );
+    // console.log(matchingStatus?.attd_id);
+    return matchingStatus ? matchingStatus?.attd_id : "";
+  }
+
   useEffect(() => {
     loadstudent();
     loadattendance();
@@ -143,20 +193,24 @@ function StuAttendanceInsert() {
 
   return (
     <div>
-      <Link to={"/attendance"}>
-        <svg
-          baseProfile="tiny"
-          height="24px"
-          id="Layer_1"
-          version="1.2"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <g>
-            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
-          </g>
-        </svg>
-      </Link>
+       <button className="btn-back" role="button">
+        <Link to={"/attendance"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
       <div>
         <h1>
           เช็คชื่อนักเรียนห้อง {getkin}/{getroom} ปีการศึกษา {getyear} เทอม{" "}
@@ -168,50 +222,67 @@ function StuAttendanceInsert() {
         <input
           type="date"
           value={new Date(selectedDate).toISOString().split("T")[0]}
-          onChange={(e) => setSelectedDate(new Date(e.target.value))}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          onFocus={(e) => handleStatusDate(e.target.value)}
         />
       </div>
       <br />
-      <table>
-        <thead>
-          <tr>
-            <th>ชื่อ-นามสกุล</th>
-            <th>รหัสประจำตัว</th>
-            <th>เดือน-วัน-ปี</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showstu?.map((data, index) => {
-            const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
-            return (
-              <tr key={stu_id}>
-                <td>
-                  {prefix} {stu_Fname} {stu_Lname}
-                </td>
-                <td>{stu_sn}</td>
-                <td>{new Date(selectedDate).toLocaleDateString("en-US")}</td>
-                <td>
-                  <select
-                    onChange={(e) => handleStatusChange(index, e.target.value)}
-                    value={statusRecords[index]?.attd_id || ""}
-                  >
-                    <option>Select status</option>
-                    {showatten?.map((data) => {
-                      const { attd_id, attd_name } = data;
-                      return (
-                        <option key={attd_id} value={attd_id}>
-                          {attd_name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell>
+              <p className="headerC">ชื่อ-นามสกุล</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">รหัสประจำตัว</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">เดือน-วัน-ปี</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">สถานะเข้าเรียน</p>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {showstu
+            ?.sort((a, b) => a.stu_id - b.stu_id)
+            ?.map((data, index) => {
+              const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
+              return (
+                <TableRow key={stu_id}>
+                  <TableCell>
+                    {prefix} {stu_Fname} {stu_Lname}
+                  </TableCell>
+                  <TableCell>{stu_sn}</TableCell>
+                  <TableCell>
+                    {new Date(selectedDate).toLocaleDateString("en-US")}
+                  </TableCell>
+                  <TableCell>
+                    <select
+                      onChange={(e) =>
+                        handleStatusChange(index, e.target.value)
+                      }
+                      // onFocus={(e) => setsta(index, e.target.value)}
+                      value={
+                        statusRecords[index]?.attd_id || getAttdIdByStatus("มา")
+                      }
+                    >
+                      {showatten?.map((data) => {
+                        const { attd_id, attd_name } = data;
+                        return (
+                          <option key={attd_id} value={attd_id}>
+                            {attd_name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
       <Button onClick={() => onInsert()}>บันทึก</Button>
       <ToastContainer
         position="top-right"

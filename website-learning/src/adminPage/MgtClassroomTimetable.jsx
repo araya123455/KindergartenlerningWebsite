@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import {
   showclasstime,
   insertclasstime,
@@ -35,50 +40,7 @@ function MgtClassroomTimetable() {
     sylla_id: "",
     tch_id: "",
   });
-  const AddClose = () => {
-    setShowAdd(false);
-    loadData();
-  };
-  const AddShow = () => {
-    setShowAdd(true);
-  };
-  //   recomment
-  const handleInsert = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    setinsert({
-      ...insert,
-      [name]: value,
-    });
-  };
-  //   on click insert value
-  const onInsrt = () => {
-    let body = {
-      kinder_id: insert.kinder_id,
-      yearterm_id: insert.yearterm_id,
-      sylla_id: insert.sylla_id,
-      tch_id: insert.tch_id,
-    };
 
-    dispatch(insertclasstime(body))
-      .then((result) => {
-        setShow(false);
-        setShowAdd({
-          kinder_id: "",
-          yearterm_id: "",
-          sylla_id: "",
-          tch_id: "",
-        });
-        useEffect(() => {
-          loadData();
-        }, []);
-        // show success notification
-        // notify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   // load classroomtimetable
   const loadData = () => {
     dispatch(showclasstime())
@@ -99,7 +61,6 @@ function MgtClassroomTimetable() {
         console.log(err);
       });
   };
-
   // load teacher
   const loadTeacher = () => {
     dispatch(showteacher())
@@ -110,7 +71,6 @@ function MgtClassroomTimetable() {
         console.log(err);
       });
   };
-
   // load kindergarted room
   const loadkinder = () => {
     dispatch(showkinroom())
@@ -126,6 +86,57 @@ function MgtClassroomTimetable() {
     dispatch(getDataAll())
       .then((result) => {
         setshowyear(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const AddClose = () => {
+    setShowAdd(false);
+    loadData();
+  };
+  const AddShow = () => {
+    setShowAdd(true);
+  };
+
+  //   recomment
+  const handleInsert = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setinsert({
+      ...insert,
+      [name]: value,
+    });
+  };
+  //   on click insert value
+  const onInsrt = () => {
+    if (
+      !insert.kinder_id ||
+      !insert.yearterm_id ||
+      !insert.sylla_id ||
+      !insert.tch_id
+    ) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
+    let body = {
+      kinder_id: insert.kinder_id,
+      yearterm_id: insert.yearterm_id,
+      sylla_id: insert.sylla_id,
+      tch_id: insert.tch_id,
+    };
+
+    dispatch(insertclasstime(body))
+      .then((result) => {
+        setinsert({
+          kinder_id: "",
+          yearterm_id: "",
+          sylla_id: "",
+          tch_id: "",
+        });
+        loadData();
+        setShowAdd(false);
       })
       .catch((err) => {
         console.log(err);
@@ -169,8 +180,6 @@ function MgtClassroomTimetable() {
         setshowEdit(false);
         setupdate({ kinder_id: "", yearterm_id: "", sylla_id: "", tch_id: "" });
         loadData();
-        loadkinder();
-        // notify();
       })
       .catch((err) => {
         console.log(err);
@@ -178,17 +187,19 @@ function MgtClassroomTimetable() {
   };
   //   Delete
   const onDelete = (id) => {
-    dispatch(deleteclasstime(id))
-      .then((result) => {
-        if (result.payload && result.payload.error) {
-          console.log(result.payload.error);
-        } else {
-          loadData();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteclasstime(id))
+        .then((result) => {
+          if (result.payload && result.payload.error) {
+            console.log(result.payload.error);
+          } else {
+            loadData();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   // reload
   useEffect(() => {
@@ -203,17 +214,27 @@ function MgtClassroomTimetable() {
       <Button className="button" variant="primary" onClick={AddShow}>
         ADD
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>ชั้น/ห้อง</th>
-            <th>เทอม/ปี</th>
-            <th>หลักสูตร</th>
-            <th>ครูผู้สอน</th>
-            <th>confix</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell>
+              <p className="headerC">ชั้น/ห้อง</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">เทอม/ปี</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">หลักสูตร</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">ครูผู้สอน</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">confix</p>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {showdata.map((data) => {
             const { crt_id, kinder_id, yearterm_id, sylla_id, tch_id } = data;
             const syllabus = showsylla.find(
@@ -236,16 +257,16 @@ function MgtClassroomTimetable() {
             const year = yearTerm ? yearTerm.year : "";
             const term = yearTerm ? yearTerm.term : "";
             return (
-              <tr key={crt_id}>
-                <td>
+              <TableRow key={crt_id}>
+                <TableCell>
                   {kinderLevel}/{kinderRoom}
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                   {term}/{year}
-                </td>
-                <td>{syllabusName}</td>
-                <td>{teacherName}</td>
-                <td>
+                </TableCell>
+                <TableCell>{syllabusName}</TableCell>
+                <TableCell>{teacherName}</TableCell>
+                <TableCell>
                   <Button
                     variant="btn btn-secondary"
                     onClick={() => EditShow(data)}
@@ -260,12 +281,12 @@ function MgtClassroomTimetable() {
                   >
                     DELETE
                   </Button>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>

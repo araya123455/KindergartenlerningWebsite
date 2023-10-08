@@ -2,6 +2,14 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   showclass,
   insertclass,
@@ -18,7 +26,6 @@ import { searchstuclass } from "../slice/searchSlice";
 
 function MgtClass() {
   const dispatch = useDispatch();
-  const [showtea, setshowtea] = useState([]);
   const [classroomTimetableData, setClassroomTimetableData] = useState([]);
   const [showstu, setshowstu] = useState([]);
   const [showkinder, setShowKinder] = useState([]);
@@ -44,6 +51,8 @@ function MgtClass() {
   const [filteredData, setFilteredData] = useState([]);
   const [Todisplay, setTodisplay] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
 
   const loadData = () => {
     dispatch(showclass())
@@ -94,7 +103,6 @@ function MgtClass() {
           map[teacher.tch_id] = teacherName;
           return map;
         }, {});
-        setshowtea(result.payload);
         setTeacherNamesMap(teacherMap); // Save the teacher names map
       })
       .catch((err) => {
@@ -153,6 +161,10 @@ function MgtClass() {
 
   const onInsert = () => {
     const { kinder_id, yearterm_id, stu_id, crt_id } = insert;
+    if (!kinder_id || !yearterm_id || !stu_id || !crt_id) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
 
     const body = {
       kinder_id,
@@ -267,13 +279,15 @@ function MgtClass() {
   };
 
   const onDelete = (id) => {
-    dispatch(deleteclass(id))
-      .then(() => {
-        loadData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteclass(id))
+        .then(() => {
+          loadData();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const openAddModal = () => {
@@ -316,6 +330,19 @@ function MgtClass() {
     setTodisplay(filteredData.length > 0 ? filteredData : Todisplay);
     // console.log(filteredData);
   }, [filteredData]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Reset to the first page when the rows per page changes
+  };
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+
   return (
     <>
       <Form>
@@ -362,78 +389,101 @@ function MgtClass() {
       <Button className="button" variant="primary" onClick={openAddModal}>
         ADD
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>ชั้น/ห้อง</th>
-            <th>เทอม/ปี</th>
-            <th>คำนำหน้า</th>
-            <th>ชื่อ</th>
-            <th>นามสกุล</th>
-            <th>ครูผู้สอน</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Todisplay.map((data) => {
-            const { class_id, kinder_id, yearterm_id, stu_id } = data;
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชั้น/ห้อง</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">เทอม/ปี</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ชื่อ-นามสกุล</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">เลขประจำตัว</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ครูผู้สอน</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Actions</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Todisplay?.slice(startIndex, endIndex)?.map((data, index) => {
+              const { class_id, kinder_id, yearterm_id, stu_id } = data;
 
-            const student = showstu.find((stu) => stu.stu_id === stu_id);
-            const studentFName = student ? student.stu_Fname : "";
-            const studentLName = student ? student.stu_Lname : "";
-            const studentprefix = student ? student.prefix : "";
-            const kinder = showkinder.find(
-              (kin) => kin.kinder_id === kinder_id
-            );
-            const kinderLevel = kinder ? kinder.kinde_level : "";
-            const kinderRoom = kinder ? kinder.Kinder_room : "";
+              const student = showstu.find((stu) => stu.stu_id === stu_id);
+              const studentFName = student ? student.stu_Fname : "";
+              const studentLName = student ? student.stu_Lname : "";
+              const studentprefix = student ? student.prefix : "";
+              const studentsn = student ? student.stu_sn : "";
+              const kinder = showkinder.find(
+                (kin) => kin.kinder_id === kinder_id
+              );
+              const kinderLevel = kinder ? kinder.kinde_level : "";
+              const kinderRoom = kinder ? kinder.Kinder_room : "";
 
-            const yearTerm = showyear.find(
-              (term) => term.yearTerm_id === yearterm_id
-            );
-            const year = yearTerm ? yearTerm.year : "";
-            const term = yearTerm ? yearTerm.term : "";
+              const yearTerm = showyear.find(
+                (term) => term.yearTerm_id === yearterm_id
+              );
+              const year = yearTerm ? yearTerm.year : "";
+              const term = yearTerm ? yearTerm.term : "";
 
-            const teacherIds = classroomTimetableData
-              .filter((entry) => entry.kinder_id === kinder_id)
-              .map((entry) => entry.tch_id);
-            const teacherNames = teacherIds.map((tch_id) => {
-              return teacherNamesMap[tch_id] || "";
-            });
+              const teacherIds = classroomTimetableData
+                .filter((entry) => entry.kinder_id === kinder_id)
+                .map((entry) => entry.tch_id);
+              const teacherNames = teacherIds.map((tch_id) => {
+                return teacherNamesMap[tch_id] || "";
+              });
 
-            return (
-              <tr key={class_id}>
-                <td>
-                  {kinderLevel}/{kinderRoom}
-                </td>
-                <td>
-                  {term}/{year}
-                </td>
-                <td>{studentprefix}</td>
-                <td>{studentFName}</td>
-                <td>{studentLName}</td>
-                <td> {teacherNames.join(", ")}</td>
-                <td>
-                  <Button
-                    variant="btn btn-secondary"
-                    onClick={() => openEditModal(data)}
-                  >
-                    EDIT
-                  </Button>
-                  <Button
-                    className="buttonD"
-                    variant="btn btn-danger"
-                    onClick={() => onDelete(class_id)}
-                  >
-                    DELETE
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
+              return (
+                <TableRow key={class_id}>
+                  <TableCell>
+                    {kinderLevel}/{kinderRoom}
+                  </TableCell>
+                  <TableCell>
+                    {term}/{year}
+                  </TableCell>
+                  <TableCell>
+                    {studentprefix} {studentFName} {studentLName}
+                  </TableCell>
+                  <TableCell>{studentsn}</TableCell>
+                  <TableCell>{teacherNames.join(", ")}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="btn btn-secondary"
+                      onClick={() => openEditModal(data)}
+                    >
+                      EDIT
+                    </Button>
+                    <Button
+                      className="buttonD"
+                      variant="btn btn-danger"
+                      onClick={() => onDelete(class_id)}
+                    >
+                      DELETE
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]} // You can adjust these options
+          component="div"
+          count={Todisplay.length} // Total number of rows
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={closeAddModal}>
         <Modal.Header closeButton>
@@ -469,7 +519,7 @@ function MgtClass() {
 
                   return (
                     <option
-                      key={data.id}
+                      key={data.kinder_id}
                       value={`${data.kinder_id} ${data.yearterm_id} ${data.crt_id}`}
                     >
                       {kinderName} - {termYearName}
@@ -542,7 +592,7 @@ function MgtClass() {
 
                   return (
                     <option
-                      key={data.id}
+                      key={data.kinder_id}
                       value={`${data.kinder_id} ${data.yearterm_id} ${data.crt_id}`}
                     >
                       {kinderName} - {termYearName}

@@ -6,6 +6,7 @@ import {
 } from "../LocalStorage/localstorage";
 import { showtest, finishedtest } from "../slice/StudentSlice";
 import { Outlet, Link } from "react-router-dom";
+import "../assets/css/table.css";
 
 function Test() {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function Test() {
                     <td>{test_detail}</td>
                     <td>
                       <Link
+                        className="linkshow"
                         to="/student/showTestResult"
                         onClick={() => onClick(test_id)}
                       >
@@ -91,7 +93,8 @@ function Test() {
                     <td>{test_detail}</td>
                     <td>
                       <Link
-                        to="/student/startTest"
+                        className="linkshow"
+                        to="/student/clickfortest"
                         onClick={() => onClick(test_id)}
                       >
                         เริ่มทำแบบทดสอบ

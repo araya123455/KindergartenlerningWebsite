@@ -17,7 +17,7 @@ const StartTest = () => {
   const [showtest, setshowtest] = useState([]);
   const [showques, setshowques] = useState([]);
   const [showresult, setshowresult] = useState([]);
-  const [showResults, setShowResults] = useState(); // Check test have result or not
+  const [showResults, setShowResults] = useState(false); // Check test have result or not
   const [showredetail, setshowredetail] = useState([]);
   const testId = getFromLocalStorage("testId");
   const auth = getFromLocalStorage("auth");
@@ -43,11 +43,12 @@ const StartTest = () => {
     dispatch(testresultdetail({ testId, stuid }))
       .then((result) => {
         setshowredetail(result.payload);
-        if (result.payload.length > 0) {
-          setShowResults(true);
-        } else {
-          setShowResults(false);
-        }
+        // console.log(result.payload.length);
+        // if (result.payload.length > 0) {
+        //   setShowResults(true);
+        // } else {
+        //   setShowResults(false);
+        // }
       })
       .catch((err) => {
         console.log(err);
@@ -83,8 +84,9 @@ const StartTest = () => {
 
   const handleAnswerSelect = (event) => {
     const newSelectedAnswers = [...selectedAnswers];
-    // console.log(newSelectedAnswers);
     newSelectedAnswers[currentQuestionIndex] = event.target.value;
+    // console.log(newSelectedAnswers);
+    // console.log(allQuestionsAnswered);
     // console.log(event.target.value);
     setSelectedAnswers(newSelectedAnswers);
   };
@@ -99,22 +101,21 @@ const StartTest = () => {
     if (currentQuestionIndex < showques.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else if (allQuestionsAnswered) {
-      const currentTime = new Date(); // Capture the current time
+      setShowResults(true); // Set showResults to true here
+      // console.log("showResults",showResults);
+      const currentTime = new Date();
       const formattedTime =
         currentTime &&
         `${currentTime.toLocaleDateString()} at ${currentTime.toLocaleTimeString()}`;
       setformattime(formattedTime);
-      console.log(formattedTime);
+      // console.log(formattedTime);
 
       if (formattime != null) {
         onInsert(formattedTime);
       }
-
       showques.forEach((question, index) => {
         onInsertDe(index);
       });
-
-      setShowResults(true); // Set showResults to true here
     } else {
       alert("กรุณาทำแบบทดสอบให้ครบทุกข้อ!!");
     }
@@ -136,11 +137,12 @@ const StartTest = () => {
   };
 
   const onInsertDe = (questionIndex) => {
-    const selectedAnswer = selectedAnswers[questionIndex];
+    const Answer = selectedAnswers[questionIndex];
+    // console.log(Answer);
     let body = {
-      ans_result: selectedAnswer,
+      ans_result: Answer,
       score:
-        selectedAnswers[questionIndex] === showques[questionIndex]?.answer
+        Answer === showques[questionIndex]?.answer
           ? showques[questionIndex]?.score_ques
           : 0,
       ques_id: showques[questionIndex]?.ques_id,
@@ -158,7 +160,7 @@ const StartTest = () => {
 
   const calculateScore = () => {
     let newScore = 0;
-    showredetail.forEach((data) => {
+    showredetail?.forEach((data) => {
       newScore += data.score;
     });
     return newScore;
@@ -166,16 +168,16 @@ const StartTest = () => {
 
   const calculateTotalPossibleScore = () => {
     let totalScore = 0;
-    showques.forEach((question) => {
-      totalScore += question.score_ques;
+    showques?.forEach((question) => {
+      totalScore += question?.score_ques;
     });
     return totalScore;
   };
 
   const timeduration = () => {
     let time;
-    showresult.forEach((data) => {
-      time = data.time_duration;
+    showresult?.forEach((data) => {
+      time = data?.time_duration;
     });
     return time;
   };
@@ -208,7 +210,7 @@ const StartTest = () => {
           const stuans = showredetail[index]?.ans_result;
           const correctans = showques[index]?.answer;
           const isCorrect = stuans === correctans;
-          const scoreq = showques[index].score_ques;
+          const scoreq = showques[index]?.score_ques;
 
           return (
             <div key={index}>
@@ -238,7 +240,7 @@ const StartTest = () => {
           <div className="question">
             {showResults ? (
               <div>
-                {showtest.map((data) => {
+                {showtest?.map((data) => {
                   const { test_id, test_detail } = data;
                   return <h3 key={test_id}>{test_detail}</h3>;
                 })}
@@ -248,7 +250,6 @@ const StartTest = () => {
                   <p>คะแนนเต็ม: {calculateTotalPossibleScore()} คะแนน</p>
                   <h4>ส่งแบบทดสอบเวลา: {timeduration()}</h4>
                 </div>
-
                 {renderAnswerSummary()}
               </div>
             ) : (
@@ -273,17 +274,17 @@ const StartTest = () => {
             {currentQuestionIndex > 0 &&
               currentQuestionIndex !== showques.length &&
               !showResults && (
-                <button className="buttn" onClick={handlePrevClick}>
+                <button className="buttn button" onClick={handlePrevClick}>
                   ย้อนกลับ
                 </button>
               )}
             {!showResults && currentQuestionIndex !== showques.length - 1 && (
-              <button className="buttn" onClick={handleNextClick}>
+              <button className="buttn button" onClick={handleNextClick}>
                 ข้อถัดไป
               </button>
             )}
             {!showResults && currentQuestionIndex === showques.length - 1 && (
-              <button className="buttn" onClick={handleNextClick}>
+              <button className="buttn button" onClick={handleNextClick}>
                 ส่งคำตอบ
               </button>
             )}

@@ -40,11 +40,11 @@ function NavbarHead(props) {
               <i>หลักสูตร</i>
             </NavLink>
           </div>
-          <div className="navbarCon">
+          {/* <div className="navbarCon">
             <NavLink to="mgtSubject">
               <i>วิชา</i>
             </NavLink>
-          </div>
+          </div> */}
           <div className="navbarCon">
             <NavLink to="mgtClassTimetable">
               <i>ตารางสอนครู</i>

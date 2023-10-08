@@ -34,6 +34,7 @@ import RouteStudent from "./component/navbarStudent/RouteNavbar";
 import CheckScore from "./studentPage/CheckScore";
 import StudentProfile from "./studentPage/StudentProfile";
 import Test from "./studentPage/Test";
+import ClickForStart from "./studentPage/ClickForStart";
 import StartTest from "./studentPage/StartTest";
 import ShowTestResult from "./studentPage/ShowTestResult";
 import Login from "../src/component/auth/Login";
@@ -175,6 +176,7 @@ function App() {
           <Route index element={<Navigate to="student" replace />} />
           <Route path="checkScore" element={<CheckScore />} />
           <Route path="test" element={<Test />} />
+          <Route path="clickfortest" element={<ClickForStart />} />
           <Route path="startTest" element={<StartTest />} />
           <Route path="showTestResult" element={<ShowTestResult />} />
         </Route>

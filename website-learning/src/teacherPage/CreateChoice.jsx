@@ -3,6 +3,14 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
 import { Outlet, Link } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   showquestion,
   insertquestion,
@@ -273,23 +281,24 @@ function CreateChoice() {
 
   return (
     <div>
-      <Link to={"/test/CreateTest"}>
-        <svg
-          baseProfile="tiny"
-          height="24px"
-          id="Layer_1"
-          version="1.2"
-          viewBox="0 0 24 24"
-          width="24px"
-          //   xml:space="preserve"
-          //   xmlns="http://www.w3.org/2000/svg"
-          //   xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g>
-            <path d="M19.164,19.547c-1.641-2.5-3.669-3.285-6.164-3.484v1.437c0,0.534-0.208,1.036-0.586,1.414   c-0.756,0.756-2.077,0.751-2.823,0.005l-6.293-6.207C3.107,12.523,3,12.268,3,11.999s0.107-0.524,0.298-0.712l6.288-6.203   c0.754-0.755,2.073-0.756,2.829,0.001C12.792,5.463,13,5.965,13,6.499v1.704c4.619,0.933,8,4.997,8,9.796v1   c0,0.442-0.29,0.832-0.714,0.958c-0.095,0.027-0.19,0.042-0.286,0.042C19.669,19.999,19.354,19.834,19.164,19.547z M12.023,14.011   c2.207,0.056,4.638,0.394,6.758,2.121c-0.768-3.216-3.477-5.702-6.893-6.08C11.384,9.996,11,10,11,10V6.503l-5.576,5.496l5.576,5.5   V14C11,14,11.738,14.01,12.023,14.011z" />
-          </g>
-        </svg>
-      </Link>
+       <button className="btn-back" role="button">
+        <Link to={"/test/CreateTest"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
       <div>
         <h2>{testname}</h2>
       </div>
@@ -298,20 +307,21 @@ function CreateChoice() {
           ADD
         </Button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>คำถาม</th>
-            <th>ข้อที่1</th>
-            <th>ข้อที่2</th>
-            <th>ข้อที่3</th>
-            <th>ข้อที่4</th>
-            <th>คำตอบ</th>
-            <th>คะแนน</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
+      <TableContainer component={Paper}>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell><p className="headerC">คำถาม</p></TableCell>
+            <TableCell><p className="headerC">ข้อที่1</p></TableCell>
+            <TableCell><p className="headerC">ข้อที่2</p></TableCell>
+            <TableCell><p className="headerC">ข้อที่3</p></TableCell>
+            <TableCell><p className="headerC">ข้อที่4</p></TableCell>
+            <TableCell><p className="headerC">คำตอบ</p></TableCell>
+            <TableCell><p className="headerC">คะแนน</p></TableCell>
+            <TableCell><p className="headerC">Confix</p></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {showdata.map((data) => {
             const {
               ques_id,
@@ -324,15 +334,15 @@ function CreateChoice() {
               score_ques,
             } = data;
             return (
-              <tr key={ques_id}>
-                <td>{ques}</td>
-                <td>{choice1}</td>
-                <td>{choice2}</td>
-                <td>{choice3}</td>
-                <td>{choice4}</td>
-                <td>{answer}</td>
-                <td>{score_ques}</td>
-                <td>
+              <TableRow key={ques_id}>
+                <TableCell>{ques}</TableCell>
+                <TableCell>{choice1}</TableCell>
+                <TableCell>{choice2}</TableCell>
+                <TableCell>{choice3}</TableCell>
+                <TableCell>{choice4}</TableCell>
+                <TableCell>{answer}</TableCell>
+                <TableCell>{score_ques}</TableCell>
+                <TableCell>
                   <Button
                     variant="btn btn-secondary"
                     onClick={() => EditShow(data)}
@@ -346,12 +356,13 @@ function CreateChoice() {
                   >
                     DELETE
                   </Button>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+      </TableContainer>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>

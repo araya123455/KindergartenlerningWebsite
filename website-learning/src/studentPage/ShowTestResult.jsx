@@ -117,7 +117,7 @@ function ShowTestResult() {
               {showredetail.map((question, index) => (
                 <div key={index}>
                   <p>
-                    คำถาม {index + 1} {showques[index]?.ques || ''}
+                    คำถาม {index + 1}. {showques[index]?.ques || ''}
                   </p>
                   {
                     (isCorrect =

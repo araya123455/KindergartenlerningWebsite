@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import {
   getDataAll,
   insertyearterm,
@@ -17,6 +22,17 @@ function MgtYearTerm() {
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
   const [update, setupdate] = useState({ year: "", term: "" });
+
+  const loadData = () => {
+    dispatch(getDataAll())
+      .then((result) => {
+        setshowdata(result.payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const AddClose = () => {
     setShowAdd(false);
   };
@@ -34,6 +50,11 @@ function MgtYearTerm() {
   };
   //   on click insert value
   const onInsrt = () => {
+    if (!insert.year || !insert.term) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
+
     let body = {
       year: insert.year,
       term: insert.term,
@@ -41,12 +62,12 @@ function MgtYearTerm() {
 
     dispatch(insertyearterm(body))
       .then((result) => {
-        setShow(false);
-        setShowAdd({
+        setinsert({
           year: "",
           term: "",
         });
         loadData();
+        setShowAdd(false);
         // show success notification
         // notify();
       })
@@ -54,22 +75,6 @@ function MgtYearTerm() {
         console.log(err);
       });
   };
-  useEffect(() => {
-    loadData();
-  }, []);
-  const loadData = () => {
-    dispatch(getDataAll())
-      .then((result) => {
-        setshowdata(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  // reload
-  useEffect(() => {
-    loadData();
-  }, []);
 
   const EditClose = () => {
     setshowEdit(false);
@@ -108,44 +113,58 @@ function MgtYearTerm() {
         console.log(err);
       });
   };
+
   //   Delete
   const onDelete = (id) => {
-    dispatch(deleteyeraterm(id))
-      .then((result) => {
-        // Check if the response contains an error message
-        if (result.payload && result.payload.error) {
-          console.log(result.payload.error); // You can log the error or show it to the user
-        } else {
-          // Deletion successful, reload the data
-          loadData();
-        }
-      })
-      .catch((err) => {
-        console.log(err); // Handle unexpected errors
-      });
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteyeraterm(id))
+        .then((result) => {
+          // Check if the response contains an error message
+          if (result.payload && result.payload.error) {
+            console.log(result.payload.error); // You can log the error or show it to the user
+          } else {
+            // Deletion successful, reload the data
+            loadData();
+          }
+        })
+        .catch((err) => {
+          console.log(err); // Handle unexpected errors
+        });
+    }
   };
+
+  // reload
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <>
       <Button className="button" variant="primary" onClick={AddShow}>
         ADD
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>Year</th>
-            <th>Term</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell>
+              <p className="headerC">Year</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Term</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Confix</p>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {showdata.map((data) => {
             const { yearTerm_id, year, term } = data;
             return (
-              <tr key={yearTerm_id}>
-                <td>{year}</td>
-                <td>{term}</td>
-                <td>
+              <TableRow key={yearTerm_id}>
+                <TableCell>{year}</TableCell>
+                <TableCell>{term}</TableCell>
+                <TableCell>
                   <Button
                     variant="btn btn-secondary"
                     onClick={() => EditShow(data)}
@@ -160,12 +179,12 @@ function MgtYearTerm() {
                   >
                     DELETE
                   </Button>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>

@@ -4,6 +4,14 @@ import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
 import { saveToLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/attendance.css";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   showclass,
   showkinroom,
@@ -71,63 +79,75 @@ function StudentAttendance() {
 
   return (
     <div>
-      <h1>แช็คชื่อนักเรียน</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ชั้น/ห้อง</th>
-            <th>เทอม/ปีการศึกษา</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showSearch?.map((data) => {
-            const { crt_id, kinder_id, yearterm_id } = data;
-            const kinder = showkinder.find(
-              (kin) => kin?.kinder_id === kinder_id
-            );
-            const kinderName = kinder
-              ? `${kinder?.kinde_level}/${kinder?.Kinder_room}`
-              : "";
+      <h1 className="h2">แช็คชื่อนักเรียน</h1>
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชั้น/ห้อง</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">เทอม/ปี</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Action</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {showSearch?.map((data) => {
+              const { crt_id, kinder_id, yearterm_id } = data;
+              const kinder = showkinder.find(
+                (kin) => kin?.kinder_id === kinder_id
+              );
+              const kinderName = kinder
+                ? `${kinder?.kinde_level}/${kinder?.Kinder_room}`
+                : "";
 
-            const yearTerm = showyear.find(
-              (term) => term?.yearTerm_id === yearterm_id
-            );
-            const termYearName = yearTerm
-              ? `${yearTerm.term}/${yearTerm.year}`
-              : "";
-            return (
-              <tr key={crt_id}>
-                <td>{kinderName}</td>
-                <td>{termYearName}</td>
-                <td>
-                  <Link
-                    className="linkshow"
-                    to={"stuAttendanceShowTotal"}
-                    onClick={() => onClick(crt_id)}
-                  >
-                    ดูประวัติ
-                  </Link>
-                  <Link
-                    className="linkinsert"
-                    to={"stuAttendanceInsert"}
-                    onClick={() => onClick(crt_id)}
-                  >
-                    เช็คชื่อ
-                  </Link>
-                  <Link
-                    className="linkshow"
-                    to={"stuAttendanceUpdate"}
-                    onClick={() => onClick(crt_id)}
-                  >
-                    แก้ไข
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              const yearTerm = showyear.find(
+                (term) => term?.yearTerm_id === yearterm_id
+              );
+              const termYearName = yearTerm
+                ? `${yearTerm.term}/${yearTerm.year}`
+                : "";
+              return (
+                <TableRow key={crt_id}>
+                  <TableCell>
+                    <p>{kinderName}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>{termYearName}</p>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      className="linkshow"
+                      to={"stuAttendanceShowTotal"}
+                      onClick={() => onClick(crt_id)}
+                    >
+                      ดูประวัติ
+                    </Link>
+                    <Link
+                      className="linkinsert"
+                      to={"stuAttendanceInsert"}
+                      onClick={() => onClick(crt_id)}
+                    >
+                      เช็คชื่อ
+                    </Link>
+                    <Link
+                      className="linkshow"
+                      to={"stuAttendanceUpdate"}
+                      onClick={() => onClick(crt_id)}
+                    >
+                      แก้ไข
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

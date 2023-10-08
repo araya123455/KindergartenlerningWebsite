@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { showtest, showtestde } from "../slice/TeacherSlice";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   getFromLocalStorage,
   saveToLocalStorage,
@@ -89,57 +97,75 @@ function TestResult() {
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>ชื่อแบบทดสอบ</th>
-            <th>ชั้น/ห้อง</th>
-            <th>ปี/เทอม</th>
-            <th>Confix</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* bcoz test can add to many class then use testdetail */}
-          {showtestdetail?.map((data, index) => {
-            // const { test_id, test_detail } = data;
-            const testde_id = showtestdetail[index]?.testDe_id;
-            const testid = showtestname.find(
-              (tes) => tes.test_id === showtestdetail[index]?.test_id
-            );
-            const testnamed = testid ? testid?.test_detail : "";
-            const kinder = showkinder?.find(
-              (kin) => kin.kinder_id === showtestdetail[index]?.kinder_id
-            );
-            const kinderLevel = kinder ? kinder?.kinde_level : "";
-            const kinderRoom = kinder ? kinder?.Kinder_room : "";
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชื่อแบบทดสอบ</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ชั้น/ห้อง</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ปี/เทอม</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Confix</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* bcoz test can add to many class then use testdetail */}
+            {showtestdetail?.map((data, index) => {
+              // const { test_id, test_detail } = data;
+              const testde_id = showtestdetail[index]?.testDe_id;
+              const testid = showtestname.find(
+                (tes) => tes.test_id === showtestdetail[index]?.test_id
+              );
+              const testnamed = testid ? testid?.test_detail : "";
+              const kinder = showkinder?.find(
+                (kin) => kin.kinder_id === showtestdetail[index]?.kinder_id
+              );
+              const kinderLevel = kinder ? kinder?.kinde_level : "";
+              const kinderRoom = kinder ? kinder?.Kinder_room : "";
 
-            const yearTerm = showyear?.find(
-              (term) => term.yearTerm_id === showtestdetail[index]?.yearterm_id
-            );
-            const year = yearTerm ? yearTerm.year : "";
-            const term = yearTerm ? yearTerm.term : "";
-            return (
-              <tr key={index}>
-                <td>{testnamed}</td>
-                <td>
-                  {kinderLevel}/{kinderRoom}
-                </td>
-                <td>
-                  {term}/{year}
-                </td>
-                <td>
-                  <Link
-                    to="/testResultDetail"
-                    onClick={() => onClick(testde_id, testid)}
-                  >
-                    แบบทดสอบที่ถูกส่งมา
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              const yearTerm = showyear?.find(
+                (term) =>
+                  term.yearTerm_id === showtestdetail[index]?.yearterm_id
+              );
+              const year = yearTerm ? yearTerm.year : "";
+              const term = yearTerm ? yearTerm.term : "";
+              return (
+                <TableRow key={index}>
+                  <TableCell>
+                    <p>{testnamed}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>
+                      {kinderLevel}/{kinderRoom}
+                    </p>
+                  </TableCell>
+                  <TableCell>
+                    <p>
+                      {term}/{year}
+                    </p>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      className="linkshow"
+                      to="/testResultDetail"
+                      onClick={() => onClick(testde_id, testid)}
+                    >
+                      แบบทดสอบที่ถูกส่งมา
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Outlet />
     </div>
   );

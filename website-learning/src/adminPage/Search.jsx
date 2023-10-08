@@ -10,12 +10,14 @@ function Search() {
 
   const teacherData = useSelector((state) => state.data.teacherData);
   const studentData = useSelector((state) => state.data.studentData);
+  const [showstr, setShowstr] = useState(""); // Use state for showstr
 
   const handleSearch = () => {
     if (!searchQuery) {
       alert("Please input data first"); // Display an alert message
-      setStudentResults("");
-      setTeacherResults("");
+      setStudentResults([]);
+      setTeacherResults([]);
+      setShowstr(""); // Set showstr to "not found"
       return;
     }
     filterData();
@@ -38,6 +40,13 @@ function Search() {
       (student) => student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
     );
     setStudentResults(filteredStudents);
+
+    // Set showstr based on the results
+    if (filteredTeachers.length === 0 && filteredStudents.length === 0) {
+      setShowstr("not found");
+    } else {
+      setShowstr(""); // Reset showstr if results are found
+    }
   };
 
   return (
@@ -51,8 +60,7 @@ function Search() {
       />
 
       {/* Search button */}
-      <button onClick={handleSearch}>Search</button>
-
+      <button className="buttnN buttonN" onClick={handleSearch}>Search</button>
       {/* Display teacher search results */}
       <ul className="student-results">
         {teacherResults.length > 0
@@ -75,7 +83,7 @@ function Search() {
       {/* Display student search results */}
       <ul className="student-results">
         {studentResults.length > 0
-          ? studentResults.map((student) => (
+          ? studentResults?.map((student) => (
               <li key={student.stu_id} className="student-item">
                 <h2>Student Results:</h2>
                 <div>Student Sn: {student.stu_sn}</div>
@@ -89,6 +97,11 @@ function Search() {
             ))
           : null}
       </ul>
+
+      {/* Display "not found" message */}
+      {showstr === "not found" && (
+        <p>No results found</p>
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
+import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import {
   showsubject,
   insertsubject,
@@ -9,56 +10,21 @@ import {
   deletesubject,
   showsyllabus,
 } from "../slice/DataSlice";
+import { selectsubject } from "../slice/StudentSlice";
+import { Link } from "react-router-dom";
 
 function MgtSubject() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [showsylla, setshowsylla] = useState([]);
+  const [selectsub, setselectsub] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  const [insert, setinsert] = useState({ sub_name: "", sylla_id: "" });
+  const syllaId = getFromLocalStorage("syllaId");
+  const [insert, setinsert] = useState({ sub_name: "" });
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
-  const [update, setupdate] = useState({ sub_name: "", sylla_id: "" });
-  const AddClose = () => {
-    setShowAdd(false);
-  };
-  const AddShow = () => {
-    setShowAdd(true);
-  };
-  //   recomment
-  const handleInsert = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    setinsert({
-      ...insert,
-      [name]: value,
-    });
-  };
-  //   on click insert value
-  const onInsrt = () => {
-    let body = {
-      sub_name: insert.sub_name,
-      sylla_id: insert.sylla_id,
-    };
-    dispatch(insertsubject(body))
-      .then((result) => {
-        setShowAdd(false);
-        setShowAdd({
-          sub_name: "",
-          sylla_id: "",
-        });
-        loadData();
-        // show success notification
-        // notify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    loadSyllabus();
-    loadData();
-  }, []);
+  const [update, setupdate] = useState({ sub_name: "" });
+
   // show syllabus
   const loadSyllabus = () => {
     dispatch(showsyllabus())
@@ -79,19 +45,66 @@ function MgtSubject() {
         console.log(err);
       });
   };
-  // reload
-  useEffect(() => {
-    loadSyllabus();
-    loadData();
-  }, []);
+
+  const loadselectsub = () => {
+    dispatch(selectsubject({ syllaId }))
+      .then((result) => {
+        setselectsub(result.payload);
+        // console.log(selectsub);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const AddClose = () => {
+    setShowAdd(false);
+  };
+  const AddShow = () => {
+    setShowAdd(true);
+  };
+
+  //   recomment
+  const handleInsert = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setinsert({
+      ...insert,
+      [name]: value,
+    });
+  };
+
+  //   on click insert value
+  const onInsrt = () => {
+    let body = {
+      sub_name: insert.sub_name,
+      sylla_id: syllaId,
+    };
+    dispatch(insertsubject(body))
+      .then((result) => {
+        setinsert({
+          sub_name: "",
+        });
+        setShowAdd(false);
+        loadSyllabus();
+        loadselectsub();
+        // show success notification
+        // notify();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const EditClose = () => {
     setshowEdit(false);
   };
+
   const EditShow = (data) => {
     setDatamodal(data);
     setshowEdit(true);
   };
+
   //   recomment
   const handleChange = (e) => {
     let name = e.target.name;
@@ -101,23 +114,22 @@ function MgtSubject() {
       [name]: value,
     });
   };
+
   //   on click save value edit
   const onSave = () => {
     let body = {
       id: datamodal.sub_id,
       body: {
         sub_name: update.sub_name === "" ? datamodal.sub_name : update.sub_name,
-        sylla_id: update.sylla_id === "" ? datamodal.sylla_id : update.sylla_id,
       },
     };
 
     dispatch(editsubject(body))
       .then((result) => {
+        setupdate({ sub_name: "" });
         setshowEdit(false);
-        setupdate({ sub_name: "", sylla_id: "" });
         loadSyllabus();
-        loadData();
-        // notify();
+        loadselectsub();
       })
       .catch((err) => {
         console.log(err);
@@ -130,22 +142,48 @@ function MgtSubject() {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
         } else {
-          loadData();
+          loadSyllabus();
+          loadselectsub();
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   useEffect(() => {
-    loadSyllabus();
     loadData();
+    loadSyllabus();
+    loadselectsub();
   }, []);
+
   return (
     <>
-      <Button className="button" variant="primary" onClick={AddShow}>
-        ADD
-      </Button>
+      <div>
+        <button className="btn-back" role="button">
+          <Link to={"/admin/mgtSyllabus"} className="back-font">
+            <svg
+              viewBox="0 0 96 96"
+              height="24px"
+              id="Layer_1"
+              version="1.2"
+              width="24px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+                fill="#ffffff"
+              />
+            </svg>
+            ย้อนกลับ
+          </Link>
+        </button>
+      </div>
+      <div>
+        <Button className="button" variant="primary" onClick={AddShow}>
+          ADD
+        </Button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -155,7 +193,7 @@ function MgtSubject() {
           </tr>
         </thead>
         <tbody>
-          {showdata?.map((data) => {
+          {selectsub?.map((data) => {
             const { sub_id, sub_name, sylla_id } = data;
             const syllabus = showsylla.find(
               (sylla) => sylla.sylla_id === sylla_id
@@ -202,22 +240,6 @@ function MgtSubject() {
                 onChange={(e) => handleInsert(e)}
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>ชื่อหลักสูตร</Form.Label>
-              <Form.Control
-                as="select"
-                className="input-line"
-                name="sylla_id"
-                onChange={(e) => handleInsert(e)}
-              >
-                <option value="">Choose Syllabus</option> {/* Default option */}
-                {showsylla.map((sylla) => (
-                  <option key={sylla.sylla_id} value={sylla.sylla_id}>
-                    {sylla.sylla_name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -245,23 +267,6 @@ function MgtSubject() {
                 onChange={(e) => handleChange(e)}
                 name={"sub_name"}
               />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>ชื่อหลักสูตร</Form.Label>
-              <Form.Control
-                as="select"
-                className="input-line"
-                value={update.sylla_id}
-                onChange={(e) => handleChange(e)}
-                name={"sylla_id"}
-              >
-                <option value="">Choose Syllabus</option> {/* Default option */}
-                {showsylla.map((sylla) => (
-                  <option key={sylla.sylla_id} value={sylla.sylla_id}>
-                    {sylla.sylla_name}
-                  </option>
-                ))}
-              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>

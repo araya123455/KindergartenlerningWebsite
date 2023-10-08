@@ -299,7 +299,7 @@ export const subjectscoreupdate = createAsyncThunk(
 export const subjectscoredelete = createAsyncThunk(
   "subjectscoredelete",
   async (id, body) => {
-    console.log(id, body);
+    // console.log(id, body);
     const response = await axios.delete(
       `${import.meta.env.VITE_APP_API}/subjectscoredelete/${id}`,
       body,

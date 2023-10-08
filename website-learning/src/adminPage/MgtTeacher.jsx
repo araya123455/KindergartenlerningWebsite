@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import {
   showteacher,
   insertteacher,
@@ -76,6 +81,21 @@ function MgtTeacher() {
 
   //   on click insert value
   const onInsrt = () => {
+    if (
+      !insert.prefix ||
+      !insert.tch_Fname ||
+      !insert.tch_Lname ||
+      !insert.tch_sn ||
+      !insert.tch_user ||
+      !insert.tch_pass ||
+      !insert.status ||
+      !insert.tch_sect ||
+      !insert.position_id
+    ) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
+
     let body = {
       prefix: insert.prefix,
       tch_Fname: insert.tch_Fname,
@@ -90,7 +110,7 @@ function MgtTeacher() {
 
     dispatch(insertteacher(body))
       .then((result) => {
-        setShowAdd({
+        setinsert({
           prefix: "",
           tch_Fname: "",
           tch_Lname: "",
@@ -168,17 +188,19 @@ function MgtTeacher() {
   };
   //   Delete
   const onDelete = (id) => {
-    dispatch(deleteteacher(id))
-      .then((result) => {
-        if (result.payload && result.payload.error) {
-          console.log(result.payload.error);
-        } else {
-          loadData();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (window.confirm("Are you sure you want to delete?")) {
+      dispatch(deleteteacher(id))
+        .then((result) => {
+          if (result.payload && result.payload.error) {
+            console.log(result.payload.error);
+          } else {
+            loadData();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -191,20 +213,36 @@ function MgtTeacher() {
       <Button className="button" variant="primary" onClick={AddShow}>
         ADD
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>ชื่อ-นามสกุล</th>
-            <th>เลขประจำตัว</th>
-            <th>username</th>
-            <th>password</th>
-            <th>สถานะ</th>
-            <th>แผนก</th>
-            <th>ตำแหน่ง</th>
-            <th>confix</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead className="TableHead">
+          <TableRow>
+            <TableCell>
+              <p className="headerC">ชื่อ-นามสกุล</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">รหัสประจำตัว</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Username</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Password</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">สถานะ</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">แผนก</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">ตำแหน่ง</p>
+            </TableCell>
+            <TableCell>
+              <p className="headerC">Confix</p>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {showdata.map((data) => {
             const {
               tch_id,
@@ -222,17 +260,17 @@ function MgtTeacher() {
               (p) => p.position_id === position_id
             );
             return (
-              <tr key={tch_id}>
-                <td>
+              <TableRow key={tch_id}>
+                <TableCell>
                   {prefix} {tch_Fname} {tch_Lname}
-                </td>
-                <td>{tch_sn}</td>
-                <td>{tch_user}</td>
-                <td>{tch_pass}</td>
-                <td>{status}</td>
-                <td>{tch_sect}</td>
-                <td>{posi?.position}</td>
-                <td>
+                </TableCell>
+                <TableCell>{tch_sn}</TableCell>
+                <TableCell>{tch_user}</TableCell>
+                <TableCell>{tch_pass}</TableCell>
+                <TableCell>{status}</TableCell>
+                <TableCell>{tch_sect}</TableCell>
+                <TableCell>{posi?.position}</TableCell>
+                <TableCell>
                   <Button
                     variant="btn btn-secondary"
                     onClick={() => EditShow(data)}
@@ -254,12 +292,12 @@ function MgtTeacher() {
                   >
                     SHOW
                   </Button> */}
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
