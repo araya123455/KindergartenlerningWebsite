@@ -1,14 +1,60 @@
- @media print {
-    .report {
-      margin: 0;
-      padding: 0;
-    }
-  
-    .no-print {
-      display: none;
-    }
-    .navbar {
-      display: none !important;
-    }
+@media print {
+  .report {
+    margin: 0;
+    padding: 0;
   }
-  
+
+  .no-print {
+    display: none;
+  }
+  .navbar {
+    display: none !important;
+  }
+  .btn-hidden {
+    display: none !important;
+  }
+  .th-font {
+    color: #000;
+  }
+}
+
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set the page size to A4 (or your preferred size) */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* Define a print-specific style for the report container */
+.report-container {
+  font-family: "TH SarabunPSK", sans-serif;
+  text-align: center;
+  font-size: 15px;
+  margin: 0;
+  padding: 20px;
+  page-break-after: always;
+}
+
+/* Define styles for the table */
+.tablee {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 0;
+}
+
+.tablee th,
+.tablee td {
+  font-family: "TH SarabunPSK", sans-serif;
+  border: 1px solid #000;
+  padding: 5px;
+}
+
+.f-fam {
+  font-family: "TH SarabunPSK", sans-serif;
+  font-size: 16px;
+}

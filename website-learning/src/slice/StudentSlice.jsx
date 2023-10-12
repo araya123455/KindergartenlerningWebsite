@@ -259,6 +259,34 @@ export const assessmentreport = createAsyncThunk(
     }
   }
 );
+export const searchteacher = createAsyncThunk(
+  "searchteacher",
+  async ({ assstuId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/searchteacher", {
+        params: { stu_id: assstuId },
+      });
+      return response.data;
+
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const searchteachersub = createAsyncThunk(
+  "searchteachersub",
+  async ({ substuId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/searchteacher", {
+        params: { stu_id: substuId },
+      });
+      return response.data;
+
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const shownamesubject = createAsyncThunk(
   "shownamesubject",
@@ -293,6 +321,32 @@ export const searcstudent = createAsyncThunk(
   async ({ stuid }, { rejectWithValue }) => {
     try {
       const response = await axios.get("/searcstudent", {
+        params: { stu_id: stuid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const pyearterm = createAsyncThunk(
+  "pyearterm",
+  async ({ stuid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/pyearterm", {
+        params: { stu_id: stuid },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const pkinder = createAsyncThunk(
+  "pkinder",
+  async ({ stuid }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/pkinder", {
         params: { stu_id: stuid },
       });
       return response.data;

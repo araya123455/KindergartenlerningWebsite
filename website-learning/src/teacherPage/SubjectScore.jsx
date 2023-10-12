@@ -86,6 +86,15 @@ function SubjectScore() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <h1 className="h2">แบบให้คะแนนนักเรียนแต่ละวิชา</h1>
       <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -98,7 +107,7 @@ function SubjectScore() {
                 <p className="headerC">เทอม/ปีการศึกษา</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Action</p>
+                <p className="headerC"></p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -129,14 +138,14 @@ function SubjectScore() {
                   <TableCell>
                     <Link
                       className="assclass"
-                      to={"/subjectFullScore"}
+                      to={"/teacher/subjectFullScore"}
                       onClick={() => onClickF(kinder_id, yearterm_id)}
                     >
                       กำหนดคะแนนเต็ม
                     </Link>
                     <Link
                       className="assclass"
-                      to={"/stuSubjectScoreInsert"}
+                      to={"/teacher/stuSubjectScoreInsert"}
                       onClick={() => onClick(kinder_id, yearterm_id)}
                     >
                       ให้คะแนนนักเรียน

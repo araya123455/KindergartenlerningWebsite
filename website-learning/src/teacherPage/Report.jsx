@@ -23,7 +23,7 @@ function Report() {
                {/* Left side */}
               <Row>
                 <Col className="center-button" >
-                <Link to={"/ReportLearning"} >
+                <Link to={"/teacher/ReportLearning"} >
                 <button className="learn-more" type="button">
                   พัฒนาการ 5 ด้าน
                 </button><br></br>
@@ -39,7 +39,7 @@ function Report() {
           <h1>ผลการเรียน</h1>
              <Row>
               <Col>
-              <Link to={"/ReportSubjectYearTerm"}>
+              <Link to={"/teacher/ReportSubject"}>
                 <button className="learn-more" type="button">
                   ผลการเรียน
                 </button>

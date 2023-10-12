@@ -205,7 +205,7 @@ function ReportSubjectYearTerm() {
             <th>เทอม/ปี</th>
             <th>ชื่อ-นามสกุล</th>
             <th>รหัสประจำตัว</th>
-            <th>Confix</th>
+            <th>แก้ไข</th>
           </tr>
         </thead>
         <tbody>

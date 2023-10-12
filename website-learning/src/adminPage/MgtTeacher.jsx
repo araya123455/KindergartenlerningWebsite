@@ -7,6 +7,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showteacher,
   insertteacher,
@@ -20,6 +22,7 @@ function MgtTeacher() {
   const [showdata, setshowdata] = useState([]);
   const [showposition, setshowposition] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [insert, setinsert] = useState({
     prefix: "",
     tch_Fname: "",
@@ -124,9 +127,11 @@ function MgtTeacher() {
         loadData();
         setShowAdd(false);
         // show success notification
+        toast.success("Teacher records inserted successfully");
         // notify();
       })
       .catch((err) => {
+        toast.error("Failed to insert Teacher records");
         console.log(err);
       });
   };
@@ -180,27 +185,34 @@ function MgtTeacher() {
         });
         loadData();
         setshowEdit(false);
+        toast.success("Teacher records have been edited successfully");
         // notify();
+      })
+      .catch((err) => {
+        toast.error("Failed to insert Teacher records");
+        console.log(err);
+      });
+  };
+
+  const handleDeleteConfirmation = (tch_id) => {
+    setDatamodal({ tch_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
+  //   Delete
+  const onDelete = (id) => {
+    dispatch(deleteteacher(id))
+      .then((result) => {
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error);
+        } else {
+          loadData();
+          setShowDeleteConfirmation(false);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-  //   Delete
-  const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deleteteacher(id))
-        .then((result) => {
-          if (result.payload && result.payload.error) {
-            console.log(result.payload.error);
-          } else {
-            loadData();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
 
   useEffect(() => {
@@ -238,7 +250,7 @@ function MgtTeacher() {
               <p className="headerC">ตำแหน่ง</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Confix</p>
+              <p className="headerC">แก้ไข</p>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -262,14 +274,28 @@ function MgtTeacher() {
             return (
               <TableRow key={tch_id}>
                 <TableCell>
-                  {prefix} {tch_Fname} {tch_Lname}
+                  <p>
+                    {prefix} {tch_Fname} {tch_Lname}
+                  </p>
                 </TableCell>
-                <TableCell>{tch_sn}</TableCell>
-                <TableCell>{tch_user}</TableCell>
-                <TableCell>{tch_pass}</TableCell>
-                <TableCell>{status}</TableCell>
-                <TableCell>{tch_sect}</TableCell>
-                <TableCell>{posi?.position}</TableCell>
+                <TableCell>
+                  <p>{tch_sn}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{tch_user}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{tch_pass}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{status}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{tch_sect}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{posi?.position}</p>
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="btn btn-secondary"
@@ -281,17 +307,10 @@ function MgtTeacher() {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(tch_id)}
+                    onClick={() => handleDeleteConfirmation(tch_id)}
                   >
                     DELETE
                   </Button>
-                  {/* <Button
-                    className="buttonD"
-                    variant="btn btn-light"
-                    onClick={() => onDelete(tch_id)}
-                  >
-                    SHOW
-                  </Button> */}
                 </TableCell>
               </TableRow>
             );
@@ -307,12 +326,17 @@ function MgtTeacher() {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>คำนำหน้า</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 name="prefix"
                 onChange={(e) => handleInsert(e)}
-              />
+              >
+                <option>กรุณาเลือกคำนำหน้า</option>
+                <option value="นางสาว">นางสาว</option>
+                <option value="นาง">นาง</option>
+                <option value="นาย">นาย</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>ชื่อ</Form.Label>
@@ -361,12 +385,18 @@ function MgtTeacher() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>สถานะ</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 name="status"
                 onChange={(e) => handleInsert(e)}
-              />
+              >
+                <option>กรุณาเลือกสถานะ</option>
+                <option value="สอนอยู่">สอนอยู่</option>
+                <option value="ลาออก">ลาออก</option>
+                <option value="ดำรงตำแหน่งอยู่">ดำรงตำแหน่งอยู่</option>
+                <option value="หมดวาระจากตำแหน่ง">หมดวาระจากตำแหน่ง</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>แผนก</Form.Label>
@@ -416,13 +446,18 @@ function MgtTeacher() {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>คำนำหน้า</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 placeholder={datamodal.prefix}
                 onChange={(e) => handleChange(e)}
                 name={"prefix"}
-              />
+              >
+                <option>กรุณาเลือกคำนำหน้า</option>
+                <option value="นางสาว">นางสาว</option>
+                <option value="นาง">นาง</option>
+                <option value="นาย">นาย</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>ชื่อ</Form.Label>
@@ -456,13 +491,19 @@ function MgtTeacher() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>สถานะ</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 placeholder={datamodal.status}
                 onChange={(e) => handleChange(e)}
                 name={"status"}
-              />
+              >
+                <option>กรุณาเลือกสถานะ</option>
+                <option value="สอนอยู่">สอนอยู่</option>
+                <option value="ลาออก">ลาออก</option>
+                <option value="ดำรงตำแหน่งอยู่">ดำรงตำแหน่งอยู่</option>
+                <option value="หมดวาระจากตำแหน่ง">หมดวาระจากตำแหน่ง</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>แผนก</Form.Label>
@@ -505,6 +546,40 @@ function MgtTeacher() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.tch_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

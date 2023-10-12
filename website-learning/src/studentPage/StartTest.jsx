@@ -20,7 +20,7 @@ const StartTest = () => {
   const [showResults, setShowResults] = useState(false); // Check test have result or not
   const [showredetail, setshowredetail] = useState([]);
   const testId = getFromLocalStorage("testId");
-  const auth = getFromLocalStorage("auth");
+  const auth = getFromLocalStorage("stu_auth");
   const stuid = auth.stu_id;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -234,62 +234,73 @@ const StartTest = () => {
   };
 
   return (
-    <div className="body">
-      <div className="App">
-        <div className="test-container">
-          <div className="question">
-            {showResults ? (
-              <div>
-                {showtest?.map((data) => {
-                  const { test_id, test_detail } = data;
-                  return <h3 key={test_id}>{test_detail}</h3>;
-                })}
+    <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
+      <div className="body">
+        <div className="App">
+          <div className="test-container">
+            <div className="question">
+              {showResults ? (
                 <div>
-                  <h2>ผลการการทดสอบ</h2>
-                  <p>คะแนนที่ได้: {calculateScore()} คะแนน</p>
-                  <p>คะแนนเต็ม: {calculateTotalPossibleScore()} คะแนน</p>
-                  <h4>ส่งแบบทดสอบเวลา: {timeduration()}</h4>
+                  {showtest?.map((data) => {
+                    const { test_id, test_detail } = data;
+                    return <h3 key={test_id}>{test_detail}</h3>;
+                  })}
+                  <div>
+                    <h2>ผลการการทดสอบ</h2>
+                    <p>คะแนนที่ได้: {calculateScore()} คะแนน</p>
+                    <p>คะแนนเต็ม: {calculateTotalPossibleScore()} คะแนน</p>
+                    <h4>ส่งแบบทดสอบเวลา: {timeduration()}</h4>
+                  </div>
+                  {renderAnswerSummary()}
                 </div>
-                {renderAnswerSummary()}
-              </div>
-            ) : (
-              <div>
-                <h2>
-                  {currentQuestionIndex + 1}.{" "}
-                  {showques[currentQuestionIndex]?.ques}
-                </h2>
-                {/* <p>{showques[currentQuestionIndex]?.ques}</p> */}
-                {showques[currentQuestionIndex]?.choice1 &&
-                  renderChoices([
-                    showques[currentQuestionIndex]?.choice1,
-                    showques[currentQuestionIndex]?.choice2,
-                    showques[currentQuestionIndex]?.choice3,
-                    showques[currentQuestionIndex]?.choice4,
-                  ])}
-                <p>คะแนน: {showques[currentQuestionIndex]?.score_ques}</p>
-              </div>
-            )}
-          </div>
-          <div className="navigation">
-            {currentQuestionIndex > 0 &&
-              currentQuestionIndex !== showques.length &&
-              !showResults && (
-                <button className="buttn button" onClick={handlePrevClick}>
-                  ย้อนกลับ
+              ) : (
+                <div>
+                  <h2>
+                    {currentQuestionIndex + 1}.{" "}
+                    {showques[currentQuestionIndex]?.ques}
+                  </h2>
+                  {/* <p>{showques[currentQuestionIndex]?.ques}</p> */}
+                  {showques[currentQuestionIndex]?.choice1 &&
+                    renderChoices([
+                      showques[currentQuestionIndex]?.choice1,
+                      showques[currentQuestionIndex]?.choice2,
+                      showques[currentQuestionIndex]?.choice3,
+                      showques[currentQuestionIndex]?.choice4,
+                    ])}
+                  <p>คะแนน: {showques[currentQuestionIndex]?.score_ques}</p>
+                </div>
+              )}
+            </div>
+            <div className="navigation">
+              {currentQuestionIndex > 0 &&
+                currentQuestionIndex !== showques.length &&
+                !showResults && (
+                  <button className="buttn button" onClick={handlePrevClick}>
+                    ย้อนกลับ
+                  </button>
+                )}
+              {!showResults && currentQuestionIndex !== showques.length - 1 && (
+                <button className="buttn button" onClick={handleNextClick}>
+                  ข้อถัดไป
                 </button>
               )}
-            {!showResults && currentQuestionIndex !== showques.length - 1 && (
-              <button className="buttn button" onClick={handleNextClick}>
-                ข้อถัดไป
-              </button>
-            )}
-            {!showResults && currentQuestionIndex === showques.length - 1 && (
-              <button className="buttn button" onClick={handleNextClick}>
-                ส่งคำตอบ
-              </button>
-            )}
+              {!showResults && currentQuestionIndex === showques.length - 1 && (
+                <button className="buttn button" onClick={handleNextClick}>
+                  ส่งคำตอบ
+                </button>
+              )}
+            </div>
+            <div className="timer">{/* Implement timer logic here */}</div>
           </div>
-          <div className="timer">{/* Implement timer logic here */}</div>
         </div>
       </div>
     </div>

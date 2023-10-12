@@ -1,0 +1,58 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.gradient-ani {
+  --size: 250px;
+  --speed: 50s;
+  --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+
+  width: var(--size);
+  height: var(--size);
+  filter: blur(calc(var(--size) / 5));
+  background-image: linear-gradient(hsl(158, 82%, 57%), hsl(252, 82%, 57%));
+  animation: rotate var(--speed) var(--easing) alternate infinite;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+@media (min-width: 720px) {
+  .gradient-ani {
+    --size: 500px;
+  }
+}
+
+.blurred {
+  z-index: -1;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  z-index: -1;
+  position: fixed;
+  /* top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; */
+}
+
+.blurred-bg {
+  background-color: #222;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+/* This is just to transition when you change the viewport size. */
+.blurred-ani {
+  transition: all 0.25s ease-out;
+}

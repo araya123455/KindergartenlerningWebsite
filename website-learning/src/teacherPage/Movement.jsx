@@ -18,7 +18,7 @@ const Movement = () => {
     dispatch(learningvideo())
       .then((result) => {
         setshowdata(result.payload);
-        console.log(result.payload);
+        // console.log(result.payload);
       })
       .catch((err) => {
         console.log(err);
@@ -36,7 +36,7 @@ const Movement = () => {
 
   useEffect(() => {
     loadData();
-    console.log("show: ", loadData());
+    // console.log("show: ", loadData());
     // loadFile();
   }, []);
 

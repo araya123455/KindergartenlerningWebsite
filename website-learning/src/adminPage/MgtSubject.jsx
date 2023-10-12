@@ -12,6 +12,8 @@ import {
 } from "../slice/DataSlice";
 import { selectsubject } from "../slice/StudentSlice";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MgtSubject() {
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ function MgtSubject() {
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
   const [update, setupdate] = useState({ sub_name: "" });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   // show syllabus
   const loadSyllabus = () => {
@@ -76,6 +79,10 @@ function MgtSubject() {
 
   //   on click insert value
   const onInsrt = () => {
+    if (!insert.sub_name || !syllaId) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
     let body = {
       sub_name: insert.sub_name,
       sylla_id: syllaId,
@@ -88,11 +95,11 @@ function MgtSubject() {
         setShowAdd(false);
         loadSyllabus();
         loadselectsub();
-        // show success notification
-        // notify();
+        toast.success("Subject records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert Subject records");
       });
   };
 
@@ -130,11 +137,19 @@ function MgtSubject() {
         setshowEdit(false);
         loadSyllabus();
         loadselectsub();
+        toast.success("Subject records have been edited successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert Subject records");
       });
   };
+
+  const handleDeleteConfirmation = (sub_id) => {
+    setDatamodal({ sub_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
   //   Delete
   const onDelete = (id) => {
     dispatch(deletesubject(id))
@@ -144,6 +159,7 @@ function MgtSubject() {
         } else {
           loadSyllabus();
           loadselectsub();
+          setShowDeleteConfirmation(false);
         }
       })
       .catch((err) => {
@@ -189,7 +205,7 @@ function MgtSubject() {
           <tr>
             <th>ชื่อวิชา</th>
             <th>ชื่อหลักสูตร</th>
-            <th>confix</th>
+            <th>แก้ไข</th>
           </tr>
         </thead>
         <tbody>
@@ -214,7 +230,7 @@ function MgtSubject() {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(sub_id)}
+                    onClick={() => handleDeleteConfirmation(sub_id)}
                   >
                     DELETE
                   </Button>
@@ -279,6 +295,40 @@ function MgtSubject() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.sub_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

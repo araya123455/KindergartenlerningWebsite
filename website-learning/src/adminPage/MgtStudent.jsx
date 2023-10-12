@@ -15,6 +15,8 @@ import TableRow from "@mui/material/TableRow";
 import { insertstudent, editstudent, deletestudent } from "../slice/DataSlice";
 import { searcstudent } from "../slice/StudentSlice";
 import { fetchStudentData } from "../slice/TchStuSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MgtStudent() {
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ function MgtStudent() {
   const [rowsPerPage, setRowsPerPage] = useState(5); // Set your desired initial rows per page
   const [searchstu, setsearchstu] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [insert, setinsert] = useState({
     prefix: "",
     stu_Fname: "",
@@ -52,7 +55,7 @@ function MgtStudent() {
     dispatch(searcstudent({ stuid }))
       .then((result) => {
         setsearchstu(result.payload.data);
-        // console.log(result.payload.data);
+        // console.log(result);
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +108,7 @@ function MgtStudent() {
 
     dispatch(insertstudent(body))
       .then((result) => {
+        toast.success("Student records inserted successfully");
         setShowAdd(false);
         setinsert({
           prefix: "",
@@ -118,6 +122,7 @@ function MgtStudent() {
         loadStudent();
       })
       .catch((err) => {
+        toast.error("Failed to insert Student records");
         console.log(err);
       });
   };
@@ -159,6 +164,7 @@ function MgtStudent() {
 
     dispatch(editstudent(body))
       .then((result) => {
+        toast.success("Student records have been edited successfully");
         setshowEdit(false);
         setupdate({
           prefix: "",
@@ -172,25 +178,30 @@ function MgtStudent() {
         loadStudent();
       })
       .catch((err) => {
+        toast.error("Failed to insert Student records");
         console.log(err);
       });
   };
 
+  const handleDeleteConfirmation = (stu_id) => {
+    setDatamodal({ stu_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
   //   Delete
   const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deletestudent(id))
-        .then((result) => {
-          if (result.payload && result.payload.error) {
-            console.log(result.payload.error);
-          } else {
-            loadStudent();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    dispatch(deletestudent(id))
+      .then((result) => {
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error);
+        } else {
+          loadStudent();
+          setShowDeleteConfirmation(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleSearch = () => {
@@ -291,7 +302,7 @@ function MgtStudent() {
                 <p className="headerC">สถานะ</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Confix</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -310,12 +321,22 @@ function MgtStudent() {
               return (
                 <TableRow key={stu_id}>
                   <TableCell>
-                    {prefix} {stu_Fname} {stu_Lname}
+                    <p>
+                      {prefix} {stu_Fname} {stu_Lname}
+                    </p>
                   </TableCell>
-                  <TableCell>{stu_sn}</TableCell>
-                  <TableCell>{stu_user}</TableCell>
-                  <TableCell>{stu_pass}</TableCell>
-                  <TableCell>{status}</TableCell>
+                  <TableCell>
+                    <p>{stu_sn}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>{stu_user}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>{stu_pass}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>{status}</p>
+                  </TableCell>
                   <TableCell>
                     <Button
                       variant="btn btn-secondary"
@@ -327,7 +348,7 @@ function MgtStudent() {
                     <Button
                       className="buttonD"
                       variant="btn btn-danger"
-                      onClick={() => onDelete(stu_id)}
+                      onClick={() => handleDeleteConfirmation(stu_id)}
                     >
                       DELETE
                     </Button>
@@ -356,12 +377,16 @@ function MgtStudent() {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>คำนำหน้า</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 name="prefix"
                 onChange={(e) => handleInsert(e)}
-              />
+              >
+                <option>กรุณาเลือกคำนำหน้า</option>
+                <option value="เด็กหญิง">เด็กหญิง</option>
+                <option value="เด็กชาย">เด็กชาย</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>ชื่อ</Form.Label>
@@ -410,12 +435,16 @@ function MgtStudent() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>สถานะ</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
-                type="text"
                 name="status"
                 onChange={(e) => handleInsert(e)}
-              />
+                // value={insert.status}
+              >
+                <option>กรุณาเลือกสถานะ</option>
+                <option value="กำลังศึกษา">กำลังศึกษา</option>
+                <option value="ลาออก">ลาออก</option>
+              </Form.Select>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -437,13 +466,17 @@ function MgtStudent() {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>คำนำหน้า</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 placeholder={datamodal.prefix}
                 onChange={(e) => handleChange(e)}
                 name={"prefix"}
-              />
+              >
+                <option>กรุณาเลือกคำนำหน้า</option>
+                <option value="เด็กหญิง">เด็กหญิง</option>
+                <option value="เด็กชาย">เด็กชาย</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>ชื่อ</Form.Label>
@@ -497,13 +530,17 @@ function MgtStudent() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>สถานะ</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="input-line"
                 type="text"
                 placeholder={datamodal.status}
                 onChange={(e) => handleChange(e)}
                 name={"status"}
-              />
+              >
+                <option>กรุณาเลือกสถานะ</option>
+                <option value="กำลังศึกษา">กำลังศึกษา</option>
+                <option value="ลาออก">ลาออก</option>
+              </Form.Select>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -516,6 +553,41 @@ function MgtStudent() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.stu_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

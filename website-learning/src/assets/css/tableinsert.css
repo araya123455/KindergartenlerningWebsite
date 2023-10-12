@@ -112,10 +112,23 @@ ul li {
 }
 
 /* Your custom styles */
+.m-result {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column; /* To center content vertically */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.s-re {
+  font-size: 18px;
+}
+
 .student-results {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 600px;
 }
 
 .student-item {
@@ -124,6 +137,12 @@ ul li {
   padding: 10px;
   border-radius: 5px;
   background-color: #f7f7f7;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow effect */
+  transition: transform 0.2s; /* Add a smooth hover effect */
+}
+
+.student-item:hover {
+  transform: scale(1.02); /* Scale up slightly on hover for a 3D effect */
 }
 
 /* Font style */

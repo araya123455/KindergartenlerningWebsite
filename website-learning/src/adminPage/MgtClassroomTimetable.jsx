@@ -7,6 +7,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showclasstime,
   insertclasstime,
@@ -21,6 +23,7 @@ import {
 function MgtClassroomTimetable() {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showsylla, setshowsylla] = useState([]);
   const [showtea, setshowtea] = useState([]);
   const [showkinder, setshowkinder] = useState([]);
@@ -137,9 +140,11 @@ function MgtClassroomTimetable() {
         });
         loadData();
         setShowAdd(false);
+        toast.success("Classroom Timetable records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert Classroom Timetable records");
       });
   };
 
@@ -180,26 +185,35 @@ function MgtClassroomTimetable() {
         setshowEdit(false);
         setupdate({ kinder_id: "", yearterm_id: "", sylla_id: "", tch_id: "" });
         loadData();
+        toast.success(
+          "Classroom Timetable records have been edited successfully"
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to insert Classroom Timetable records");
+      });
+  };
+
+  const handleDeleteConfirmation = (crt_id) => {
+    setDatamodal({ crt_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
+  //   Delete
+  const onDelete = (id) => {
+    dispatch(deleteclasstime(id))
+      .then((result) => {
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error);
+        } else {
+          loadData();
+          setShowDeleteConfirmation(false);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-  //   Delete
-  const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deleteclasstime(id))
-        .then((result) => {
-          if (result.payload && result.payload.error) {
-            console.log(result.payload.error);
-          } else {
-            loadData();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
   // reload
   useEffect(() => {
@@ -230,7 +244,7 @@ function MgtClassroomTimetable() {
               <p className="headerC">ครูผู้สอน</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">confix</p>
+              <p className="headerC">แก้ไข</p>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -259,13 +273,21 @@ function MgtClassroomTimetable() {
             return (
               <TableRow key={crt_id}>
                 <TableCell>
-                  {kinderLevel}/{kinderRoom}
+                  <p>
+                    {kinderLevel}/{kinderRoom}
+                  </p>
                 </TableCell>
                 <TableCell>
-                  {term}/{year}
+                  <p>
+                    {term}/{year}
+                  </p>
                 </TableCell>
-                <TableCell>{syllabusName}</TableCell>
-                <TableCell>{teacherName}</TableCell>
+                <TableCell>
+                  <p>{syllabusName}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{teacherName}</p>
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="btn btn-secondary"
@@ -277,7 +299,7 @@ function MgtClassroomTimetable() {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(crt_id)}
+                    onClick={() => handleDeleteConfirmation(crt_id)}
                   >
                     DELETE
                   </Button>
@@ -461,6 +483,40 @@ function MgtClassroomTimetable() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.crt_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

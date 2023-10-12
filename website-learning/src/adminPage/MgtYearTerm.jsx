@@ -7,6 +7,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   getDataAll,
   insertyearterm,
@@ -22,6 +24,7 @@ function MgtYearTerm() {
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
   const [update, setupdate] = useState({ year: "", term: "" });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const loadData = () => {
     dispatch(getDataAll())
@@ -70,9 +73,11 @@ function MgtYearTerm() {
         setShowAdd(false);
         // show success notification
         // notify();
+        toast.success("YearTerm records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert YearTerm records");
       });
   };
 
@@ -108,29 +113,35 @@ function MgtYearTerm() {
         setupdate({ year: "", term: "" });
         loadData();
         // notify();
+        toast.success("YearTerm records have been edited successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert YearTerm records");
       });
+  };
+
+  const handleDeleteConfirmation = (yearTerm_id) => {
+    setDatamodal({ yearTerm_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
   };
 
   //   Delete
   const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deleteyeraterm(id))
-        .then((result) => {
-          // Check if the response contains an error message
-          if (result.payload && result.payload.error) {
-            console.log(result.payload.error); // You can log the error or show it to the user
-          } else {
-            // Deletion successful, reload the data
-            loadData();
-          }
-        })
-        .catch((err) => {
-          console.log(err); // Handle unexpected errors
-        });
-    }
+    dispatch(deleteyeraterm(id))
+      .then((result) => {
+        // Check if the response contains an error message
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error); // You can log the error or show it to the user
+        } else {
+          // Deletion successful, reload the data
+          loadData();
+          setShowDeleteConfirmation(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err); // Handle unexpected errors
+      });
   };
 
   // reload
@@ -153,7 +164,7 @@ function MgtYearTerm() {
               <p className="headerC">Term</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Confix</p>
+              <p className="headerC">แก้ไข</p>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -162,8 +173,12 @@ function MgtYearTerm() {
             const { yearTerm_id, year, term } = data;
             return (
               <TableRow key={yearTerm_id}>
-                <TableCell>{year}</TableCell>
-                <TableCell>{term}</TableCell>
+                <TableCell>
+                  <p>{year}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{term}</p>
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="btn btn-secondary"
@@ -175,7 +190,7 @@ function MgtYearTerm() {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(yearTerm_id)}
+                    onClick={() => handleDeleteConfirmation(yearTerm_id)}
                   >
                     DELETE
                   </Button>
@@ -259,6 +274,40 @@ function MgtYearTerm() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.yearTerm_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

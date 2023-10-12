@@ -15,7 +15,7 @@ function Movement2() {
     dispatch(learningvideo())
       .then((result) => {
         setshowdata(result.payload);
-        console.log(result.payload);
+        // console.log(result.payload);
       })
       .catch((err) => {
         console.log(err);

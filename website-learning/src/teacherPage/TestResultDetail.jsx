@@ -118,8 +118,17 @@ function TestResultDetail() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <button className="btn-back" role="button">
-        <Link to={"/test/testRe"} className="back-font">
+        <Link to={"/teacher/test/testRe"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -156,7 +165,7 @@ function TestResultDetail() {
           </TableHead>
           <TableBody>
             {ckeckred &&
-              showtestred.map((data) => {
+              showtestred?.map((data) => {
                 const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
                 const totalScore = studentScores[stu_id] || 0;
 
@@ -184,7 +193,7 @@ function TestResultDetail() {
                 );
               })}
             {ckeckre &&
-              showtestre.map((data) => {
+              showtestre?.map((data) => {
                 const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
                 return (
                   <TableRow key={stu_id}>

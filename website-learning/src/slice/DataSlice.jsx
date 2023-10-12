@@ -847,6 +847,18 @@ export const assessmentstudelete = createAsyncThunk("assessmentstudelete", async
   );
   return response.data;
 });
+
+export const searchdirector = createAsyncThunk("searchdirector", async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/searchdirector`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.data;
+});
 //----------end assessment-------------
 export const dataTableSlice = createSlice({
   name: "data",

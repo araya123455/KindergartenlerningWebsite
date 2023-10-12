@@ -14,6 +14,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   insertassessment,
   editassessment,
@@ -25,6 +27,7 @@ import { findassessment } from "../slice/StudentSlice";
 
 function MgtAssessmentClass() {
   const dispatch = useDispatch();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [Show, setshowdata] = useState([]);
   const [showkinder, setShowKinder] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -104,6 +107,10 @@ function MgtAssessmentClass() {
 
   //insert
   const onInsert = () => {
+    if (!insert.assess_name || !insert.full_score || !kinderid || !yeartermid) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
     let body = {
       assess_name: insert.assess_name,
       full_score: insert.full_score,
@@ -113,15 +120,17 @@ function MgtAssessmentClass() {
 
     dispatch(insertassessment(body))
       .then((result) => {
-        setShowAdd({
+        setinsert({
           assess_name: "",
           full_score: "",
         });
         loadassessment();
         setShowAdd(false);
+        toast.success("Assessment records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert assessment records");
       });
   };
 
@@ -167,10 +176,17 @@ function MgtAssessmentClass() {
         });
         loadassessment();
         setshowEdit(false);
+        toast.success("Assessment records have been edited successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert assessment records");
       });
+  };
+
+  const handleDeleteConfirmation = (asses_id) => {
+    setDatamodal({ asses_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
   };
 
   const onDelete = (id) => {
@@ -182,6 +198,7 @@ function MgtAssessmentClass() {
           // Deletion successful, reload the data
           loadassessment();
         }
+        setShowDeleteConfirmation(false);
       })
       .catch((err) => {
         console.log(err);
@@ -214,7 +231,7 @@ function MgtAssessmentClass() {
         <div className="cloud x7"></div>
       </div>
       <button className="btn-back" role="button">
-        <Link to={"/MgtAssessment"} className="back-font">
+        <Link to={"/teacher/MgtAssessment"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -249,7 +266,7 @@ function MgtAssessmentClass() {
                   <p className="headerC">คะแนนเต็ม</p>
                 </TableCell>
                 <TableCell>
-                  <p className="headerC">Confix</p>
+                  <p className="headerC">แก้ไข</p>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -270,7 +287,7 @@ function MgtAssessmentClass() {
                       <Button
                         className="buttonD"
                         variant="btn btn-danger"
-                        onClick={() => onDelete(asses_id)}
+                        onClick={() => handleDeleteConfirmation(asses_id)}
                       >
                         DELETE
                       </Button>
@@ -281,6 +298,29 @@ function MgtAssessmentClass() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Modal
+          show={showDeleteConfirmation}
+          onHide={() => setShowDeleteConfirmation(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowDeleteConfirmation(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="btn btn-danger"
+              onClick={() => onDelete(datamodal.asses_id)}
+            >
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Modal show={showAdd} onHide={AddClose}>
           <Modal.Header closeButton>
             <Modal.Title>INSERT ASSESSMENT</Modal.Title>
@@ -356,6 +396,17 @@ function MgtAssessmentClass() {
             </Button>
           </Modal.Footer>
         </Modal>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </div>
   );

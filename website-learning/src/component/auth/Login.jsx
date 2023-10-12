@@ -7,22 +7,50 @@ import md5 from "md5";
 import "../../assets/css/Login.css";
 import { saveToLocalStorage } from "../../LocalStorage/localstorage";
 
-function Login({ signin }) {
+function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [selectedRole, setSelectedRole] = useState("teacher"); // Default role: teacher
   // console.log("selectedRole", selectedRole);
-  saveToLocalStorage("auth", null);
+
+  saveToLocalStorage("adm_auth", null);
+  saveToLocalStorage("tch_auth", null);
+  saveToLocalStorage("stu_auth", null);
+  // console.log("login page");
   const onSubmit = (e) => {
     e.preventDefault();
     if (!usernameInput || !passwordInput) {
+      alert("กรุณาลองใหม่อีกครั้ง!!");
       console.log("Please try again!");
       return;
     }
 
-    const hashedPassword = md5(passwordInput);
+    if (selectedRole === "admin") {
+      let body = {
+        adm_user: usernameInput,
+        adm_pass: passwordInput,
+      };
+      dispatch(adminlogin(body))
+        .then((result) => {
+          // console.log(result.payload.data[0]);
+          if (result.payload.message === "success") {
+            saveToLocalStorage("adm_auth", result.payload.data[0]);
+            saveToLocalStorage("login", true);
+            // signin();
+            navigate("/admin");
+          } else {
+            alert("กรุณาลองใหม่อีกครั้ง!!");
+          }
+          if (result.payload.message === "Try Again") {
+            console.log("Login fail");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     if (selectedRole === "teacher") {
       let body = {
@@ -31,21 +59,22 @@ function Login({ signin }) {
       };
       dispatch(teacherlogin(body))
         .then((result) => {
-          console.log(result.payload.data[0]);
+          // console.log(result.payload.data[0]);
           if (result.payload.message === "success") {
             // Store tch_user in localStorage
             // localStorage.setItem("tch_user", usernameInput);
-            // saveToLocalStorage('auth', )
             // console.log(result.payload);
 
             // Update state to reflect logged in status
-            saveToLocalStorage("auth", result.payload.data[0]);
-            signin();
+            saveToLocalStorage("tch_auth", result.payload.data[0]);
+            saveToLocalStorage("login", true);
+            // signin();
             navigate("/teacher");
+          } else {
+            alert("กรุณาลองใหม่อีกครั้ง!!");
           }
           if (result.payload.message === "Try Again") {
             console.log("Login fail");
-            // notify();
           }
         })
         .catch((err) => {
@@ -59,12 +88,14 @@ function Login({ signin }) {
       };
       dispatch(studentlogin(body))
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           if (result.payload.message === "success") {
-            saveToLocalStorage("auth", result.payload.data[0]);
-            signin();
-            console.log("123");
+            saveToLocalStorage("stu_auth", result.payload.data[0]);
+            saveToLocalStorage("login", true);
+            // signin();
             navigate("/student");
+          } else {
+            alert("กรุณาลองใหม่อีกครั้ง!!");
           }
           if (result.payload.message === "Try Again") {
             console.log("Login fail");
@@ -79,7 +110,7 @@ function Login({ signin }) {
 
   return (
     <>
-     <button className="btn-back" role="button">
+      <button className="btn-back" role="button">
         <Link to={"/main"} className="back-font">
           <svg
             viewBox="0 0 96 96"

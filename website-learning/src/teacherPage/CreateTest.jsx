@@ -22,6 +22,7 @@ import {
 
 function CreateTest() {
   const dispatch = useDispatch();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showdata, setshowdata] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [insert, setinsert] = useState({
@@ -58,6 +59,10 @@ function CreateTest() {
   };
   //   on click insert value
   const onInsrt = () => {
+    if (!insert.test_detail) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
     let body = {
       test_detail: insert.test_detail,
     };
@@ -65,7 +70,7 @@ function CreateTest() {
     dispatch(inserttest(body))
       .then((result) => {
         setShowAdd(false);
-        setShowAdd({
+        setinsert({
           test_detail: "",
         });
         loadData();
@@ -116,6 +121,12 @@ function CreateTest() {
         console.log(err);
       });
   };
+
+  const handleDeleteConfirmation = (test_id) => {
+    setDatamodal({ test_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
   const onDelete = (id) => {
     dispatch(deletetest(id))
       .then((result) => {
@@ -123,6 +134,7 @@ function CreateTest() {
           console.log(result.payload.error);
         } else {
           loadData();
+          setShowDeleteConfirmation(false);
         }
       })
       .catch((err) => {
@@ -141,64 +153,83 @@ function CreateTest() {
 
   return (
     <>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <Button className="button" variant="primary" onClick={AddShow}>
         ADD
       </Button>
       <TableContainer component={Paper}>
-      <Table stickyHeader aria-label="sticky table">
-        <TableHead className="TableHead">
-          <TableRow>
-            <TableCell><p className="headerC">ชื่อแบบทดสอบ</p></TableCell>
-            <TableCell><p className="headerC">เพิ่มห้องเรียน</p></TableCell>
-            <TableCell><p className="headerC">Details</p></TableCell>
-            <TableCell><p className="headerC">Confix</p></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {showdata?.map((data) => {
-            const { test_id, test_detail } = data;
-            return (
-              <TableRow key={test_id}>
-                <TableCell><p>{test_detail}</p></TableCell>
-                <TableCell>
-                  <Link
-                    className="linkadd"
-                    to="/test/addClassTest"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Add class
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <Link
-                    className="linkcreate"
-                    to="/test/createChoice"
-                    onClick={() => onClickId(test_id)}
-                  >
-                    Test detail
-                  </Link>
-                </TableCell>
-                <td>
-                  <Button
-                    variant="btn btn-secondary"
-                    onClick={() => EditShow(data)}
-                    // ส่งค่าผ่าน function ใช้ =>
-                  >
-                    EDIT
-                  </Button>
-                  <Button
-                    className="buttonD"
-                    variant="btn btn-danger"
-                    onClick={() => onDelete(test_id)}
-                  >
-                    DELETE
-                  </Button>
-                </td>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">ชื่อแบบทดสอบ</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">เพิ่มห้องเรียน</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">Details</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">แก้ไข</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {showdata?.map((data) => {
+              const { test_id, test_detail } = data;
+              return (
+                <TableRow key={test_id}>
+                  <TableCell>
+                    <p>{test_detail}</p>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      className="linkadd"
+                      to="/teacher/test/addClassTest"
+                      onClick={() => onClickId(test_id)}
+                    >
+                      Add class
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      className="linkcreate"
+                      to="/teacher/test/createChoice"
+                      onClick={() => onClickId(test_id)}
+                    >
+                      Test detail
+                    </Link>
+                  </TableCell>
+                  <td>
+                    <Button
+                      variant="btn btn-secondary"
+                      onClick={() => EditShow(data)}
+                      // ส่งค่าผ่าน function ใช้ =>
+                    >
+                      EDIT
+                    </Button>
+                    <Button
+                      className="buttonD"
+                      variant="btn btn-danger"
+                      onClick={() => handleDeleteConfirmation(test_id)}
+                    >
+                      DELETE
+                    </Button>
+                  </td>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </TableContainer>
       <Modal show={showAdd} onHide={AddClose}>
         <Modal.Header closeButton>
@@ -251,6 +282,29 @@ function CreateTest() {
           </Button>
           <Button variant="btn btn-outline-secondary" onClick={onSave}>
             Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.test_id)}
+          >
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

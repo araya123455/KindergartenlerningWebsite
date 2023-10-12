@@ -7,6 +7,9 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   showsyllabus,
   insertsyllabus,
@@ -24,6 +27,7 @@ function MgtSyllabus() {
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
   const [update, setupdate] = useState({ sylla_name: "" });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const loadData = () => {
     dispatch(showsyllabus())
@@ -71,9 +75,11 @@ function MgtSyllabus() {
         setShowAdd(false);
         // show success notification
         // notify();
+        toast.success("Syllabus records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert Syllabus records");
       });
   };
 
@@ -109,26 +115,33 @@ function MgtSyllabus() {
         setupdate({ sylla_name: "" });
         loadData();
         // notify();
+        toast.success("Syllabus records have been edited successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to insert Syllabus records");
+      });
+  };
+
+  const handleDeleteConfirmation = (sylla_id) => {
+    setDatamodal({ sylla_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
+  //   Delete
+  const onDelete = (id) => {
+    dispatch(deletesyllabus(id))
+      .then((result) => {
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error);
+        } else {
+          loadData();
+          setShowDeleteConfirmation(false);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-  //   Delete
-  const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deletesyllabus(id))
-        .then((result) => {
-          if (result.payload && result.payload.error) {
-            console.log(result.payload.error);
-          } else {
-            loadData();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
 
   // reload
@@ -157,7 +170,7 @@ function MgtSyllabus() {
               <p className="headerC">จัดการวิชา</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">confix</p>
+              <p className="headerC">แก้ไข</p>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -166,7 +179,9 @@ function MgtSyllabus() {
             const { sylla_id, sylla_name } = data;
             return (
               <TableRow key={sylla_id}>
-                <TableCell>{sylla_name}</TableCell>
+                <TableCell>
+                  <p>{sylla_name}</p>
+                </TableCell>
                 <TableCell>
                   <Link
                     className="linkshow"
@@ -187,7 +202,7 @@ function MgtSyllabus() {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(sylla_id)}
+                    onClick={() => handleDeleteConfirmation(sylla_id)}
                   >
                     DELETE
                   </Button>
@@ -252,6 +267,40 @@ function MgtSyllabus() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.sylla_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

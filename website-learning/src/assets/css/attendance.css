@@ -217,3 +217,7 @@ input[type="radio"]:checked + .radio-label::before {
   border-radius: 50%;
   display: none;
 }
+
+.m-bottom {
+  margin-bottom: 18px;
+}

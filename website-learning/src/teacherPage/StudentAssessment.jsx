@@ -18,6 +18,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { findstudent, findassessment } from "../slice/StudentSlice";
 import "../assets/css/attendance.css";
 
@@ -89,9 +91,11 @@ function StudentAssessment() {
           setinsert((prevInsert) => ({ ...prevInsert, [id]: {} }));
           loadshowstudata();
           loadassesstu();
+          toast.success("Score records inserted successfully");
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Failed to insert score records");
         });
     } else {
       alert("กรุณากรอกคะแนนให้อยู่ในช่วงของคะแนนเต็ม!!");
@@ -158,9 +162,11 @@ function StudentAssessment() {
           loadshowasses();
           loadshowstudata();
           loadassesstu();
+          toast.success("Score records have been edited successfully");
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Failed to insert score records");
         });
     } else {
       alert("กรุณากรอกคะแนนให้อยู่ในช่วงของคะแนนเต็ม!!");
@@ -214,8 +220,17 @@ function StudentAssessment() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <button className="btn-back" role="button">
-        <Link to={"/MgtAssessment"} className="back-font">
+        <Link to={"/teacher/MgtAssessment"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -253,7 +268,7 @@ function StudentAssessment() {
                 );
               })}
               <TableCell>
-                <p className="headerC">Confix</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -398,6 +413,17 @@ function StudentAssessment() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

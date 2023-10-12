@@ -13,6 +13,8 @@ import TableRow from "@mui/material/TableRow";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { subfullscoretupdate } from "../slice/TeacherSlice";
 import { shownamesyllabus, shownamesubject } from "../slice/StudentSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SubjectFullScore() {
   const dispatch = useDispatch();
@@ -84,9 +86,11 @@ function SubjectFullScore() {
         setupdate({ fullscore: "" });
         loadsubject();
         loadsyllabus();
+        toast.success("Subjectfullscore records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert subjectfullscore records");
       });
   };
 
@@ -97,8 +101,17 @@ function SubjectFullScore() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <button className="btn-back" role="button">
-        <Link to={"/subjectScore"} className="back-font">
+        <Link to={"/teacher/subjectScore"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -129,7 +142,7 @@ function SubjectFullScore() {
                 <p className="headerC">คะแนนเต็ม</p>
               </TableCell>
               <TableCell className="table-header th">
-                <p className="headerC">Confix</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -181,6 +194,17 @@ function SubjectFullScore() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

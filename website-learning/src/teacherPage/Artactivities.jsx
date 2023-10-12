@@ -12,7 +12,6 @@ const Artactivities = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const loadData = () => {
-    console.log("123");
     dispatch(learningvideo())
       .then((result) => {
         setshowdata(result.payload);
@@ -20,7 +19,7 @@ const Artactivities = () => {
       .catch((err) => {
         console.log(err);
       }); 
-      console.log("show:",showdata);
+      // console.log("show:",showdata);
   };
   // const loadFile = () => {
   //   dispatch(learningfilepdf())
@@ -34,7 +33,7 @@ const Artactivities = () => {
 
   useEffect(() => {
     loadData();
-    console.log("show: ",loadData());
+    // console.log("show: ",loadData());
     // loadFile();
   }, []);
 

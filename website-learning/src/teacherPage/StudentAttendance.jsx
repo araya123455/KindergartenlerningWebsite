@@ -79,6 +79,15 @@ function StudentAttendance() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <h1 className="h2">แช็คชื่อนักเรียน</h1>
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="sticky table">
@@ -91,7 +100,7 @@ function StudentAttendance() {
                 <p className="headerC">เทอม/ปี</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Action</p>
+                <p className="headerC"></p>
               </TableCell>
             </TableRow>
           </TableHead>

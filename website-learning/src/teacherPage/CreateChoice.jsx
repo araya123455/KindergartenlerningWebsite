@@ -11,6 +11,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showquestion,
   insertquestion,
@@ -22,6 +24,7 @@ import { getFromLocalStorage } from "../LocalStorage/localstorage";
 
 function CreateChoice() {
   const dispatch = useDispatch();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showdata, setshowdata] = useState([]);
   const [showTest, setShowTest] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -159,6 +162,19 @@ function CreateChoice() {
 
   //   on click insert value
   const onInsrt = () => {
+    if (
+      !insert.ques ||
+      !insert.choice1 ||
+      !insert.choice2 ||
+      !insert.choice3 ||
+      !insert.choice4 ||
+      !insert.answer ||
+      !insert.score_ques ||
+      !testId
+    ) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
     let body = {
       ques: insert.ques,
       choice1: insert.choice1,
@@ -173,7 +189,7 @@ function CreateChoice() {
     dispatch(insertquestion(body))
       .then((result) => {
         setShowAdd(false);
-        setShowAdd({
+        setinsert({
           ques: "",
           choice1: "",
           choice2: "",
@@ -188,9 +204,11 @@ function CreateChoice() {
         }, []);
         AddClose();
         clearChoiceData();
+        toast.success("Create choice records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert create choice records");
       });
   };
 
@@ -245,11 +263,19 @@ function CreateChoice() {
           score_ques: "",
         });
         loadData();
+        toast.success("Create choice records have been edited successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert create choice records");
       });
   };
+
+  const handleDeleteConfirmation = (ques_id) => {
+    setDatamodal({ ques_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
   const onDelete = (id) => {
     dispatch(deletequestion(id))
       .then((result) => {
@@ -257,6 +283,7 @@ function CreateChoice() {
           console.log(result.payload.error);
         } else {
           loadData();
+          setShowDeleteConfirmation(false);
         }
       })
       .catch((err) => {
@@ -281,8 +308,17 @@ function CreateChoice() {
 
   return (
     <div>
-       <button className="btn-back" role="button">
-        <Link to={"/test/CreateTest"} className="back-font">
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
+      <button className="btn-back" role="button">
+        <Link to={"/teacher/test/CreateTest"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -308,60 +344,76 @@ function CreateChoice() {
         </Button>
       </div>
       <TableContainer component={Paper}>
-      <Table stickyHeader aria-label="sticky table">
-        <TableHead className="TableHead">
-          <TableRow>
-            <TableCell><p className="headerC">คำถาม</p></TableCell>
-            <TableCell><p className="headerC">ข้อที่1</p></TableCell>
-            <TableCell><p className="headerC">ข้อที่2</p></TableCell>
-            <TableCell><p className="headerC">ข้อที่3</p></TableCell>
-            <TableCell><p className="headerC">ข้อที่4</p></TableCell>
-            <TableCell><p className="headerC">คำตอบ</p></TableCell>
-            <TableCell><p className="headerC">คะแนน</p></TableCell>
-            <TableCell><p className="headerC">Confix</p></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {showdata.map((data) => {
-            const {
-              ques_id,
-              ques,
-              choice1,
-              choice2,
-              choice3,
-              choice4,
-              answer,
-              score_ques,
-            } = data;
-            return (
-              <TableRow key={ques_id}>
-                <TableCell>{ques}</TableCell>
-                <TableCell>{choice1}</TableCell>
-                <TableCell>{choice2}</TableCell>
-                <TableCell>{choice3}</TableCell>
-                <TableCell>{choice4}</TableCell>
-                <TableCell>{answer}</TableCell>
-                <TableCell>{score_ques}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="btn btn-secondary"
-                    onClick={() => EditShow(data)}
-                  >
-                    EDIT
-                  </Button>
-                  <Button
-                    className="buttonD"
-                    variant="btn btn-danger"
-                    onClick={() => onDelete(ques_id)}
-                  >
-                    DELETE
-                  </Button>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className="TableHead">
+            <TableRow>
+              <TableCell>
+                <p className="headerC">คำถาม</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ข้อที่1</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ข้อที่2</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ข้อที่3</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">ข้อที่4</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">คำตอบ</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">คะแนน</p>
+              </TableCell>
+              <TableCell>
+                <p className="headerC">แก้ไข</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {showdata.map((data) => {
+              const {
+                ques_id,
+                ques,
+                choice1,
+                choice2,
+                choice3,
+                choice4,
+                answer,
+                score_ques,
+              } = data;
+              return (
+                <TableRow key={ques_id}>
+                  <TableCell><p>{ques}</p></TableCell>
+                  <TableCell><p>{choice1}</p></TableCell>
+                  <TableCell><p>{choice2}</p></TableCell>
+                  <TableCell><p>{choice3}</p></TableCell>
+                  <TableCell><p>{choice4}</p></TableCell>
+                  <TableCell><p>{answer}</p></TableCell>
+                  <TableCell><p>{score_ques}</p></TableCell>
+                  <TableCell>
+                    <Button
+                      variant="btn btn-secondary"
+                      onClick={() => EditShow(data)}
+                    >
+                      EDIT
+                    </Button>
+                    <Button
+                      className="buttonD"
+                      variant="btn btn-danger"
+                      onClick={() => handleDeleteConfirmation(ques_id)}
+                    >
+                      DELETE
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </TableContainer>
       {/* Insert Data */}
       <Modal show={showAdd} onHide={AddClose}>
@@ -588,7 +640,41 @@ function CreateChoice() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.ques_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Outlet />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
