@@ -12,6 +12,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showtest,
   showtestde,
@@ -54,6 +56,7 @@ function AddClassTest() {
   });
   const testid = showTest.find((tes) => tes.test_id === testId);
   const testname = testid ? testid.test_detail : "";
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const loadData = () => {
     dispatch(showtestde())
@@ -140,6 +143,15 @@ function AddClassTest() {
   };
 
   const onInsert = () => {
+    if (
+      !testId ||
+      !insert.test_status ||
+      !insert.kinder_id ||
+      !insert.yearterm_id
+    ) {
+      alert("กรุณาป้อนข้อมูลให้ครบก่อนบันทึก!!");
+      return;
+    }
     let body = {
       test_id: testId,
       test_status: insert.test_status,
@@ -150,7 +162,7 @@ function AddClassTest() {
     dispatch(inserttestde(body))
       .then((result) => {
         setShowAdd(false);
-        setShowAdd({
+        setinsert({
           test_id: "",
           test_status: "",
           kinder_id: "",
@@ -158,9 +170,11 @@ function AddClassTest() {
         });
         loadData();
         AddClose();
+        toast.success("Classtest records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert classtest records");
       });
   };
   const EditClose = () => {
@@ -214,11 +228,19 @@ function AddClassTest() {
           yearterm_id: "",
         });
         loadData();
+        toast.success("Classtest records have been edited successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert classtest records");
       });
   };
+
+  const handleDeleteConfirmation = (testDe_id) => {
+    setDatamodal({ testDe_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
   const onDelete = (id) => {
     dispatch(deletetestde(id))
       .then((result) => {
@@ -226,6 +248,7 @@ function AddClassTest() {
           console.log(result.payload.error);
         } else {
           loadData();
+          setShowDeleteConfirmation(false);
         }
       })
       .catch((err) => {
@@ -244,8 +267,17 @@ function AddClassTest() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <button className="btn-back" role="button">
-        <Link to={"/test/CreateTest"} className="back-font">
+        <Link to={"/teacher/test/CreateTest"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -285,7 +317,7 @@ function AddClassTest() {
                 <p className="headerC">ปี/เทอม</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Confix</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -344,7 +376,7 @@ function AddClassTest() {
                     <Button
                       className="buttonD"
                       variant="btn btn-danger"
-                      onClick={() => onDelete(testDe_id)}
+                      onClick={() => handleDeleteConfirmation(testDe_id)}
                     >
                       DELETE
                     </Button>
@@ -471,7 +503,7 @@ function AddClassTest() {
 
                   return (
                     <option
-                      key={data.id}
+                      key={data.kinder_id}
                       value={`${data.kinder_id} ${data.yearterm_id}`}
                     >
                       {kinderName} - {termYearName}
@@ -491,7 +523,41 @@ function AddClassTest() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.testDe_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Outlet />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

@@ -5,10 +5,11 @@ import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
 import { saveToLocalStorage } from "../../LocalStorage/localstorage";
 
-function NavbarHead({ signout }) {
+function NavbarHead() {
   const signOut = () => {
-    signout();
-    // saveToLocalStorage("auth", null);
+    
+    saveToLocalStorage("login", false);
+    saveToLocalStorage("tch_auth", null);
   };
   return (
     <div className="navbarHeader">
@@ -68,7 +69,7 @@ function NavbarHead({ signout }) {
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="/login">
+            <NavLink to="/main">
               <i onClick={() => signOut()}>Sign Out</i>
               {/* {props.isSignedIn ? (
                 <button className="bth-danger" onClick={props.signout}>

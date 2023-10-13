@@ -7,6 +7,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showkinroom,
   insertkinroom,
@@ -22,6 +24,7 @@ function MgtKindergartenroomlevel() {
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
   const [update, setupdate] = useState({ kinde_level: "", Kinder_room: "" });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const loadData = () => {
     dispatch(showkinroom())
@@ -69,9 +72,11 @@ function MgtKindergartenroomlevel() {
         });
         loadData();
         setShowAdd(false);
+        toast.success("Kindergartenroomlevel records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert Kindergartenroomlevel records");
       });
   };
 
@@ -113,28 +118,36 @@ function MgtKindergartenroomlevel() {
         setupdate({ kinde_level: "", Kinder_room: "" });
         loadData();
         // notify();
+        toast.success(
+          "Kindergartenroomlevel records have been edited successfully"
+        );
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert Kindergartenroomlevel records");
       });
+  };
+
+  const handleDeleteConfirmation = (kinder_id) => {
+    setDatamodal({ kinder_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
   };
 
   //   Delete
   const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deletekinroom(id))
-        .then((result) => {
-          if (result.payload && result.payload.error) {
-            console.log(result.payload.error); // You can log the error or show it to the user
-          } else {
-            // Deletion successful, reload the data
-            loadData();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    dispatch(deletekinroom(id))
+      .then((result) => {
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error); // You can log the error or show it to the user
+        } else {
+          // Deletion successful, reload the data
+          loadData();
+          setShowDeleteConfirmation(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -156,7 +169,7 @@ function MgtKindergartenroomlevel() {
               <p className="headerC">Room</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Confix</p>
+              <p className="headerC">แก้ไข</p>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -165,8 +178,12 @@ function MgtKindergartenroomlevel() {
             const { kinder_id, kinde_level, Kinder_room } = data;
             return (
               <TableRow key={kinder_id}>
-                <TableCell>{kinde_level}</TableCell>
-                <TableCell>{Kinder_room}</TableCell>
+                <TableCell>
+                  <p>{kinde_level}</p>
+                </TableCell>
+                <TableCell>
+                  <p>{Kinder_room}</p>
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="btn btn-secondary"
@@ -177,7 +194,7 @@ function MgtKindergartenroomlevel() {
                   <Button
                     className="buttonD"
                     variant="btn btn-danger"
-                    onClick={() => onDelete(kinder_id)}
+                    onClick={() => handleDeleteConfirmation(kinder_id)}
                   >
                     DELETE
                   </Button>
@@ -261,6 +278,40 @@ function MgtKindergartenroomlevel() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(datamodal.kinder_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

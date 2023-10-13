@@ -42,10 +42,9 @@ function StuAttendanceUpdate() {
   const [updatedata, setupdatedata] = useState({
     attd_id: "",
   });
+  let stuid;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Set your desired initial rows per page
-  let stuid;
-
   // Use useSelector to access studentData from Redux store
   const studentData = useSelector((state) => state.data.studentData);
 
@@ -173,7 +172,7 @@ function StuAttendanceUpdate() {
       },
     };
     // Dispatch an action to update the attendance status
-    console.log(body);
+    // console.log(body);
     dispatch(attendancedetailupdate(body))
       .then((result) => {
         // console.log(result);
@@ -237,8 +236,17 @@ function StuAttendanceUpdate() {
 
   return (
     <div>
-       <button className="btn-back" role="button">
-        <Link to={"/attendance"} className="back-font">
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
+      <button className="btn-back" role="button">
+        <Link to={"/teacher/attendance"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -255,14 +263,15 @@ function StuAttendanceUpdate() {
           ย้อนกลับ
         </Link>
       </button>
+      <br />
       <div>
-        <h1>
+        <h1 className="m-bottom">
           การเช็คชื่อเข้าห้องเรียนห้องอนุบาล {getkin}/{getroom} ปีการศึกษา{" "}
           {getyear} เทอม {getterm}
         </h1>
       </div>
-      <div>
-        <label>เลือกวันที่:</label>
+      <div className="m-bottom">
+        <h5>เลือกวันที่:</h5>
         <input
           type="date"
           value={selectedDate}
@@ -278,7 +287,9 @@ function StuAttendanceUpdate() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <button className="buttnN buttonN" onClick={handleSearch}>Search</button>
+      <button className="buttnN buttonN" onClick={handleSearch}>
+        Search
+      </button>
       <br />
       <br />
       <TableContainer component={Paper}>
@@ -298,30 +309,25 @@ function StuAttendanceUpdate() {
                 <p className="headerC">สถานะ</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Confix</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array?.isArray(showattende) &&
+            {Array.isArray(showattende) &&
               showattende?.slice(startIndex, endIndex)?.map((data, index) => {
-                const attdt_id = showattende[index].attdDt_id;
-                // console.log(attdt_id);
-                const stuid = showattende[index].stu_id;
-                const date = showattende[index].date;
-                const attdid = showattende[index].attd_id;
-                const attd = showatten.find((att) => att.attd_id === attdid);
+                const { attdDt_id, date, stu_id, attd_id } = data;
+                const attd = showatten.find((att) => att.attd_id === attd_id);
                 const attdd = attd ? attd?.attd_name : "";
-                // console.log(stuid);
-                const student = showstu.find((stu) => stu.stu_id === stuid);
-                // console.log(student);
+
+                const student = showstu.find((stu) => stu.stu_id === stu_id);
                 const prefix = student ? student?.prefix : "";
                 const stuname = student ? student?.stu_Fname : "";
                 const stuLname = student ? student?.stu_Lname : "";
                 const stusn = student ? student?.stu_sn : "";
 
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={attdDt_id}>
                     <TableCell>
                       {prefix} {stuname} {stuLname}
                     </TableCell>
@@ -341,7 +347,7 @@ function StuAttendanceUpdate() {
                       <Button
                         className="buttonD"
                         variant="btn btn-danger"
-                        onClick={() => handleDeleteConfirmation(attdt_id)}
+                        onClick={() => handleDeleteConfirmation(attdDt_id)}
                       >
                         DELETE
                       </Button>
@@ -354,7 +360,7 @@ function StuAttendanceUpdate() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]} // Define the rows per page options
           component="div"
-          count={showattende.length} // Total number of rows
+          count={showattende?.length || 1} // Total number of rows
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -420,7 +426,6 @@ function StuAttendanceUpdate() {
           </Button>
         </Modal.Footer>
       </Modal>
-
       <ToastContainer
         position="top-right"
         autoClose={2000}

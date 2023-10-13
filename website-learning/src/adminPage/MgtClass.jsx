@@ -10,6 +10,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showclass,
   insertclass,
@@ -26,6 +28,7 @@ import { searchstuclass } from "../slice/searchSlice";
 
 function MgtClass() {
   const dispatch = useDispatch();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [classroomTimetableData, setClassroomTimetableData] = useState([]);
   const [showstu, setshowstu] = useState([]);
   const [showkinder, setShowKinder] = useState([]);
@@ -184,9 +187,11 @@ function MgtClass() {
         });
         loadData();
         closeEditModal();
+        toast.success("Class records inserted successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to insert class records");
       });
   };
 
@@ -272,22 +277,28 @@ function MgtClass() {
         });
         loadData();
         closeEditModal();
+        toast.success("Class records have been edited successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to insert class records");
+      });
+  };
+
+  const handleDeleteConfirmation = (class_id) => {
+    setEditData({ class_id }); // Store the ID of the record to be deleted
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+  };
+
+  const onDelete = (id) => {
+    dispatch(deleteclass(id))
+      .then(() => {
+        loadData();
+        setShowDeleteConfirmation(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const onDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      dispatch(deleteclass(id))
-        .then(() => {
-          loadData();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
 
   const openAddModal = () => {
@@ -414,7 +425,7 @@ function MgtClass() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Todisplay?.slice(startIndex, endIndex)?.map((data, index) => {
+            {Todisplay?.slice(startIndex, endIndex)?.map((data) => {
               const { class_id, kinder_id, yearterm_id, stu_id } = data;
 
               const student = showstu.find((stu) => stu.stu_id === stu_id);
@@ -444,16 +455,26 @@ function MgtClass() {
               return (
                 <TableRow key={class_id}>
                   <TableCell>
-                    {kinderLevel}/{kinderRoom}
+                    <p>
+                      {kinderLevel}/{kinderRoom}
+                    </p>
                   </TableCell>
                   <TableCell>
-                    {term}/{year}
+                    <p>
+                      {term}/{year}
+                    </p>
                   </TableCell>
                   <TableCell>
-                    {studentprefix} {studentFName} {studentLName}
+                    <p>
+                      {studentprefix} {studentFName} {studentLName}
+                    </p>
                   </TableCell>
-                  <TableCell>{studentsn}</TableCell>
-                  <TableCell>{teacherNames.join(", ")}</TableCell>
+                  <TableCell>
+                    <p>{studentsn}</p>
+                  </TableCell>
+                  <TableCell>
+                    <p>{teacherNames.join(", ")}</p>
+                  </TableCell>
                   <TableCell>
                     <Button
                       variant="btn btn-secondary"
@@ -464,7 +485,7 @@ function MgtClass() {
                     <Button
                       className="buttonD"
                       variant="btn btn-danger"
-                      onClick={() => onDelete(class_id)}
+                      onClick={() => handleDeleteConfirmation(class_id)}
                     >
                       DELETE
                     </Button>
@@ -629,6 +650,40 @@ function MgtClass() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="btn btn-danger"
+            onClick={() => onDelete(editData.class_id)}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

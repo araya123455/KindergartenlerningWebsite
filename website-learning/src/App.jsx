@@ -39,6 +39,9 @@ import StartTest from "./studentPage/StartTest";
 import ShowTestResult from "./studentPage/ShowTestResult";
 import Login from "../src/component/auth/Login";
 import ProtectedRoute from "./component/protected/ProtectedRoute";
+import ProtectedRouteAdm from "./component/protected/ProtectedRouteAdm";
+import ProtectedRouteTch from "./component/protected/ProtectedRouteTch";
+import ProtectedRouteStu from "./component/protected/ProtectedRouteStu";
 import PrivateRoutes from "./component/protected/PrivateRoutes";
 import Movement from "./teacherPage/movement";
 import Movement2 from "./teacherPage/Movement2";
@@ -58,31 +61,32 @@ import ReportLearning from "./teacherPage/ReportLearning";
 import ReportSubject from "./teacherPage/ReportSubject";
 import ShowreportSubject from "./teacherPage/ShowreportSubject";
 import PageReportLearning from "./teacherPage/PageReportLearning";
-import PageReportSubject from "./teacherPage/PageReportSubject";
+import { getFromLocalStorage } from "./LocalStorage/localstorage";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const signin = () => {
-    setIsSignedIn(true);
+    console.log("in");
+    // setIsSignedIn(true);
   };
   const signout = () => {
-    setIsSignedIn(false);
+    console.log("out");
+    // setIsSignedIn(false);
   };
-  // console.log(isSignedIn);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="login" replace />} />
-        <Route index element={<Navigate to="login" replace />} />
-        <Route path="login" element={<Login signin={signin} />} />
+        <Route path="/" element={<Navigate to="main" replace />} />
+        <Route index element={<Navigate to="main" replace />} />
+        <Route path="login" element={<Login />} />
         <Route path="main" element={<RouteNavbar />} />
         <Route
           path="admin"
           element={
-            <RouteAdmin />
-            // <ProtectedRoute isSignedIn={isSignedIn}>
-            //   <RouteAdmin />
-            // </ProtectedRoute>
+            // <RouteAdmin />
+            <ProtectedRouteAdm>
+              <RouteAdmin />
+            </ProtectedRouteAdm>
           }
         >
           <Route path="admin" element={<AdminProfile />} />
@@ -102,14 +106,13 @@ function App() {
         </Route>
 
         <Route
-          // path="teacher"
-          // element={
-          //   <ProtectedRoute isSignedIn={isSignedIn} signin={signin}>
-
-          //     <RouteTeacher signout={signout}/>
-          //   </ProtectedRoute>
-          // }
-          element={<RouteTeacher />}
+          path="teacher"
+          element={
+            <ProtectedRouteTch>
+              <RouteTeacher />
+            </ProtectedRouteTch>
+          }
+          // element={<RouteTeacher />}
         >
           <Route path="teacher" element={<TeacherProfile />} />
           <Route index element={<Navigate to="teacher" replace />} />
@@ -125,11 +128,17 @@ function App() {
               element={<StuAttendanceUpdate />}
             />
             <Route path="attendanceShow" element={<StuAttendanceShow />} />
-            <Route path="stuAttendanceShowTotal" element={<StuAttendanceShowTotal />} />
+            <Route
+              path="stuAttendanceShowTotal"
+              element={<StuAttendanceShowTotal />}
+            />
           </Route>
           <Route path="subjectscore" element={<SubjectScore />} />
           <Route path="subjectFullScore" element={<SubjectFullScore />} />
-          <Route path="stuSubjectScoreInsert" element={<StuSubjectScoreInsert />} />
+          <Route
+            path="stuSubjectScoreInsert"
+            element={<StuSubjectScoreInsert />}
+          />
           <Route path="movenment" element={<Movement />} />
           <Route path="movenment2" element={<Movement2 />} />
           <Route path="learningFile" element={<LearningFile />} />
@@ -151,7 +160,6 @@ function App() {
           <Route path="ReportSubject" element={<ReportSubject />} />
           <Route path="showreportSubject" element={<ShowreportSubject />} />
           <Route path="PageReportLearning" element={<PageReportLearning />} />
-          <Route path="PageReportSubject" element={<PageReportSubject />} />
           <Route path="test">
             <Route path="createChoice" element={<CreateChoice />} />
             <Route path="addClassTest" element={<AddClassTest />} />
@@ -164,12 +172,12 @@ function App() {
           <Route path="report" element={<Report />} />
         </Route>
         <Route
+          // <RouteStudent />
           path="student"
           element={
-            // <RouteStudent />
-            <ProtectedRoute isSignedIn={isSignedIn}>
-              <RouteStudent signout={signout} />
-            </ProtectedRoute>
+            <ProtectedRouteStu>
+              <RouteStudent />
+            </ProtectedRouteStu>
           }
         >
           <Route path="student" element={<StudentProfile />} />

@@ -12,6 +12,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showstusubscore,
   subjectscoreinsert,
@@ -104,7 +106,7 @@ function StuSubjectScoreInsert() {
       sub_id: subId,
       stu_id: id,
     }));
-  
+
     if (valid(body)) {
       Promise.all(body.map((item) => dispatch(subjectscoreinsert(item))))
         .then(() => {
@@ -112,9 +114,11 @@ function StuSubjectScoreInsert() {
           loadsubject();
           loadsyllabus();
           loadsubscore();
+          toast.success("Scoresubject records inserted successfully");
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Failed to insert scoresubject records");
         });
     } else {
       alert("กรุณากรอกคะแนนให้อยู่ในช่วงของคะแนนเต็ม!!");
@@ -164,9 +168,11 @@ function StuSubjectScoreInsert() {
           loadsubject();
           loadsyllabus();
           loadsubscore();
+          toast.success("Scoresubject records have been edited successfully");
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Failed to insert scoresubject records");
         });
     } else {
       alert("กรุณากรอกคะแนนให้อยู่ในช่วงของคะแนนเต็ม!!");
@@ -221,8 +227,17 @@ function StuSubjectScoreInsert() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <button className="btn-back" role="button">
-        <Link to={"/subjectScore"} className="back-font">
+        <Link to={"/teacher/subjectScore"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -263,7 +278,7 @@ function StuSubjectScoreInsert() {
                 );
               })}
               <TableCell>
-                <p className="headerC">Confix</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -390,6 +405,17 @@ function StuSubjectScoreInsert() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

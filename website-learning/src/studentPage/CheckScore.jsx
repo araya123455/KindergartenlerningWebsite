@@ -9,7 +9,7 @@ import "../assets/css/checkscore.css";
 
 function CheckScore() {
   const dispatch = useDispatch();
-  const auth = getFromLocalStorage("auth");
+  const auth = getFromLocalStorage("stu_auth");
   const substuId = auth.stu_id;
   const [stuscore, setstuscore] = useState([]);
   const [subject, setsubject] = useState([]);
@@ -55,6 +55,15 @@ function CheckScore() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       {stuscore.length > 0 ? (
         <table>
           <thead>

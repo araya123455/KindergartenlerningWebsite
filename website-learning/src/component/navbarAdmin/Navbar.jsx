@@ -4,8 +4,15 @@ import { Navbar } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
+import { saveToLocalStorage } from "../../LocalStorage/localstorage";
 
-function NavbarHead(props) {
+function NavbarHead() {
+  const signOut = () => {
+    
+    // console.log("123");
+    saveToLocalStorage("login", false);
+    saveToLocalStorage("adm_auth", null);
+  };
   return (
     <div className="navbarHeader">
       <Navbar bg="dark" variant="dark" className="main-navbar">
@@ -61,8 +68,8 @@ function NavbarHead(props) {
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="/login ">
-              <i>Sign Out</i>
+            <NavLink to="/main">
+              <i onClick={() => signOut()}>Sign Out</i>
             </NavLink>
           </div>
         </Nav>

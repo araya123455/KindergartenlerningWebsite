@@ -4,18 +4,15 @@ import { Link } from "react-router-dom";
 
 function ClickForStart() {
   return (
-    <div className="particle">
-      <div className="glowing">
+    <div className="particle-bg">
+      {/* <div className="glowing">
         <span className="red" style={{ "--i": 1 }}></span>
         <span className="yellow" style={{ "--i": 2 }}></span>
         <span className="blue" style={{ "--i": 3 }}></span>
-      </div>
+      </div> */}
       <div className="centered">
         <button className="button-55 " role="button">
-          <Link
-            className="fontbutton"
-            to="/student/starttest"
-          >
+          <Link className="fontbutton" to="/student/starttest">
             เริ่มทำแบบทดสอบ
           </Link>
         </button>

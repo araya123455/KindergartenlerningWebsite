@@ -1,109 +1,76 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
+import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { showadmin } from "../slice/DataSlice";
+import "../assets/css/blurredAnimatedGradients.css";
 
 function AdminProfile() {
-  const dispatch = useDispatch();
   const [showad, setshowad] = useState([]);
-
-  // load admin
-  const loadAdmin = () => {
-    dispatch(showadmin())
-      .then((result) => {
-        setshowad(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  
-  // const loadAdmin = () => {
-  //   const saveAdmin = localStorage.getItem("admin");
-  //   if (saveAdmin) {
-  //     setshowad(JSON.parse(saveAdmin));
-  //   } else {
-  //     dispatch(showadmin())
-  //       .then((result) => {
-  //         const adminData = result.payload;
-  //         setshowad(adminData);
-  //         saveAdminToLocalStorage(adminData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // };
-
-  // const saveAdminToLocalStorage = (data) => {
-  //   localStorage.setItem("admin", JSON.stringify(data));
-  // };
+  const auth = getFromLocalStorage("adm_auth");
 
   useEffect(() => {
-    loadAdmin();
+    setshowad(auth);
+    // console.log(showad);
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "20px",
-        justifyContent: "center", // Align cards to the center
-      }}
-    >
-      {showad.map((admin) => {
-        const {
-          adm_id,
-          prefix,
-          adm_name,
-          adm_Lname,
-          adm_sn,
-          adm_user,
-          status,
-        } = admin;
-        return (
-          <Card
-            key={adm_id}
-            sx={{
-              width: "400px", // Updated to a wider value
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              alignItems: "center", // Center align card content
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              borderRadius: "10px",
-              transition: "transform 0.2s",
-              "&:hover": {
-                transform: "scale(1.05)", // Zoom in a bit on hover
-              },
-            }}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="350"
-                alt="Admin Image"
-                // Use the full URL of the image
-                src={"/images/admin.jpg"}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {prefix} {adm_name} {adm_Lname}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {adm_sn}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        );
-      })}
+    <div>
+      <div className="blurred-bg">
+        <div className="blurred gradient-ani"></div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "20px",
+          justifyContent: "center", // Align cards to the center
+        }}
+      >
+        <Card
+          sx={{
+            width: "400px", // Updated to a wider value
+            display: "flex",
+            // marginTop: "50px",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "center", // Center align card content
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            borderRadius: "10px",
+            transition: "transform 0.2s",
+            "&:hover": {
+              transform: "scale(1.05)", // Zoom in a bit on hover
+            },
+          }}
+        >
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              height="310"
+              alt="Admin Image"
+              // Use the full URL of the image
+              src={"/images/admin.jpg"}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                <h2 className="font-mail">Profile</h2>
+              </Typography>
+              <Typography gutterBottom variant="h5" component="div">
+                <p>
+                  ชื่อ-นามสกุล {auth?.adm_name} {auth?.adm_Lname}
+                </p>
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                <p>แผนก {auth?.adm_sect}</p>
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </div>
     </div>
   );
 }

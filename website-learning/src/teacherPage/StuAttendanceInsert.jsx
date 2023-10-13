@@ -39,6 +39,7 @@ function StuAttendanceInsert() {
         setshowstu(result.payload);
         // console.log(result);
         setStatusRecords(initialStatusRecords);
+        console.log(statusRecords);
       })
       .catch((err) => {
         console.log(err);
@@ -87,6 +88,7 @@ function StuAttendanceInsert() {
   const handleStatusChange = (index, attd_id) => {
     // Update the statusRecords array with the selected status for the specific student.
     // console.log(index);
+    console.log(attd_id);
     setStatusRecords((prevStatusRecords) => {
       const updatedStatusRecords = [...prevStatusRecords];
       updatedStatusRecords[index] = {
@@ -115,29 +117,16 @@ function StuAttendanceInsert() {
   };
 
   const onInsert = () => {
-    // Check if all status and date are set to default values
-    const isDefaultValues = statusRecords.every((record) => {
-      return (
-        record.attd_id === getAttdIdByStatus("มา") &&
-        record.date === new Date(selectedDate).toISOString().split("T")[0]
-      );
-    });
-
-    if (isDefaultValues) {
-      // User didn't change anything, set status and date to default
-      setStatusRecords((prevStatusRecords) => {
-        const updatedStatusRecords = prevStatusRecords.map((record) => ({
-          ...record,
-          attd_id: getAttdIdByStatus("มา"),
-          date: new Date(selectedDate).toISOString().split("T")[0],
-        }));
-        return updatedStatusRecords;
-      });
-    }
-
-    // Iterate through statusRecords and send each attendance record to the server.
+    // Create an array to hold all attendance records, including defaults
+    const allAttendanceRecords = showstu.map((student) => ({
+      stu_id: student.stu_id,
+      attd_id: statusRecords.find((record) => record.stu_id === student.stu_id)?.attd_id || getAttdIdByStatus("มา"),
+      date: new Date(selectedDate).toISOString().split("T")[0],
+    }));
+  
+    // Iterate through all attendance records and send each to the server
     Promise.all(
-      statusRecords.map((record) => {
+      allAttendanceRecords.map((record) => {
         const { date, stu_id, attd_id } = record;
         if (date && stu_id && attd_id) {
           const body = { date, stu_id, attd_id };
@@ -149,14 +138,12 @@ function StuAttendanceInsert() {
       .then(() => {
         toast.success("Attendance records inserted successfully");
         // Clear the status and date for each student individually
-        setStatusRecords((prevStatusRecords) => {
-          const updatedStatusRecords = prevStatusRecords.map((record) => ({
-            ...record,
-            attd_id: "",
-            date: "",
-          }));
-          return updatedStatusRecords;
-        });
+        const updatedStatusRecords = statusRecords.map((record) => ({
+          ...record,
+          attd_id: "",
+          date: "",
+        }));
+        setStatusRecords(updatedStatusRecords); // Reset the status records for all students
         setSelectedDate(new Date()); // Reset the date
       })
       .catch((err) => {
@@ -164,6 +151,7 @@ function StuAttendanceInsert() {
         toast.error("Failed to insert attendance records");
       });
   };
+  
 
   const crt_Id = showSearch.find((data) => data?.crt_id === crtId);
   const yearTerm_id = crt_Id ? crt_Id.yearterm_id : "";
@@ -193,8 +181,17 @@ function StuAttendanceInsert() {
 
   return (
     <div>
-       <button className="btn-back" role="button">
-        <Link to={"/attendance"} className="back-font">
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
+      <button className="btn-back" role="button">
+        <Link to={"/teacher/attendance"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -211,6 +208,7 @@ function StuAttendanceInsert() {
           ย้อนกลับ
         </Link>
       </button>
+      <br />
       <div>
         <h1>
           เช็คชื่อนักเรียนห้อง {getkin}/{getroom} ปีการศึกษา {getyear} เทอม{" "}
@@ -263,6 +261,7 @@ function StuAttendanceInsert() {
                       onChange={(e) =>
                         handleStatusChange(index, e.target.value)
                       }
+                      // onFocus={(e) => handleStatusDate(e.target.value)}
                       // onFocus={(e) => setsta(index, e.target.value)}
                       value={
                         statusRecords[index]?.attd_id || getAttdIdByStatus("มา")
@@ -283,7 +282,8 @@ function StuAttendanceInsert() {
             })}
         </TableBody>
       </Table>
-      <Button onClick={() => onInsert()}>บันทึก</Button>
+      <br />
+      <button className="buttonN buttnN" onClick={() => onInsert()}>บันทึก</button>
       <ToastContainer
         position="top-right"
         autoClose={2000}

@@ -67,6 +67,7 @@ function StuAttendanceShow() {
     dispatch(searceattendance({ crtId, stuid, selectedDate }))
       .then((result) => {
         setshowattende(result.payload.data);
+        // console.log(showattende);
       })
       .catch((err) => {
         console.log(err);
@@ -165,8 +166,20 @@ function StuAttendanceShow() {
 
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <button className="btn-back" role="button">
-        <Link to={"/attendance/stuAttendanceShowTotal"} className="back-font">
+        <Link
+          to={"/teacher/attendance/stuAttendanceShowTotal"}
+          className="back-font"
+        >
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -230,18 +243,18 @@ function StuAttendanceShow() {
                 ?.sort((a, b) => a?.stu_id - b?.stu_id)
                 ?.slice(startIndex, endIndex)
                 ?.map((data, index) => {
-                  const stuid = showattende[index]?.stu_id;
-                  const date = showattende[index]?.date;
-                  const attdid = showattende[index]?.attd_id;
-                  const attd = showatten.find((att) => att?.attd_id === attdid);
+                  const { attdDt_id, date, stu_id, attd_id } = data;
+                  const attd = showatten.find(
+                    (att) => att?.attd_id === attd_id
+                  );
                   const attdd = attd ? attd.attd_name : "";
-                  const student = showstu.find((stu) => stu?.stu_id === stuid);
+                  const student = showstu.find((stu) => stu?.stu_id === stu_id);
                   const prefix = student ? student?.prefix : "";
                   const stuname = student ? student?.stu_Fname : "";
                   const stuLname = student ? student?.stu_Lname : "";
                   const stusn = student ? student?.stu_sn : "";
                   return (
-                    <TableRow key={index}>
+                    <TableRow key={attdDt_id}>
                       <TableCell>
                         {prefix} {stuname} {stuLname}
                       </TableCell>

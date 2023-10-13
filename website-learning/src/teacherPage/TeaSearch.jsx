@@ -11,7 +11,7 @@ function TeaSearch() {
   const handleSearch = () => {
     if (!searchQuery) {
       alert("Please input data first"); // Display an alert message
-      setStudentResults("")
+      setStudentResults("");
       return;
     }
     filterData();
@@ -23,14 +23,23 @@ function TeaSearch() {
 
   const filterData = () => {
     // Filter student results with an exact match on stu_sn
-    const filteredStudents = studentData?.filter((student) =>
-      student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
+    const filteredStudents = studentData?.filter(
+      (student) => student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
     );
     setStudentResults(filteredStudents);
   };
-  
+
   return (
     <div>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <h5>วิธีการ: ใช้รหัสประจำตัวนักเรียนเพื่อค้นหาเท่านั้น!</h5>
       <input
         type="text"
@@ -38,25 +47,29 @@ function TeaSearch() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button className="buttnN buttonN" onClick={handleSearch}>Search</button>
-      <ul className="student-results">
-        {studentResults.length > 0 ? (
-          studentResults.map((student) => (
-            <li key={student.stu_id} className="student-item">
-              <h2>Student Results:</h2>
-              <div>Student Sn: {student.stu_sn}</div>
-              <div>Prefix: {student.prefix}</div>
-              <div>
-                Name: {student.stu_Fname} {student.stu_Lname}
-              </div>
-              <div>Username: {student.stu_user}</div>
-              <div>Status: {student.status}</div>
-            </li>
-          ))
-        ) : (
-          null
-        )}
-      </ul>
+      <button className="buttnN buttonN" onClick={handleSearch}>
+        Search
+      </button>
+      <div className="m-result">
+        <ul className="student-results ">
+          {studentResults.length > 0
+            ? studentResults?.map((student) => (
+                <li key={student.stu_id} className="student-item">
+                  <h2 className="font-mail">ข้อมูลนักเรียน</h2>
+                  <p className="font-mail s-re">
+                    เลขประจำตัว: {student.stu_sn}
+                  </p>
+                  <p className="font-mail s-re">คำนำหน้า: {student.prefix}</p>
+                  <p className="font-mail s-re">
+                    ชื่อ-นามสกุล: {student.stu_Fname} {student.stu_Lname}
+                  </p>
+                  <p className="font-mail s-re">Username: {student.stu_user}</p>
+                  <p className="font-mail s-re">สถานะ: {student.status}</p>
+                </li>
+              ))
+            : null}
+        </ul>
+      </div>
     </div>
   );
 }

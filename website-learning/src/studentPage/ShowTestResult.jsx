@@ -18,7 +18,7 @@ function ShowTestResult() {
   const [showques, setshowques] = useState([]);
   const [showresult, setshowresult] = useState([]);
   const [showredetail, setshowredetail] = useState([]);
-  const auth = getFromLocalStorage("auth");
+  const auth = getFromLocalStorage("stu_auth");
   const stuid = auth.stu_id;
   const testId = getFromLocalStorage("testId");
   let score = 0,
@@ -88,7 +88,34 @@ function ShowTestResult() {
   return (
     <>
       <div>
-        <h2>ผลการการทดสอบ</h2>
+        <div id="clouds">
+          <div className="cloud x1"></div>
+          <div className="cloud x2"></div>
+          <div className="cloud x3"></div>
+          <div className="cloud x4"></div>
+          <div className="cloud x5"></div>
+          <div className="cloud x6"></div>
+          <div className="cloud x7"></div>
+        </div>
+        <button className="btn-back" role="button">
+          <Link to={"/student/test"} className="back-font">
+            <svg
+              viewBox="0 0 96 96"
+              height="24px"
+              id="Layer_1"
+              version="1.2"
+              width="24px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+                fill="#ffffff"
+              />
+            </svg>
+            ย้อนกลับ
+          </Link>
+        </button>
+        <h2 className="font-mail">ผลการการทดสอบ</h2>
         {showtest.map((data) => {
           const { test_id, test_detail } = data;
           return <h3 key={test_id}>{test_detail}</h3>;
@@ -117,20 +144,21 @@ function ShowTestResult() {
               {showredetail.map((question, index) => (
                 <div key={index}>
                   <p>
-                    คำถาม {index + 1}. {showques[index]?.ques || ''}
+                    คำถาม {index + 1}. {showques[index]?.ques || ""}
                   </p>
                   {
                     (isCorrect =
-                      showques[index]?.answer === showredetail[index]?.ans_result || false)
+                      showques[index]?.answer ===
+                        showredetail[index]?.ans_result || false)
                   }
                   <div
                     className={`answer-summary ${
                       isCorrect ? "correct" : "incorrect"
                     }`}
                   >
-                    <p>คำตอบของคุณ: {showredetail[index]?.ans_result || ''}</p>
+                    <p>คำตอบของคุณ: {showredetail[index]?.ans_result || ""}</p>
                     {!isCorrect && (
-                      <p>คำตอบที่ถูกต้อง: {showques[index]?.answer || ''}</p>
+                      <p>คำตอบที่ถูกต้อง: {showques[index]?.answer || ""}</p>
                     )}
                     <p className="score">
                       คะแนน: {isCorrect ? showques[index]?.score_ques : 0}

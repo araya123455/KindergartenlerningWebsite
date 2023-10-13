@@ -132,8 +132,17 @@ function StuAttendanceShowTotal() {
 
   return (
     <div>
-       <button className="btn-back" role="button">
-        <Link to={"/attendance"} className="back-font">
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
+      <button className="btn-back" role="button">
+        <Link to={"/teacher/attendance"} className="back-font">
           <svg
             viewBox="0 0 96 96"
             height="24px"
@@ -151,7 +160,7 @@ function StuAttendanceShowTotal() {
         </Link>
       </button>
       <div>
-        <label>เลือกวันที่:</label>
+        <h5>เลือกวันที่:</h5>
         <input
           type="date"
           value={selectedDate}
@@ -159,7 +168,9 @@ function StuAttendanceShowTotal() {
         />
       </div>
       <br />
-      <button className="buttonN buttnN" onClick={handleSearch}>Search</button>
+      <button className="buttonN buttnN" onClick={handleSearch}>
+        Search
+      </button>
       <br />
       <br />
       <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
@@ -220,7 +231,7 @@ function StuAttendanceShowTotal() {
                 <TableCell>
                   <Link
                     className="linkshow"
-                    to={"/attendance/attendanceShow"}
+                    to={"/teacher/attendance/attendanceShow"}
                     onClick={() => onClick(date)}
                   >
                     ดูประวัติ
