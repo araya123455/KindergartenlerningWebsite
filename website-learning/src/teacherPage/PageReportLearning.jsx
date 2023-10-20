@@ -250,28 +250,32 @@ function PageReportLearning() {
             }}
           >
             <div>
-              <h5 className="f-fam" style={{ fontSize: 15 }}>
-                ลงชื่อ{" "}
-                <img
-                  src="/srinual.png"
-                  alt="your_image"
-                  style={{ width: "60px", height: "65x" }}
-                />{" "}
-                ครูประจำชั้น
-              </h5>
+            <div style={{ display: "flex", alignItems: "center" }}>
+                <h5
+                  className="f-fam"
+                  style={{ fontSize: 15, marginRight: "110px" }}
+                >
+                  ลงชื่อ
+                </h5>
+                <h5 className="f-fam" style={{ fontSize: 15 }}>
+                  ครูประจำชั้น
+                </h5>
+              </div>
               <h5 className="f-fam" style={{ fontSize: 15 }}>( {teachername} )</h5>
               <h5 className="f-fam" style={{ fontSize: 15 }}>
                 {teachersect} {posi?.position}
               </h5>
-              <h5 className="f-fam" style={{ fontSize: 15 }}>
-                ลงชื่อ{" "}
-                <img
-                  src="/vipa.png"
-                  alt="your_image"
-                  style={{ width: "60px", height: "50x" }}
-                />{" "}
-                ผู้อำนวยการ
-              </h5>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <h5
+                  className="f-fam"
+                  style={{ fontSize: 15, marginRight: "110px" }}
+                >
+                  ลงชื่อ
+                </h5>
+                <h5 className="f-fam" style={{ fontSize: 15 }}>
+                  ผู้อำนวยการ
+                </h5>
+              </div>
               <h5 className="f-fam" style={{ fontSize: 15 }}>( {directorname} )</h5>
               <h5 className="f-fam" style={{ fontSize: 15 }}>
                 ผู้อำนวยการโรงเรียนสุเหร่าคลองสิบ

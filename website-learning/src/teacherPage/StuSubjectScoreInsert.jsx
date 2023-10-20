@@ -255,7 +255,7 @@ function StuSubjectScoreInsert() {
         </Link>
       </button>
       <div>
-        <h2>{syllabus}</h2>
+        <h2 className="h2">{syllabus}</h2>
       </div>
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="sticky table">
@@ -330,7 +330,7 @@ function StuSubjectScoreInsert() {
                     <Button
                       variant="btn btn-primary"
                       onClick={() => AddShow(stu_id)}
-                      disabled={studentsubscore.length > 0 ? true : false}
+                      // disabled={studentsubscore.length > 0 ? true : false}
                     >
                       ADD
                     </Button>

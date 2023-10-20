@@ -336,7 +336,7 @@ function CreateChoice() {
         </Link>
       </button>
       <div>
-        <h2>{testname}</h2>
+        <h2 className="h2">{testname}</h2>
       </div>
       <div>
         <Button className="button" variant="primary" onClick={AddShow}>
