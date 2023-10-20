@@ -275,8 +275,12 @@ function MgtAssessmentClass() {
                 const { asses_id, assess_name, full_score } = data;
                 return (
                   <TableRow key={asses_id}>
-                    <TableCell>{assess_name}</TableCell>
-                    <TableCell>{full_score}</TableCell>
+                    <TableCell>
+                      <p>{assess_name}</p>
+                    </TableCell>
+                    <TableCell>
+                      <p>{full_score}</p>
+                    </TableCell>
                     <TableCell>
                       <Button
                         variant="btn btn-secondary"

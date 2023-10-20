@@ -329,13 +329,13 @@ function StuAttendanceUpdate() {
                 return (
                   <TableRow key={attdDt_id}>
                     <TableCell>
-                      {prefix} {stuname} {stuLname}
+                      <p>{prefix} {stuname} {stuLname}</p>
                     </TableCell>
-                    <TableCell>{stusn}</TableCell>
+                    <TableCell><p>{stusn}</p></TableCell>
                     <TableCell>
-                      {new Date(date).toLocaleDateString("en-US")}
+                      <p>{new Date(date).toLocaleDateString("en-US")}</p>
                     </TableCell>
-                    <TableCell>{attdd}</TableCell>
+                    <TableCell><p>{attdd}</p></TableCell>
                     <TableCell>
                       <Button
                         variant="btn btn-secondary"
