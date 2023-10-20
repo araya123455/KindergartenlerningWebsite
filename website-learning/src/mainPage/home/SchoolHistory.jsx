@@ -7,10 +7,6 @@ import "../../assets/css/mainpage.css";
 import Carousel from "react-bootstrap/Carousel";
 
 const SchoolHistory = () => {
-<<<<<<< HEAD
-  return ( 
-    <div></div>
-=======
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -77,7 +73,6 @@ const SchoolHistory = () => {
         ))}
       </Carousel>
     </div>
->>>>>>> devv_araya
   );
 };
 
