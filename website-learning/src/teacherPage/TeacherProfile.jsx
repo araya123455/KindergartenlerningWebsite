@@ -85,7 +85,7 @@ function TeacherProfile() {
                 <p>เลขประจำตัว {showdata?.tch_sn}</p>
               </Typography>
               <Typography variant="h6" color="text.secondary">
-                <p>แผนก {showdata?.tch_sect} ตำแหน่ง</p>
+                <p>แผนก {showdata?.tch_sect}</p>
               </Typography>
             </CardContent>
           </CardActionArea>
