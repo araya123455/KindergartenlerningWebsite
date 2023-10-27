@@ -270,7 +270,7 @@ function StuSubjectScoreInsert() {
               {showsubject?.map((data) => {
                 const { sub_id, sub_name, fullscore } = data;
                 return (
-                  <TableCell className="table-header th" key={sub_id}>
+                  <TableCell className="att-th th" key={sub_id}>
                     <p className="headerC">
                       {sub_name}({fullscore})
                     </p>
