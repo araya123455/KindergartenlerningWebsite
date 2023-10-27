@@ -128,33 +128,75 @@ function Login() {
           ย้อนกลับ
         </Link>
       </button>
+      <div id="clouds">
+        <div className="cloud x1"></div>
+        <div className="cloud x2"></div>
+        <div className="cloud x3"></div>
+        <div className="cloud x4"></div>
+        <div className="cloud x5"></div>
+        <div className="cloud x6"></div>
+        <div className="cloud x7"></div>
+      </div>
       <div className="border">
-        <h2>LOGIN</h2>
+        <h2 className="l-h2">LOGIN</h2>
         <div className="inputBorder">
           <Form>
             <Form.Group className="mb-3" controlId="usernameInput">
-              <Form.Label>Username</Form.Label>
+              <div className="l-center">
+                <Link className="l-s">
+                  <svg
+                    height="23"
+                    viewBox="0 0 1792 1792"
+                    width="23"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M1600 1405q0 120-73 189.5t-194 69.5h-874q-121 0-194-69.5t-73-189.5q0-53 3.5-103.5t14-109 26.5-108.5 43-97.5 62-81 85.5-53.5 111.5-20q9 0 42 21.5t74.5 48 108 48 133.5 21.5 133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5t-271.5 112.5-271.5-112.5-112.5-271.5 112.5-271.5 271.5-112.5 271.5 112.5 112.5 271.5z" />
+                  </svg>
+                </Link>
+                <Form.Label className="label-l">Username</Form.Label>
+              </div>
               <Form.Control
-                className="input-line form-control"
+                className="input-line form-control input-user"
                 type="text"
-                placeholder="Enter username"
+                placeholder="User name / Email"
                 autoComplete="username"
                 onChange={(e) => setUsernameInput(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="passwordInput">
-              <Form.Label>Password</Form.Label>
+              <div className="l-center">
+                <Link className="l-s">
+                  <svg
+                    enable-background="new 0 0 24 24"
+                    height="20px"
+                    id="Layer_1"
+                    version="1.1"
+                    viewBox="0 0 22 22"
+                    width="20px"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M20.002,24.001H4.014c-1.104,0-1.998-0.896-1.998-2.001V11.994  c0-1.105,0.895-2.002,1.998-2.002h0.999V6.991c0-3.868,3.132-7.004,6.995-7.004s6.995,3.136,6.995,7.004v3.001h0.999  c1.104,0,1.998,0.896,1.998,2.002V22C22,23.104,21.105,24.001,20.002,24.001z M16.005,6.991c0-2.21-1.79-4.002-3.997-4.002  S8.011,4.781,8.011,6.991v3.001h7.994V6.991z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </Link>
+                <Form.Label className="label-l">Password</Form.Label>
+              </div>
               <Form.Control
                 className="input-line form-control"
                 type="password"
-                placeholder="Enter password"
+                placeholder="Password"
                 autoComplete="current-password"
                 onChange={(e) => setPasswordInput(e.target.value)}
               />
             </Form.Group>
             <div>
               <Form.Group className="mb-3">
-                <Form.Label className="label">Option: </Form.Label>
+                <Form.Label className=" label-l">ผู้ใช้งาน: </Form.Label>
                 <Form.Select
                   className="details summary"
                   value={selectedRole}
@@ -175,18 +217,6 @@ function Login() {
             <button className="button-30" role="button" onClick={onSubmit}>
               Submit
             </button>
-            <Link
-              style={{
-                marginLeft: "90%",
-                marginBottom: "30%",
-                textDecoration: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              to="/register"
-            >
-              Register
-            </Link>
           </Form>
         </div>
       </div>
