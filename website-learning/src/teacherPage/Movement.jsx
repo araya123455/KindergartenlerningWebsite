@@ -13,31 +13,18 @@ const Movement = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
-
   const loadData = () => {
     dispatch(learningvideo())
       .then((result) => {
         setshowdata(result.payload);
-        // console.log(result.payload);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  // const loadFile = () => {
-  //   dispatch(learningfilepdf())
-  //     .then((result) => {
-  //       setshowdata(result.payload);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
+ 
   useEffect(() => {
     loadData();
-    // console.log("show: ", loadData());
-    // loadFile();
   }, []);
 
   const handleVideoClick = (videoLink) => {
@@ -81,10 +68,6 @@ const Movement = () => {
         <div className="cloud x6"></div>
         <div className="cloud x7"></div>
       </div>
-      {/* <button onClick={handleDownload} disabled={loading}>
-        {loading ? "Downloading..." : "Download PDF"}
-      </button> */}
-
       <h1>เสริมประสบกาณ์ - Movement</h1>
       <br></br>
       {showdata
