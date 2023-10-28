@@ -251,16 +251,16 @@ function StudentAssessment() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead className="TableHead">
             <TableRow>
-              <TableCell className="table-header th">
+              <TableCell className="att-th th">
                 <p className="headerC">ชื่อ-นามสกุล</p>
               </TableCell>
-              <TableCell className="table-header th">
+              <TableCell className="att-th th">
                 <p className="headerC">รหัสประจำตัว</p>
               </TableCell>
               {showaeesedata?.map((data) => {
                 const { asses_id, assess_name, full_score } = data;
                 return (
-                  <TableCell className="table-header th" key={asses_id}>
+                  <TableCell className="att-th th" key={asses_id}>
                     <p className="headerC">
                       {assess_name}({full_score})
                     </p>

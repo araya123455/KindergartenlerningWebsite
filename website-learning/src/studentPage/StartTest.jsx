@@ -224,7 +224,7 @@ const StartTest = () => {
               >
                 <p>คำตอบของคุณ: {stuans}</p>
                 {!isCorrect && <p>คำตอบที่ถูกต้อง: {correctans}</p>}
-                <p className="score">คะแนน: {isCorrect ? scoreq : 0}</p>
+                 <p className="score">คะแนน: {isCorrect ? scoreq : 0}</p>
               </div>
             </div>
           );

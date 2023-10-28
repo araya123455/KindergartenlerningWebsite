@@ -1,17 +1,17 @@
-.div{
-    background-color: red;
-    width: 50%;
-    height: 20rem;
-    font-weight: bold;
-    padding: 5px; 
-    content: '\e8c2'
+.div {
+  background-color: red;
+  width: 50%;
+  height: 20rem;
+  font-weight: bold;
+  padding: 5px;
+  content: "\e8c2";
 }
-.right{
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'cursive', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
+.right {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "cursive", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .carousel {
   position: relative;
@@ -64,14 +64,53 @@
 .carousel-button.prev {
   left: 10px;
 }
-  .image {
-    display: block; 
-    margin-left: 30%; 
-    margin-right: 40%; 
-    width: 40%; 
-    height: 40%;
-  }
-  
-  
+.image {
+  display: block;
+  margin-left: 30%;
+  margin-right: 40%;
+  width: 40%;
+  height: 40%;
+}
 
-  
+/* History css */
+/* Add this CSS to your stylesheet */
+.scrollable-carousel .carousel-inner {
+  display: flex;
+  overflow: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Hide the scrollbar (for Firefox) */
+  -ms-overflow-style: none; /* Hide the scrollbar (for IE/Edge) */
+  scroll-behavior: smooth;
+}
+
+.scrollable-carousel .carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.scrollable-carousel .carousel-control-prev,
+.scrollable-carousel .carousel-control-next {
+  width: auto;
+  /* Optional: Add styles to your previous and next buttons */
+}
+
+.title-h {
+  font-size: 40px;
+  color: aliceblue;
+  font-weight: 300;
+  text-shadow: 1.5px 1.5px 1.5px black;
+}
+.title-p {
+  font-size: 18px;
+  color: aliceblue;
+  font-weight: 200;
+  text-shadow: 1.5px 1.5px 1.5px black;
+}
+
+.his-space {
+  margin-bottom: 25vh;
+}
+
+.per-space {
+  margin-bottom: 6vh;
+}

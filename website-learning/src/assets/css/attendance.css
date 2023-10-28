@@ -221,3 +221,14 @@ input[type="radio"]:checked + .radio-label::before {
 .m-bottom {
   margin-bottom: 18px;
 }
+
+/* Add your CSS styles for table header here */
+.att-header {
+  background-color: #f2f2f2;
+}
+
+.att-th {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+}

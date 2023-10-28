@@ -172,9 +172,9 @@ function TestResultDetail() {
                 return (
                   <TableRow key={stu_id}>
                     <TableCell>
-                      {prefix} {stu_Fname} {stu_Lname}
+                      <p>{prefix} {stu_Fname} {stu_Lname}</p>
                     </TableCell>
-                    <TableCell>{stu_sn}</TableCell>
+                    <TableCell><p>{stu_sn}</p></TableCell>
                     <TableCell>
                       <p className="hstatus green">
                         {totalScore}{" "}
@@ -198,9 +198,9 @@ function TestResultDetail() {
                 return (
                   <TableRow key={stu_id}>
                     <TableCell>
-                      {prefix} {stu_Fname} {stu_Lname}
+                      <p>{prefix} {stu_Fname} {stu_Lname}</p>
                     </TableCell>
-                    <TableCell>{stu_sn}</TableCell>
+                    <TableCell><p>{stu_sn}</p></TableCell>
                     <TableCell>
                       <p className="hstatus red">0</p>
                     </TableCell>

@@ -129,7 +129,7 @@ function SubjectFullScore() {
         </Link>
       </button>
       <div>
-        <h2>{syllabus}</h2>
+        <h2 className="h2">{syllabus}</h2>
       </div>
       <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -151,8 +151,8 @@ function SubjectFullScore() {
               const { sub_id, sub_name, fullscore } = data;
               return (
                 <TableRow key={sub_id}>
-                  <TableCell className="td">{sub_name}</TableCell>
-                  <TableCell className="td">{fullscore}</TableCell>
+                  <TableCell className="td"><p>{sub_name}</p></TableCell>
+                  <TableCell className="td"><p>{fullscore}</p></TableCell>
                   <TableCell className="td">
                     <Button
                       variant="btn btn-secondary"

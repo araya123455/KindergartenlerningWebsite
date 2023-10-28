@@ -255,7 +255,7 @@ function StuSubjectScoreInsert() {
         </Link>
       </button>
       <div>
-        <h2>{syllabus}</h2>
+        <h2 className="h2">{syllabus}</h2>
       </div>
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="sticky table">
@@ -270,7 +270,7 @@ function StuSubjectScoreInsert() {
               {showsubject?.map((data) => {
                 const { sub_id, sub_name, fullscore } = data;
                 return (
-                  <TableCell className="table-header th" key={sub_id}>
+                  <TableCell className="att-th th" key={sub_id}>
                     <p className="headerC">
                       {sub_name}({fullscore})
                     </p>
@@ -330,7 +330,7 @@ function StuSubjectScoreInsert() {
                     <Button
                       variant="btn btn-primary"
                       onClick={() => AddShow(stu_id)}
-                      disabled={studentsubscore.length > 0 ? true : false}
+                      // disabled={studentsubscore.length > 0 ? true : false}
                     >
                       ADD
                     </Button>
