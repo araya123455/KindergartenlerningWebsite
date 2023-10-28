@@ -112,6 +112,10 @@ ul li {
 }
 
 /* Your custom styles */
+h2 {
+  text-align: center;
+}
+
 .m-result {
   margin-top: 20px;
   display: flex;
