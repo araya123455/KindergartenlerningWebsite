@@ -61,10 +61,16 @@ function AdminProfile() {
               </Typography>
               <Typography gutterBottom variant="h5" component="div">
                 <p>
-                  ชื่อ-นามสกุล {auth?.adm_name} {auth?.adm_Lname}
+                  ชื่อ-นามสกุล {auth?.prefix} {auth?.adm_name} {auth?.adm_Lname}
                 </p>
               </Typography>
-              <Typography variant="h6" color="text.secondary">
+              <Typography gutterBottom variant="h6" component="div">
+                <p>
+                  Username {auth?.adm_user}
+                </p>
+              </Typography>
+              {/* color="text.secondary" */}
+              <Typography variant="h6" >
                 <p>แผนก {auth?.adm_sect}</p>
               </Typography>
             </CardContent>
