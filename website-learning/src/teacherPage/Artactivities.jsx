@@ -73,7 +73,7 @@ const Artactivities = () => {
            {/* <a href="MovementFile" className="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Download PDF</a> */}
       <h1>กิจกรรมศิลปะ - Artactivities</h1><br></br>
       {showdata
-        .filter((data) => data.cont_id === 2) // Filter the data based on contV_id
+        .filter((data) => data.cont_id === 4) // Filter the data based on contV_id
         .map((data) => {
           const { video_detail, video_link, cont_id } = data;
         return (
