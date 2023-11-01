@@ -202,6 +202,7 @@ function MgtTeacher() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deleteteacher(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -212,6 +213,8 @@ function MgtTeacher() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

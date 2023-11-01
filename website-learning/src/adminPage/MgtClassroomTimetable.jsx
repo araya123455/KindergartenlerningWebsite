@@ -203,6 +203,7 @@ function MgtClassroomTimetable() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deleteclasstime(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -213,6 +214,8 @@ function MgtClassroomTimetable() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
   // reload

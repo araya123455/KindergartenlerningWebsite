@@ -9,7 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import {
   showsyllabus,
   insertsyllabus,
@@ -131,6 +130,7 @@ function MgtSyllabus() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deletesyllabus(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -141,6 +141,8 @@ function MgtSyllabus() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

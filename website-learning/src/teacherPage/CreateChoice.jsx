@@ -278,9 +278,11 @@ function CreateChoice() {
 
   const onDelete = (id) => {
     dispatch(deletequestion(id))
+    .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
+          // setShowDeleteConfirmation(false);
         } else {
           loadData();
           setShowDeleteConfirmation(false);
@@ -288,6 +290,8 @@ function CreateChoice() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

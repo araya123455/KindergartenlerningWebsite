@@ -292,12 +292,15 @@ function MgtClass() {
 
   const onDelete = (id) => {
     dispatch(deleteclass(id))
+      .unwrap()
       .then(() => {
         loadData();
         setShowDeleteConfirmation(false);
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

@@ -129,9 +129,11 @@ function CreateTest() {
 
   const onDelete = (id) => {
     dispatch(deletetest(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
+          // setShowDeleteConfirmation(false);
         } else {
           loadData();
           setShowDeleteConfirmation(false);
@@ -139,6 +141,8 @@ function CreateTest() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
   // set null

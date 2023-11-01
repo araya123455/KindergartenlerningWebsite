@@ -113,17 +113,29 @@ export const edityearterm = createAsyncThunk(
 export const deleteyeraterm = createAsyncThunk(
   "deleteyeraterm",
   async (id, body) => {
-    console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/yeartermdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    // console.log(id, body);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/yeartermdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error(
+          "ไอดีของปีการศึกษานี้ถูกผูกกับตารางอื่นอยู่ไม่สามารถทำการลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const showkinroom = createAsyncThunk("showkinroom", async () => {
@@ -168,17 +180,29 @@ export const editkinroom = createAsyncThunk(
 export const deletekinroom = createAsyncThunk(
   "deletekinroom",
   async (id, body) => {
-    console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/kinroomdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    // console.log(id, body);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/kinroomdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error(
+          "ไอดีของชั้นเรียนนี้ถูกผูกตารางอื่นอยู่ไม่สามารถทำการลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const showteacher = createAsyncThunk("showteacher", async () => {
@@ -190,11 +214,14 @@ export const showteacher = createAsyncThunk("showteacher", async () => {
   return response.data;
 });
 export const showteacherposi = createAsyncThunk("showteacherposi", async () => {
-  const response = await axios.get(`${import.meta.env.VITE_APP_API}/teacherposi`, {
-    headers: {
-      "Content-Type": "Application/json",
-    },
-  });
+  const response = await axios.get(
+    `${import.meta.env.VITE_APP_API}/teacherposi`,
+    {
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
   return response.data;
 });
 export const insertteacher = createAsyncThunk("insertteacher", async (body) => {
@@ -229,16 +256,26 @@ export const deleteteacher = createAsyncThunk(
   "deleteteacher",
   async (id, body) => {
     // console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/teacherdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/teacherdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error("ไอดีของครูถูกผูกกับตารางอื่นอยู่ไม่สามารถลบได้");
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const manageStudent = createAsyncThunk("manageStudent", async (body) => {
@@ -293,16 +330,26 @@ export const deletestudent = createAsyncThunk(
   "deletestudent",
   async (id, body) => {
     console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/studentdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/studentdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error("ไอดีของนักเรียนถูกผูกกับตารางอื่นอยู่ไม่สามารถลบได้");
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const showsyllabus = createAsyncThunk("showsyllabus", async () => {
@@ -347,17 +394,29 @@ export const editsyllabus = createAsyncThunk(
 export const deletesyllabus = createAsyncThunk(
   "deletesyllabus",
   async (id, body) => {
-    console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/syllabusdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    // console.log(id, body);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/syllabusdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error(
+          "ไอดีของหลักสูตรนี้ถูกผูกกับตารางอื่นอยู่ไม่สามารถทำการลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const showsubject = createAsyncThunk("showsubject", async () => {
@@ -399,17 +458,29 @@ export const editsubject = createAsyncThunk(
 export const deletesubject = createAsyncThunk(
   "deletesubject",
   async (id, body) => {
-    console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/subjectdelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    // console.log(id, body);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/subjectdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error(
+          "ไอดีของวิชานี้ผูกอยู่กับตารางอื่นอยู่ไม่สามารถทำการลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const showclasstime = createAsyncThunk("showclasstime", async () => {
@@ -457,17 +528,29 @@ export const editclasstime = createAsyncThunk(
 export const deleteclasstime = createAsyncThunk(
   "deleteclasstime",
   async (id, body) => {
-    console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/classtimedelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    // console.log(id, body);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/classtimedelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error(
+          "ไอดีของตารางสอนนี้ถูกผูกอยู่กับตารางอื่นอยู่ไม่สามารถทำการลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 export const showclass = createAsyncThunk("showclass", async () => {
@@ -504,17 +587,29 @@ export const editclass = createAsyncThunk("editclass", async ({ id, body }) => {
   return response.data;
 });
 export const deleteclass = createAsyncThunk("deleteclass", async (id, body) => {
-  console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/classdelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
+  // console.log(id, body);
+  try {
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/classdelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      // Handle the 400 Bad Request error here
+      // console.log("Can't delete");
+      throw new Error(
+        "ไอดีของห้องเรียนนี้ถูกผูกอยู่กับตารางอื่นอยู่ไม่สามารถทำการลบได้"
+      );
+    } else {
+      throw new Error("An error occurred while deleting the item.");
     }
-  );
-  return response.data;
+  }
 });
 
 export const showqualification = createAsyncThunk(
@@ -775,31 +870,49 @@ export const editassessment = createAsyncThunk(
   }
 );
 
-export const deleteassessment = createAsyncThunk("deleteassessment", async (id, body) => {
-  // console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/assessmentdelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
+export const deleteassessment = createAsyncThunk(
+  "deleteassessment",
+  async (id, body) => {
+    // console.log(id, body);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/assessmentdelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        // console.log("Can't delete");
+        throw new Error(
+          "ไอดีของประเมินนี้ผูกอยู่กับตารางอื่นไม่สามารถทำการลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
+      }
     }
-  );
-  return response.data;
-});
+  }
+);
 
-export const showassessmentstu = createAsyncThunk("showassessmentstu", async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_API}/assessmentstu`,
-    {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const showassessmentstu = createAsyncThunk(
+  "showassessmentstu",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_API}/assessmentstu`,
+      {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 export const assessmentstuinsert = createAsyncThunk(
   "assessmentstuinsert",
@@ -834,19 +947,22 @@ export const assessmentstuupdate = createAsyncThunk(
   }
 );
 
-export const assessmentstudelete = createAsyncThunk("assessmentstudelete", async (id, body) => {
-  // console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/assessmentstudelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.data;
-});
+export const assessmentstudelete = createAsyncThunk(
+  "assessmentstudelete",
+  async (id, body) => {
+    // console.log(id, body);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/assessmentstudelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 export const searchdirector = createAsyncThunk("searchdirector", async () => {
   const response = await axios.get(

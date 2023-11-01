@@ -13,6 +13,7 @@ function TeaSearch() {
   const [searchQuery, setSearchQuery] = useState("");
   const [studentResults, setStudentResults] = useState([]);
   const studentData = useSelector((state) => state.data.studentData);
+  const [showstr, setShowstr] = useState(""); // Use state for showstr
   const [stuclass, setstuclass] = useState([]);
   const [showkinder, setShowKinder] = useState([]);
   const [showyear, setShowYear] = useState([]);
@@ -21,6 +22,7 @@ function TeaSearch() {
     if (!searchQuery) {
       alert("Please input data first"); // Display an alert message
       setStudentResults("");
+      setShowstr(""); // Set showstr to "not found"
       return;
     }
     filterData();
@@ -71,6 +73,12 @@ function TeaSearch() {
       (student) => student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
     );
     setStudentResults(filteredStudents);
+    // Set showstr based on the results
+    if (filteredStudents.length === 0) {
+      setShowstr("not found");
+    } else {
+      setShowstr(""); // Reset showstr if results are found
+    }
   };
 
   return (
@@ -120,14 +128,13 @@ function TeaSearch() {
                     <p className="font-mail s-re">
                       เลขประจำตัว: {student.stu_sn}
                     </p>
-                    <p className="font-mail s-re">คำนำหน้า: {student.prefix}</p>
                     <p className="font-mail s-re">
-                      ชื่อ-นามสกุล: {student.stu_Fname} {student.stu_Lname}
+                      ชื่อ-นามสกุล: {student.prefix} {student.stu_Fname}{" "}
+                      {student.stu_Lname}
                     </p>
                     <p className="font-mail s-re">
                       Username: {student.stu_user}
                     </p>
-                    <p className="font-mail s-re">สถานะ: {student.status}</p>
                     <p className="font-mail s-re">สถานะ: {student.status}</p>
                     <p className="font-mail s-re">
                       ชั้น/ห้อง: {kinderLevel}/{kinderRoom}
@@ -141,6 +148,8 @@ function TeaSearch() {
             : null}
         </ul>
       </div>
+      {/* Display "not found" message */}
+      {showstr === "not found" && <p>No results found</p>}
     </div>
   );
 }
