@@ -199,9 +199,8 @@ function CreateChoice() {
           score_ques: "",
           test_id: "",
         });
-        useEffect(() => {
-          loadData();
-        }, []);
+        loadData();
+        loadTest();
         AddClose();
         clearChoiceData();
         toast.success("Create choice records inserted successfully");
@@ -263,6 +262,7 @@ function CreateChoice() {
           score_ques: "",
         });
         loadData();
+        loadTest();
         toast.success("Create choice records have been edited successfully");
       })
       .catch((err) => {
@@ -428,6 +428,7 @@ function CreateChoice() {
                 className="input-line"
                 type="text"
                 name="ques"
+                value={insert.ques}
                 onChange={(e) => handleInsert(e)}
               />
             </Form.Group>

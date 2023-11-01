@@ -83,33 +83,43 @@ function StudentResultDetail({ stuid, testId }) {
 
   return (
     <>
-      <div>
-        <h2>ผลการการทดสอบ</h2>
+      <h2>ผลการการทดสอบ</h2>
+      <div className="h2-testdiv">
         {showtest.map((data) => {
           const { test_id, test_detail } = data;
-          return <h3 key={test_id}>{test_detail}</h3>;
+          return (
+            <h3 className="h2-testd" key={test_id}>
+              {test_detail}
+            </h3>
+          );
         })}
       </div>
-      <div>
+      <div className="h4-sum">
         {showresult.map((data) => {
           const { testR_id, time_duration } = data;
-          return <h4 key={testR_id}>ส่งแบบทดสอบเวลา: {time_duration}</h4>;
+          return (
+            <h4 className="h4-sumsize" key={testR_id}>
+              ส่งแบบทดสอบเวลา: {time_duration}
+            </h4>
+          );
         })}
       </div>
       <div>
-        {showredetail.map((data) => {
-          const { score, testDe_id } = data;
-          totalscore += score;
-        })}
-        <h5>คะแนนที่ได้: {totalscore} คะแนน</h5>
-        {showques.map((data) => {
-          const { ques_id, score_ques } = data;
-          score += score_ques;
-        })}
-        <h5>คะแนนเต็ม: {score} คะแนน</h5>
+        <div className="h4-sum">
+          {showredetail.map((data) => {
+            const { score, testDe_id } = data;
+            totalscore += score;
+          })}
+          <h5 className="h4-sumsize">คะแนนที่ได้: {totalscore} คะแนน</h5>
+          {showques.map((data) => {
+            const { ques_id, score_ques } = data;
+            score += score_ques;
+          })}
+          <h5 className="h4-sumsize">คะแนนเต็ม: {score} คะแนน</h5>
+        </div>
         <div className="body">
-          <div className="test-container">
-            <div className="question">
+          <div className="m-test-container">
+            <div className="m-question p-ques">
               {showredetail.map((question, index) => (
                 <div key={index}>
                   <p>
@@ -117,7 +127,8 @@ function StudentResultDetail({ stuid, testId }) {
                   </p>
                   {
                     (isCorrect =
-                      showques[index]?.answer === showredetail[index]?.ans_result || false)
+                      showques[index]?.answer ===
+                        showredetail[index]?.ans_result || false)
                   }
                   <div
                     className={`answer-summary ${

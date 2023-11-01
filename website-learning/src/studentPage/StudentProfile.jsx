@@ -69,7 +69,7 @@ function StudentProfile() {
       >
         <Card
           sx={{
-            width: "400px", // Updated to a wider value
+            width: "500px", // Updated to a wider value
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -89,12 +89,12 @@ function StudentProfile() {
               </Typography>
               <Typography gutterBottom variant="h5" component="div">
                 <p>
-                  ชื่อ-นามสกุล {showdata?.prefix} {showdata?.stu_Fname}{" "}
+                  ชื่อ-นามสกุล: {showdata?.prefix} {showdata?.stu_Fname}{" "}
                   {showdata?.stu_Lname}
                 </p>
               </Typography>
               <Typography variant="h6" color="text.secondary">
-                <p>เลขประจำตัว {showdata?.stu_user}</p>
+                <p>เลขประจำตัว: {showdata?.stu_user}</p>
               </Typography>
               <Typography variant="h6" color="text.secondary">
                 <p>

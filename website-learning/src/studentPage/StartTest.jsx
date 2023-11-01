@@ -8,16 +8,23 @@ import {
   testresultdetail,
   testedresult,
   selectedtest,
+  pyearterm,
+  pkinder,
 } from "../slice/StudentSlice";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/starttest.css";
+import { Link } from "react-router-dom";
+import ShowTestResultStu from "./ShowTestResult";
 
 const StartTest = () => {
   const dispatch = useDispatch();
+  const [showdata, setshowdata] = useState([]);
+  const [yearterm, setyearterm] = useState([]);
+  const [kinder, setkinder] = useState([]);
   const [showtest, setshowtest] = useState([]);
   const [showques, setshowques] = useState([]);
   const [showresult, setshowresult] = useState([]);
-  const [showResults, setShowResults] = useState(false); // Check test have result or not
+  const [showResults, setShowResults] = useState(); // Check test have result or not
   const [showredetail, setshowredetail] = useState([]);
   const testId = getFromLocalStorage("testId");
   const auth = getFromLocalStorage("stu_auth");
@@ -26,7 +33,7 @@ const StartTest = () => {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const allQuestionsAnswered = selectedAnswers.every((answer) => answer !== "");
   const [formattime, setformattime] = useState("");
-
+  // console.log(showResults);
   const loadData = () => {
     dispatch(showquestion({ testId }))
       .then((result) => {
@@ -44,11 +51,11 @@ const StartTest = () => {
       .then((result) => {
         setshowredetail(result.payload);
         // console.log(result.payload.length);
-        // if (result.payload.length > 0) {
-        //   setShowResults(true);
-        // } else {
-        //   setShowResults(false);
-        // }
+        if (result.payload.length > 0) {
+          setShowResults(true);
+        } else {
+          setShowResults(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -75,8 +82,37 @@ const StartTest = () => {
       });
   };
 
+  const loadyearterm = () => {
+    if (stuid != null) {
+      dispatch(pyearterm({ stuid }))
+        .then((result) => {
+          setyearterm(result.payload);
+          // console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const loadkinder = () => {
+    if (stuid != null) {
+      dispatch(pkinder({ stuid }))
+        .then((result) => {
+          setkinder(result.payload);
+          // console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(() => {
     loadData();
+    setshowdata(auth);
+    loadyearterm();
+    loadkinder();
     loadTestdetail();
     loadTestresult();
     loadShowtest();
@@ -89,7 +125,13 @@ const StartTest = () => {
     // console.log(allQuestionsAnswered);
     // console.log(event.target.value);
     setSelectedAnswers(newSelectedAnswers);
+    console.log(selectedAnswers);
   };
+
+  // Use useEffect to log selectedAnswers when it changes
+  useEffect(() => {
+    console.log(selectedAnswers);
+  }, [selectedAnswers]);
 
   const handlePrevClick = () => {
     if (currentQuestionIndex > 0) {
@@ -114,12 +156,18 @@ const StartTest = () => {
         onInsert(formattedTime);
       }
       showques.forEach((question, index) => {
+        // console.log(question);
+        // console.log(index);
         onInsertDe(index);
       });
     } else {
       alert("กรุณาทำแบบทดสอบให้ครบทุกข้อ!!");
     }
   };
+
+  useEffect(() => {
+    console.log(selectedAnswers);
+  }, [selectedAnswers]);
 
   const onInsert = (formattedTime) => {
     let body = {
@@ -137,6 +185,7 @@ const StartTest = () => {
   };
 
   const onInsertDe = (questionIndex) => {
+    console.log(questionIndex);
     const Answer = selectedAnswers[questionIndex];
     // console.log(Answer);
     let body = {
@@ -149,6 +198,7 @@ const StartTest = () => {
       stu_id: stuid,
       test_id: testId,
     };
+    // console.log(body);
     dispatch(savetestresultdetail(body))
       .then((result) => {
         console.log(result);
@@ -224,7 +274,7 @@ const StartTest = () => {
               >
                 <p>คำตอบของคุณ: {stuans}</p>
                 {!isCorrect && <p>คำตอบที่ถูกต้อง: {correctans}</p>}
-                 <p className="score">คะแนน: {isCorrect ? scoreq : 0}</p>
+                <p className="score">คะแนน: {isCorrect ? scoreq : 0}</p>
               </div>
             </div>
           );
@@ -244,27 +294,62 @@ const StartTest = () => {
         <div className="cloud x6"></div>
         <div className="cloud x7"></div>
       </div>
+      <button className="btn-back" role="button">
+        <Link to={"/student/test"} className="back-font">
+          <svg
+            viewBox="0 0 96 96"
+            height="24px"
+            id="Layer_1"
+            version="1.2"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39.3756,48.0022l30.47-25.39a6.0035,6.0035,0,0,0-7.6878-9.223L26.1563,43.3906a6.0092,6.0092,0,0,0,0,9.2231L62.1578,82.615a6.0035,6.0035,0,0,0,7.6878-9.2231Z"
+              fill="#ffffff"
+            />
+          </svg>
+          ย้อนกลับ
+        </Link>
+      </button>
       <div className="body">
         <div className="App">
           <div className="test-container">
-            <div className="question">
+            <div className="">
               {showResults ? (
-                <div>
+                <div className="startsum-question">
+                  <h2 className="hh-f">ผลการการทดสอบ</h2>
                   {showtest?.map((data) => {
                     const { test_id, test_detail } = data;
-                    return <h3 key={test_id}>{test_detail}</h3>;
+                    return (
+                      <h3 className="header-f" key={test_id}>
+                        {test_detail}
+                      </h3>
+                    );
                   })}
                   <div>
-                    <h2>ผลการการทดสอบ</h2>
+                    <p className="header-f">
+                      ชื่อ-นามสกุล {showdata?.prefix} {showdata?.stu_Fname}{" "}
+                      {showdata?.stu_Lname} เลขประจำตัว: {showdata?.stu_user}
+                    </p>
+                    <p className="header-f">
+                      ระดับชั้น: {kinder[0]?.kinde_level}/
+                      {kinder[0]?.Kinder_room} ปีการศึกษา: {yearterm[0]?.year}/
+                      {yearterm[0]?.term}
+                    </p>
+                  </div>
+                  <div className="summary-f">
+                    <p className="sum-f">ส่งแบบทดสอบเวลา: {timeduration()}</p>
+                  </div>
+                  <div className="sum-f sum-top">
                     <p>คะแนนที่ได้: {calculateScore()} คะแนน</p>
                     <p>คะแนนเต็ม: {calculateTotalPossibleScore()} คะแนน</p>
-                    <h4>ส่งแบบทดสอบเวลา: {timeduration()}</h4>
                   </div>
                   {renderAnswerSummary()}
                 </div>
               ) : (
-                <div>
-                  <h2>
+                <div className="startte-question">
+                  <h2 className="startte-h2">
                     {currentQuestionIndex + 1}.{" "}
                     {showques[currentQuestionIndex]?.ques}
                   </h2>
