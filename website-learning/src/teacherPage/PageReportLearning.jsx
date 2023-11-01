@@ -60,7 +60,7 @@ function PageReportLearning() {
     dispatch(searchdirector())
       .then((result) => {
         setschderector(result.payload);
-        // console.log(schdirector[0]?.position_id);
+        console.log(schdirector[0]?.position_id);
       })
       .catch((err) => {
         console.log(err);
