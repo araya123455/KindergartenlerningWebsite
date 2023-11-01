@@ -12,7 +12,6 @@ const SchoolHistory = () => {
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
-
   // Define the carousel items with titles, text, and image paths
   const carouselItems = [
     {

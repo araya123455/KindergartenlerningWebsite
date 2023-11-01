@@ -13,14 +13,6 @@ import {
 } from "@chakra-ui/react";
 import "../../assets/css/home.css";
 import "../../assets/css/index.css";
-// import "../../assets/css/home.css"
-// import { Videos } from "../../component/videos";
-
-// import Contact from "./Contact";
-// import Personnel from "./Personnel";
-// import SchoolHistory from "./SchoolHistory";
-// // import "../../assets/css/mainpage.css";
-//import { FaBeer } from 'react-icons/fa'
 
 const MidCompsArray = [
   {
@@ -269,24 +261,5 @@ export const Home = () => {
     </Box>
   );
 };
-// const Home = () => {
-//   return (
-//     <div className="p-5 text-center bg-image rounded-5 shadow"
-//       style={{
-//         backgroundImage: "url(/klongsip_pic.jpg)",
-//         height: "10rem",
-//         marginTop: "0rem",
-//         marginBottom: "01rem",
-//       }}
-//     >
-//       <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}>
-//         <div className="d-flex justify-content-center align-items-center h-100">
-//           <div className="text-white">
-//             <h1 className="display-4">Surao Klong Sip School <FaBeer></FaBeer> </h1>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+
 export default Home;
