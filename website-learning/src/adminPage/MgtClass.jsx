@@ -56,11 +56,15 @@ function MgtClass() {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
+  const [countstu, setcountstu] = useState();
+  // var count = 0;
 
   const loadData = () => {
     dispatch(showclass())
       .then((result) => {
         setTodisplay(result.payload);
+        // console.log(Todisplay.length);
+        // setcountstu(Todisplay.length);
       })
       .catch((err) => {
         console.log(err);
@@ -246,6 +250,8 @@ function MgtClass() {
     )
       .then((result) => {
         setFilteredData(result.payload);
+        // console.log(filteredData.length);
+        // setcountstu(filteredData.length);
       })
       .catch((err) => {
         console.log(err);
@@ -339,10 +345,16 @@ function MgtClass() {
     // Fetch the original data for filtering (remove this part from here)
   }, []);
 
+  useEffect(() => {
+    // Count the number of students here
+    setcountstu(Todisplay.length);
+  }, [Todisplay]);
+
   // Update Todisplay whenever filteredData changes
   useEffect(() => {
     setTodisplay(filteredData.length > 0 ? filteredData : Todisplay);
     // console.log(filteredData);
+    setcountstu(filteredData.length);
   }, [filteredData]);
 
   const handleChangePage = (event, newPage) => {
@@ -396,6 +408,11 @@ function MgtClass() {
             })}
           </Form.Control>
         </Form.Group>
+        <div>
+          <p>
+            จำนวนนักเรียน: {countstu} คน
+          </p>
+        </div>
         <Button className="button" variant="primary" onClick={handleFilter}>
           Apply Filter
         </Button>
