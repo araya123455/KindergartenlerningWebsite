@@ -57,7 +57,7 @@ function TeacherProfile() {
       >
         <Card
           sx={{
-            width: "400px", // Updated to a wider value
+            width: "500px", // Updated to a wider value
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",

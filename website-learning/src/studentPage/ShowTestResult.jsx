@@ -8,16 +8,20 @@ import {
   testresultdetail,
   finishedtest,
 } from "../slice/StudentSlice";
+import { pyearterm, pkinder } from "../slice/StudentSlice";
 import "../assets/css/starttest.css";
 import { Outlet, Link } from "react-router-dom";
 
 function ShowTestResult() {
   const dispatch = useDispatch();
   const [finished, setfinished] = useState([]);
+  const [showdata, setshowdata] = useState([]);
   const [showtest, setshowtest] = useState([]);
   const [showques, setshowques] = useState([]);
   const [showresult, setshowresult] = useState([]);
   const [showredetail, setshowredetail] = useState([]);
+  const [yearterm, setyearterm] = useState([]);
+  const [kinder, setkinder] = useState([]);
   const auth = getFromLocalStorage("stu_auth");
   const stuid = auth.stu_id;
   const testId = getFromLocalStorage("testId");
@@ -77,12 +81,41 @@ function ShowTestResult() {
       });
   };
 
+  const loadyearterm = () => {
+    if (stuid != null) {
+      dispatch(pyearterm({ stuid }))
+        .then((result) => {
+          setyearterm(result.payload);
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const loadkinder = () => {
+    if (stuid != null) {
+      dispatch(pkinder({ stuid }))
+        .then((result) => {
+          setkinder(result.payload);
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(() => {
+    setshowdata(auth);
     loadShowtest();
     loadShowquestion();
     loadTestresult();
     loadTestdetail();
     loadFinished();
+    loadyearterm();
+    loadkinder();
   }, []);
 
   return (
@@ -115,31 +148,57 @@ function ShowTestResult() {
             ย้อนกลับ
           </Link>
         </button>
-        <h2 className="font-mail">ผลการการทดสอบ</h2>
-        {showtest.map((data) => {
-          const { test_id, test_detail } = data;
-          return <h3 key={test_id}>{test_detail}</h3>;
-        })}
-      </div>
-      <div>
-        {showresult.map((data) => {
-          const { testR_id, time_duration } = data;
-          return <h4 key={testR_id}>ส่งแบบทดสอบเวลา: {time_duration}</h4>;
-        })}
-      </div>
-      <div>
-        {showredetail.map((data) => {
-          const { score, testDe_id } = data;
-          totalscore += score;
-        })}
-        <h5>คะแนนที่ได้: {totalscore} คะแนน</h5>
-        {showques.map((data) => {
-          const { ques_id, score_ques } = data;
-          score += score_ques;
-        })}
-        <h5>คะแนนเต็ม: {score} คะแนน</h5>
         <div className="body">
           <div className="test-container">
+            {/* <div>
+              <img
+                src="../CLIPLY_372109170_FREE_FIREWORKS_400.gif"
+                alt="GIF"
+                className="gif-align-right"
+              />
+            </div> */}
+            <div>
+              <h2 className="font-mail hh-f">ผลการการทดสอบ</h2>
+              <p className="header-f">
+                ชื่อ-นามสกุล {showdata?.prefix} {showdata?.stu_Fname}{" "}
+                {showdata?.stu_Lname} เลขประจำตัว: {showdata?.stu_user}
+              </p>
+              <p className="header-f">
+                ระดับชั้น: {kinder[0]?.kinde_level}/{kinder[0]?.Kinder_room}{" "}
+                ปีการศึกษา: {yearterm[0]?.year}/{yearterm[0]?.term}
+              </p>
+              {showtest.map((data) => {
+                const { test_id, test_detail } = data;
+                return (
+                  <p key={test_id} className="header-f">
+                    {test_detail}
+                  </p>
+                );
+              })}
+            </div>
+
+            <div className="summary-f">
+              {showresult.map((data) => {
+                const { testR_id, time_duration } = data;
+                return (
+                  <p key={testR_id} className="sum-f">
+                    ส่งแบบทดสอบเวลา: {time_duration}
+                  </p>
+                );
+              })}
+            </div>
+            <div className="sum-f">
+              {showredetail.map((data) => {
+                const { score, testDe_id } = data;
+                totalscore += score;
+              })}
+              <p>คะแนนที่ได้: {totalscore} คะแนน</p>
+              {showques.map((data) => {
+                const { ques_id, score_ques } = data;
+                score += score_ques;
+              })}
+              <p>คะแนนเต็ม: {score} คะแนน</p>
+            </div>
             <div className="question">
               {showredetail.map((question, index) => (
                 <div key={index}>

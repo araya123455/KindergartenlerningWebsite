@@ -213,7 +213,7 @@ function TestResultDetail() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal show={showData} onHide={DataShow}>
+      <Modal show={showData} onHide={DataShow} className="modal-test">
         <Modal.Body>
           {/* Render the StudentResultDetail component with stu_id and test_id */}
           {selectedStudentId && (
