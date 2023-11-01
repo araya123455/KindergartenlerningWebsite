@@ -191,6 +191,7 @@ function MgtAssessmentClass() {
 
   const onDelete = (id) => {
     dispatch(deleteassessment(id))
+      .unwrap() 
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error); // You can log the error or show it to the user
@@ -202,6 +203,8 @@ function MgtAssessmentClass() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

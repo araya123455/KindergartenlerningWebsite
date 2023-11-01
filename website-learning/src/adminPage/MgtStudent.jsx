@@ -191,6 +191,7 @@ function MgtStudent() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deletestudent(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -201,6 +202,8 @@ function MgtStudent() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

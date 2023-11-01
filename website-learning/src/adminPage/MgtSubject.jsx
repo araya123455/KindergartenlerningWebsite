@@ -153,6 +153,7 @@ function MgtSubject() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deletesubject(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error);
@@ -164,6 +165,8 @@ function MgtSubject() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 
