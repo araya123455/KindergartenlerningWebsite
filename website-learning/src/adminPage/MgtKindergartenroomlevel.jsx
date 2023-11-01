@@ -136,6 +136,7 @@ function MgtKindergartenroomlevel() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deletekinroom(id))
+      .unwrap()
       .then((result) => {
         if (result.payload && result.payload.error) {
           console.log(result.payload.error); // You can log the error or show it to the user
@@ -147,6 +148,8 @@ function MgtKindergartenroomlevel() {
       })
       .catch((err) => {
         console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 

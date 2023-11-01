@@ -43,17 +43,29 @@ export const edittest = createAsyncThunk("edittest", async ({ id, body }) => {
 });
 
 export const deletetest = createAsyncThunk("deletetest", async (id, body) => {
-  console.log(id, body);
-  const response = await axios.delete(
-    `${import.meta.env.VITE_APP_API}/testdelete/${id}`,
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
+  // console.log(id, body);
+  try {
+    const response = await axios.delete(
+      `${import.meta.env.VITE_APP_API}/testdelete/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      // Handle the 400 Bad Request error here
+      // console.log("Can't delete");
+      throw new Error(
+        "หลักสูตรนี้ได้มีการประกาศแบบทดสอบไปแล้วไม่สามารถทำการลบได้"
+      );
+    } else {
+      throw new Error("An error occurred while deleting the item.");
     }
-  );
-  return response.data;
+  }
 });
 
 export const showtestde = createAsyncThunk("showtestde", async () => {
@@ -157,16 +169,27 @@ export const deletequestion = createAsyncThunk(
   "deletequestion",
   async (id, body) => {
     // console.log(id, body);
-    const response = await axios.delete(
-      `${import.meta.env.VITE_APP_API}/questiondelete/${id}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_APP_API}/questiondelete/${id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle the 400 Bad Request error here
+        throw new Error(
+          "คำถามถูกประกาศให้นักเรียนแล้วไม่สามรถลบได้"
+        );
+      } else {
+        throw new Error("An error occurred while deleting the item.");
       }
-    );
-    return response.data;
+    }
   }
 );
 
@@ -401,7 +424,6 @@ export const TeacherSlice = createSlice({
     state.error = action.error;
     state.loading = false;
   },
-  
 });
 // Action creators are generated for each case reducer function
 export const { SET_VALUE } = TeacherSlice.actions;

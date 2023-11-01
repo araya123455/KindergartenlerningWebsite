@@ -190,10 +190,8 @@ function Search() {
                       เลขประจำตัว: {teacher?.tch_sn}
                     </p>
                     <p className="font-mail s-re">
-                      คำนำหน้า: {teacher?.prefix}
-                    </p>
-                    <p className="font-mail s-re">
-                      ชื่อ-นามสกุล: {teacher?.tch_Fname} {teacher?.tch_Lname}
+                      ชื่อ-นามสกุล: {teacher?.prefix} {teacher?.tch_Fname}{" "}
+                      {teacher?.tch_Lname}
                     </p>
                     <p className="font-mail s-re">
                       Username: {teacher?.tch_user}
@@ -242,9 +240,9 @@ function Search() {
                     <p className="font-mail s-re">
                       เลขประจำตัว: {student.stu_sn}
                     </p>
-                    <p className="font-mail s-re">คำนำหน้า: {student.prefix}</p>
                     <p className="font-mail s-re">
-                      ชื่อ-นามสกุล: {student.stu_Fname} {student.stu_Lname}
+                      ชื่อ-นามสกุล: {student.prefix} {student.stu_Fname}{" "}
+                      {student.stu_Lname}
                     </p>
                     <p className="font-mail s-re">
                       Username: {student.stu_user}

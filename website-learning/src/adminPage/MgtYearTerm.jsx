@@ -129,6 +129,7 @@ function MgtYearTerm() {
   //   Delete
   const onDelete = (id) => {
     dispatch(deleteyeraterm(id))
+      .unwrap()
       .then((result) => {
         // Check if the response contains an error message
         if (result.payload && result.payload.error) {
@@ -140,7 +141,9 @@ function MgtYearTerm() {
         }
       })
       .catch((err) => {
-        console.log(err); // Handle unexpected errors
+        console.log(err);
+        setShowDeleteConfirmation(false);
+        alert(err.message);
       });
   };
 
