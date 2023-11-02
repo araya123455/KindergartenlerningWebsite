@@ -24,7 +24,7 @@ import {
   searchclasstime,
   showteacher,
 } from "../slice/DataSlice";
-import { searchstuclass } from "../reducers/SearchClass";
+import { searchstuclass } from "../slice/SearchClass";
 
 function MgtClass() {
   const dispatch = useDispatch();

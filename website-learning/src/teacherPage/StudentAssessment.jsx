@@ -20,7 +20,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { findstudent, findassessment } from "../reducers/ReducerData";
+import { findstudent, findassessment } from "../slice/SearchDataSlice";
 import "../assets/css/attendance.css";
 
 function StudentAssessment() {

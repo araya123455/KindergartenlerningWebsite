@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import DataSlice from "./slice/DataSlice";
 import UserSlice from "./slice/userSlice";
-import dataReducer from "./reducers/ReducerSearch";
-import searchReducer from "./reducers/SearchClass";
-import studentReducer from "./reducers/ReducerData"; // Update the path as needed
+import dataReducer from "./slice/AdminSearchSlice";
+import searchReducer from "./slice/SearchClass";
+import searchDataSlice from "./slice/SearchDataSlice"; // Update the path as needed
 import PdfSlice from "./slice/PdfSlice";
 import PdfSliceEnglish from "./slice/PdfSliceEnglish";
 import PdfSliceEnhance from "./slice/PdfSliceEnhance";
@@ -16,7 +16,7 @@ export const store = configureStore({
     user: UserSlice,
     data: dataReducer,
     search: searchReducer,
-    student: studentReducer,
+    student: searchDataSlice,
     pdff: PdfSlice,
     pdf: PdfSliceEnglish,
     pdfEn: PdfSliceEnhance,

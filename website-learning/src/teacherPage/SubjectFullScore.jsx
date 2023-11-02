@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { subfullscoretupdate } from "../slice/TeacherSlice";
-import { shownamesyllabus, shownamesubject } from "../reducers/ReducerData";
+import { shownamesyllabus, shownamesubject } from "../slice/SearchDataSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

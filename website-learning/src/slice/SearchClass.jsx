@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../slice/axiosInstance";
+import axios from "./axiosInstance";
 
 export const searchstuclass = createAsyncThunk(
   "search/searchstuclass",

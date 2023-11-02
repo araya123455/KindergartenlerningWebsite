@@ -10,7 +10,7 @@ import {
   deletesubject,
   showsyllabus,
 } from "../slice/DataSlice";
-import { selectsubject } from "../reducers/ReducerData";
+import { selectsubject } from "../slice/SearchDataSlice";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

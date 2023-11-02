@@ -13,8 +13,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { insertstudent, editstudent, deletestudent } from "../slice/DataSlice";
-import { searcstudent } from "../reducers/ReducerData";
-import { fetchStudentData } from "../reducers/ReducerSearch";
+import { searcstudent } from "../slice/SearchDataSlice";
+import { fetchStudentData } from "../slice/AdminSearchSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

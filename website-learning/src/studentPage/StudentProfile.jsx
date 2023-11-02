@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
-import { pyearterm, pkinder } from "../reducers/ReducerData";
+import { pyearterm, pkinder } from "../slice/SearchDataSlice";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";

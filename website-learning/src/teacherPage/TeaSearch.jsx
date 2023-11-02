@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStudentData } from "../reducers/ReducerSearch";
+import { fetchStudentData } from "../slice/AdminSearchSlice";
 import {
   showsubject,
   showclass,

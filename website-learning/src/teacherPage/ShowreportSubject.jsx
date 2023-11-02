@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
-import { showstusubreport } from "../reducers/ReducerData";
+import { showstusubreport } from "../slice/SearchDataSlice";
 import { useSelector } from "react-redux";
 import {
   showkinroom,
@@ -14,7 +14,7 @@ import {
   showteacherposi,
   searchdirector,
 } from "../slice/DataSlice";
-import { searchteachersub } from "../reducers/ReducerData";
+import { searchteachersub } from "../slice/SearchDataSlice";
 import { showstusubscore } from "../slice/TeacherSlice";
 import "../assets/css/PrintStyles.css";
 

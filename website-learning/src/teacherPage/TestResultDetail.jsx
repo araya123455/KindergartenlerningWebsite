@@ -16,7 +16,7 @@ import {
   testresultdetatil,
   testresultdetatiled,
   testresultdetail,
-} from "../reducers/ReducerData";
+} from "../slice/SearchDataSlice";
 import StudentResultDetail from "./StudentResultDetail";
 import "../assets/css/testredetail.css";
 

@@ -23,7 +23,7 @@ import {
   showkinroom,
   getDataAll,
 } from "../slice/DataSlice";
-import { findassessment } from "../reducers/ReducerData";
+import { findassessment } from "../slice/SearchDataSlice";
 
 function MgtAssessmentClass() {
   const dispatch = useDispatch();

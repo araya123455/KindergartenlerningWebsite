@@ -4,7 +4,7 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../LocalStorage/localstorage";
-import { showtest, finishedtest } from "../reducers/ReducerData";
+import { showtest, finishedtest } from "../slice/SearchDataSlice";
 import { Outlet, Link } from "react-router-dom";
 import "../assets/css/table.css";
 
