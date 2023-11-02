@@ -180,7 +180,7 @@ function CreateTest() {
                 <p className="headerC">เพิ่มห้องเรียน</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Details</p>
+                <p className="headerC">สร้างคำถาม</p>
               </TableCell>
               <TableCell>
                 <p className="headerC">แก้ไข</p>
@@ -197,7 +197,7 @@ function CreateTest() {
                   </TableCell>
                   <TableCell>
                     <Link
-                      className="linkadd"
+                      className="linkadd font-mail"
                       to="/teacher/test/addClassTest"
                       onClick={() => onClickId(test_id)}
                     >
@@ -206,11 +206,11 @@ function CreateTest() {
                   </TableCell>
                   <TableCell>
                     <Link
-                      className="linkcreate"
+                      className="linkcreate font-mail"
                       to="/teacher/test/createChoice"
                       onClick={() => onClickId(test_id)}
                     >
-                      Test detail
+                      Create questions
                     </Link>
                   </TableCell>
                   <td>

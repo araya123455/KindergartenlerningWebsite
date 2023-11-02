@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
 import { attendance, attendancedetailinsert } from "../slice/TeacherSlice";
-import { studentattendance } from "../slice/StudentSlice";
+import { studentattendance } from "../reducers/ReducerData";
 import { Link } from "react-router-dom";
 
 function StuAttendanceInsert() {

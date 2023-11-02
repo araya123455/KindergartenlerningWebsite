@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
-import { assessmentreport, searchteacher } from "../slice/StudentSlice";
+import { assessmentreport, searchteacher } from "../reducers/ReducerData";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {

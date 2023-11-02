@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStudentData, fetchTeacherData } from "../slice/TchStuSlice";
+import { fetchStudentData, fetchTeacherData } from "../reducers/ReducerSearch";
 import {
   showteacherposi,
   showsyllabus,

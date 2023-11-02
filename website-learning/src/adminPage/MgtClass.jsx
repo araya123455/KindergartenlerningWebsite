@@ -24,7 +24,7 @@ import {
   searchclasstime,
   showteacher,
 } from "../slice/DataSlice";
-import { searchstuclass } from "../slice/searchSlice";
+import { searchstuclass } from "../reducers/SearchClass";
 
 function MgtClass() {
   const dispatch = useDispatch();
@@ -373,7 +373,7 @@ function MgtClass() {
     <>
       <Form>
         <Form.Group className="mb-3" controlId="filter_kinder_id">
-          <Form.Label>Filter by Kinder/YearTerm</Form.Label>
+          <Form.Label>ค้นหาโดย ชั้น/ห้อง</Form.Label>
           <Form.Control
             as="select"
             className="input-line"
@@ -381,7 +381,7 @@ function MgtClass() {
             value={selectedFilter}
             onChange={(e) => setSelectedFilter(e.target.value)}
           >
-            <option value="">Show All Room/Level</option>
+            <option value="">แสดงทั้งหมด</option>
             {showSearch.map((data) => {
               const kinder = showkinder.find(
                 (kin) => kin.kinder_id === data.kinder_id

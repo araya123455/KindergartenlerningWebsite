@@ -6,7 +6,7 @@ import {
   testedresult,
   testresultdetail,
   finishedtest,
-} from "../slice/StudentSlice";
+} from "../reducers/ReducerData";
 import "../assets/css/starttest.css";
 
 function StudentResultDetail({ stuid, testId }) {

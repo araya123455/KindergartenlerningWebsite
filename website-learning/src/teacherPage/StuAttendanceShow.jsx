@@ -12,8 +12,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
 import { attendance } from "../slice/TeacherSlice";
-import { fetchStudentData } from "../slice/TchStuSlice";
-import { studentattendance, searceattendance } from "../slice/StudentSlice";
+import { fetchStudentData } from "../reducers/ReducerSearch";
+import { studentattendance, searceattendance } from "../reducers/ReducerData";
 import { Link } from "react-router-dom";
 
 function StuAttendanceShow() {

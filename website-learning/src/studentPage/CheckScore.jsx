@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import { Outlet, Link } from "react-router-dom";
 import { showstusubscore } from "../slice/TeacherSlice";
-import { showstusubreport } from "../slice/StudentSlice";
+import { showstusubreport } from "../reducers/ReducerData";
 import { showsubject } from "../slice/DataSlice";
 import "../assets/css/checkscore.css";
 

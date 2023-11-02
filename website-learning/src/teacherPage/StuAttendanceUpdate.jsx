@@ -19,8 +19,8 @@ import {
   attendancedetailupdate,
   attendancedelete,
 } from "../slice/TeacherSlice";
-import { fetchStudentData } from "../slice/TchStuSlice";
-import { studentattendance, searceattendance } from "../slice/StudentSlice";
+import { fetchStudentData } from "../reducers/ReducerSearch";
+import { studentattendance, searceattendance } from "../reducers/ReducerData";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 

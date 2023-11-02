@@ -12,7 +12,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { searceattendance } from "../slice/StudentSlice";
+import { searceattendance } from "../reducers/ReducerData";
 import { Link } from "react-router-dom";
 import { attendance } from "../slice/TeacherSlice";
 import "../assets/css/attendanceshowtotal.css";

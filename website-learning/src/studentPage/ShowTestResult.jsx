@@ -7,8 +7,8 @@ import {
   testedresult,
   testresultdetail,
   finishedtest,
-} from "../slice/StudentSlice";
-import { pyearterm, pkinder } from "../slice/StudentSlice";
+} from "../reducers/ReducerData";
+import { pyearterm, pkinder } from "../reducers/ReducerData";
 import "../assets/css/starttest.css";
 import { Outlet, Link } from "react-router-dom";
 

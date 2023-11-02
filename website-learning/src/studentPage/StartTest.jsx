@@ -10,7 +10,7 @@ import {
   selectedtest,
   pyearterm,
   pkinder,
-} from "../slice/StudentSlice";
+} from "../reducers/ReducerData";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import "../assets/css/starttest.css";
 import { Link } from "react-router-dom";

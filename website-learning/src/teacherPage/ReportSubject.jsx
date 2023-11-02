@@ -19,7 +19,7 @@ import {
   getDataAll,
   searchclasstime,
 } from "../slice/DataSlice";
-import { searchstuclass } from "../slice/searchSlice";
+import { searchstuclass } from "../reducers/SearchClass";
 
 function ReportSubject() {
   const dispatch = useDispatch();

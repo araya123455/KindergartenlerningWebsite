@@ -24,7 +24,7 @@ import {
   findstudent,
   shownamesyllabus,
   shownamesubject,
-} from "../slice/StudentSlice";
+} from "../reducers/ReducerData";
 import "../assets/css/attendance.css";
 
 function StuSubjectScoreInsert() {

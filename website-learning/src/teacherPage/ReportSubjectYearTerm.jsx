@@ -15,7 +15,7 @@ import {
   showteacher,
   showsubject,
 } from "../slice/DataSlice";
-import { searchstuclass } from "../slice/searchSlice";
+import { searchstuclass } from "../reducers/SearchClass";
 
 function ReportSubjectYearTerm() {
   const dispatch = useDispatch();
