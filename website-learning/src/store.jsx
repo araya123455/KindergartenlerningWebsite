@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import DataSlice from "./slice/DataSlice";
 import UserSlice from "./slice/userSlice";
-import dataReducer from "./slice/AdminSearchSlice";
+import dataReducer from "./slice/FetchDataSlice";
 import searchReducer from "./slice/SearchClass";
 import searchDataSlice from "./slice/SearchDataSlice"; // Update the path as needed
 import PdfSlice from "./slice/PdfSlice";

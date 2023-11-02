@@ -12,7 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { showkinroom, getDataAll, searchclasstime } from "../slice/DataSlice";
 import { attendance } from "../slice/TeacherSlice";
-import { fetchStudentData } from "../slice/AdminSearchSlice";
+import { fetchStudentData } from "../slice/FetchDataSlice";
 import { studentattendance, searceattendance } from "../slice/SearchDataSlice";
 import { Link } from "react-router-dom";
 

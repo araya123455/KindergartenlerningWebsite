@@ -14,7 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { insertstudent, editstudent, deletestudent } from "../slice/DataSlice";
 import { searcstudent } from "../slice/SearchDataSlice";
-import { fetchStudentData } from "../slice/AdminSearchSlice";
+import { fetchStudentData } from "../slice/FetchDataSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

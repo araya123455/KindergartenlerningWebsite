@@ -19,7 +19,7 @@ import {
   attendancedetailupdate,
   attendancedelete,
 } from "../slice/TeacherSlice";
-import { fetchStudentData } from "../slice/AdminSearchSlice";
+import { fetchStudentData } from "../slice/FetchDataSlice";
 import { studentattendance, searceattendance } from "../slice/SearchDataSlice";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
