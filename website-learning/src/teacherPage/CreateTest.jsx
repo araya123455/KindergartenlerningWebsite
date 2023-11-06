@@ -124,7 +124,7 @@ function CreateTest() {
 
   const handleDeleteConfirmation = (test_id) => {
     setDatamodal({ test_id }); // Store the ID of the record to be deleted
-    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+    setShowDeleteConfirmation(true); // Show the <p>ยืนยันการลบข้อมูล</p> modal
   };
 
   const onDelete = (id) => {
@@ -294,21 +294,21 @@ function CreateTest() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
+          <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนีใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => setShowDeleteConfirmation(false)}
           >
-            Cancel
+            ยกเลิก
           </Button>
           <Button
             variant="btn btn-danger"
             onClick={() => onDelete(datamodal.test_id)}
           >
-            Delete
+            ยืนยัน
           </Button>
         </Modal.Footer>
       </Modal>

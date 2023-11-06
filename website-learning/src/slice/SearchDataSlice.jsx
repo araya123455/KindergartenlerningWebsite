@@ -98,8 +98,22 @@ export const testresultdetail = createAsyncThunk(
       const response = await axios.get("/testresultdetail", {
         params: { test_id: testId, stu_id: stuid },
       });
-      return response.data;
+
+      if (response.status === 404) {
+        // Handle the "Not Found" error here
+        // You can return a specific error message or perform other actions
+        return rejectWithValue("Resource not found");
+      }
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        // Handle other errors here
+        // You can return an error message or perform other actions
+        return rejectWithValue("An error occurred");
+      }
     } catch (err) {
+      // Handle network or other errors here
       return rejectWithValue(err.response.data);
     }
   }
