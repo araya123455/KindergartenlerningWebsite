@@ -440,7 +440,7 @@ function MgtClass() {
                 <p className="headerC">ครูผู้สอน</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Actions</p>
+                <p className="headerC">แก้ไข</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -677,7 +677,7 @@ function MgtClass() {
         <Modal.Header closeButton>
           <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body><p>คุณต้องการลบข้อมูลนีใช่ไหม</p></Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"

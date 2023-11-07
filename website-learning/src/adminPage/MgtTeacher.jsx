@@ -204,12 +204,8 @@ function MgtTeacher() {
     dispatch(deleteteacher(id))
       .unwrap()
       .then((result) => {
-        if (result.payload && result.payload.error) {
-          console.log(result.payload.error);
-        } else {
-          loadData();
-          setShowDeleteConfirmation(false);
-        }
+        loadData();
+        setShowDeleteConfirmation(false);
       })
       .catch((err) => {
         console.log(err);
@@ -554,9 +550,13 @@ function MgtTeacher() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
+          <Modal.Title>
+            <p>ยืนยันการลบข้อมูล</p>
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body><p>คุณต้องการลบข้อมูลนีใช่ไหม</p></Modal.Body>
+        <Modal.Body>
+          <p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p>
+        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"

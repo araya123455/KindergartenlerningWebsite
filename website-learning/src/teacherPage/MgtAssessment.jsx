@@ -105,7 +105,7 @@ function MgtAssessment() {
                 <p className="headerC">เทอม/ปี</p>
               </TableCell>
               <TableCell>
-                <p className="headerC">Action</p>
+                <p className="headerC"></p>
               </TableCell>
             </TableRow>
           </TableHead>

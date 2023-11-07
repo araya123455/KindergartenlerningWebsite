@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { Form, Button, FormLabel } from "react-bootstrap";
 import { getFromLocalStorage } from "../LocalStorage/localstorage";
 import {
-  showsubject,
   insertsubject,
   editsubject,
   deletesubject,
@@ -17,7 +16,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 function MgtSubject() {
   const dispatch = useDispatch();
-  const [showdata, setshowdata] = useState([]);
   const [showsylla, setshowsylla] = useState([]);
   const [selectsub, setselectsub] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -33,16 +31,6 @@ function MgtSubject() {
     dispatch(showsyllabus())
       .then((result) => {
         setshowsylla(result.payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const loadData = () => {
-    dispatch(showsubject())
-      .then((result) => {
-        setshowdata(result.payload);
       })
       .catch((err) => {
         console.log(err);
@@ -171,7 +159,6 @@ function MgtSubject() {
   };
 
   useEffect(() => {
-    loadData();
     loadSyllabus();
     loadselectsub();
   }, []);
@@ -305,7 +292,7 @@ function MgtSubject() {
         <Modal.Header closeButton>
           <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body><p>คุณต้องการลบข้อมูลนีใช่ไหม</p></Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"

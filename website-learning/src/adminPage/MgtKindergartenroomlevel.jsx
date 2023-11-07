@@ -166,10 +166,10 @@ function MgtKindergartenroomlevel() {
         <TableHead className="TableHead">
           <TableRow>
             <TableCell>
-              <p className="headerC">Level</p>
+              <p className="headerC">ชั้น</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Room</p>
+              <p className="headerC">ห้อง</p>
             </TableCell>
             <TableCell>
               <p className="headerC">แก้ไข</p>
@@ -215,7 +215,7 @@ function MgtKindergartenroomlevel() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Level</Form.Label>
+              <Form.Label>ชั้น</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -224,7 +224,7 @@ function MgtKindergartenroomlevel() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Room</Form.Label>
+              <Form.Label>ห้อง</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -251,7 +251,7 @@ function MgtKindergartenroomlevel() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Level</Form.Label>
+              <Form.Label>ชั้น</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -261,7 +261,7 @@ function MgtKindergartenroomlevel() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Room</Form.Label>
+              <Form.Label>ห้อง</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -288,7 +288,7 @@ function MgtKindergartenroomlevel() {
         <Modal.Header closeButton>
           <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body><p>คุณต้องการลบข้อมูลนีใช่ไหม</p></Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"

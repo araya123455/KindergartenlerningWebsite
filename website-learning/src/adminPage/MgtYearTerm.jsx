@@ -161,10 +161,10 @@ function MgtYearTerm() {
         <TableHead className="TableHead">
           <TableRow>
             <TableCell>
-              <p className="headerC">Year</p>
+              <p className="headerC">ปีการศึกษา</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Term</p>
+              <p className="headerC">เทอม</p>
             </TableCell>
             <TableCell>
               <p className="headerC">แก้ไข</p>
@@ -211,7 +211,7 @@ function MgtYearTerm() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Year</Form.Label>
+              <Form.Label>ปีการศึกษา</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -220,7 +220,7 @@ function MgtYearTerm() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Term</Form.Label>
+              <Form.Label>เทอม</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -247,7 +247,7 @@ function MgtYearTerm() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Year</Form.Label>
+              <Form.Label>ปีการศึกษา</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -257,7 +257,7 @@ function MgtYearTerm() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Term</Form.Label>
+              <Form.Label>เทอม</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -284,7 +284,7 @@ function MgtYearTerm() {
         <Modal.Header closeButton>
           <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body><p>คุณต้องการลบข้อมูลนีใช่ไหม</p></Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"

@@ -268,7 +268,7 @@ function MgtStudent() {
         <h5>วิธีการ: ใช้รหัสประจำตัวเพื่อค้นหาเท่านั้น!</h5>
         <input
           type="text"
-          placeholder="Search for teachers and students..."
+          placeholder="Search for students..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
