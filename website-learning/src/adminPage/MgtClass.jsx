@@ -541,7 +541,7 @@ function MgtClass() {
                 onChange={handleInsert} // Attach onChange directly to Form.Control
                 value={`${insert.kinder_id} ${insert.yearterm_id} ${insert.crt_id}`}
               >
-                <option value="">Choose Room/Level</option>
+                <option value="">เลือก ชั้น/ห้อง - เทอม/ปี</option>
                 {showSearch.map((data) => {
                   const kinder = showkinder.find(
                     (kin) => kin.kinder_id === data.kinder_id
@@ -578,7 +578,7 @@ function MgtClass() {
                 onChange={handleInsert}
                 value={insert.stu_id}
               >
-                <option value="">Choose student</option>
+                <option value="">เลือกนักเรียน</option>
                 {getAvailableStudents().map((stu) => (
                   <option key={stu.stu_id} value={stu.stu_id}>
                     {stu.stu_Fname} {stu.stu_Lname}
@@ -614,7 +614,7 @@ function MgtClass() {
                 onChange={handleEdit}
                 value={`${editData.kinder_id} ${editData.yearterm_id} ${editData.crt_id}`}
               >
-                <option value="">Choose Room/Level</option>
+                <option value="">เลือก ชั้น/ห้อง - เทอม/ปี</option>
                 {showSearch.map((data) => {
                   const kinder = showkinder.find(
                     (kin) => kin.kinder_id === data.kinder_id
