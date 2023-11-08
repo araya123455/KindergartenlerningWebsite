@@ -186,15 +186,7 @@ export const Home = () => {
                 <h1>ส่งเสริมการเรียนรู้ระดับชั้นปฐมวัย</h1>
               </Heading>
               <Spacer />
-              {/* <Text lineHeight={2} text-align="center" fontFamily="cursive" fontSize="5xl" noOfLines={"4"}>
-              Early childhood education is a holistic development of children from birth to 6 years of age on the
-               basis of nurture and promotion of learning processes that respond to nature and the 
-               age-appropriate development of each child to their full potential. under the social 
-               and cultural context where children live with love and generosity and everyone's 
-               understanding To build a foundation of quality of life for children to develop into 
-               complete human beings, creating value for themselves, families,
-                society and the nation.<br></br>
-              </Text> */}
+              
               <Text
                 lineHeight={2}
                 text-align="center"
@@ -212,7 +204,7 @@ export const Home = () => {
                 </h5>
               </Text>
             </VStack>
-            {/* <Button ml='12' h={'16'} size='lg' px='1rem' borderRadius='50' colorScheme='blue' bg='blue.600'><NavLink to='/signup'>Sign up free</NavLink></Button> */}
+            
           </Container>
           <Container>
             <Box p="4">

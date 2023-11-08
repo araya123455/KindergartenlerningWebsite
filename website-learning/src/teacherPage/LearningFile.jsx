@@ -22,9 +22,10 @@ function LearningFile() {
     setIsViewerOpen(true);
   };
   const closeViewer = () => {
-    setSelectedPdfIndex(null);
+    setSelectedPdfIndex(null);          
     setIsViewerOpen(false);
   };
+
   useEffect(() => {
     const fetchPdfUrls = async () => {
       try {
