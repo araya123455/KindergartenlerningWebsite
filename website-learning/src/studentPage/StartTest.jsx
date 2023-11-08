@@ -232,6 +232,7 @@ const StartTest = () => {
     return time;
   };
 
+  // selected choice
   const renderChoices = (choices) => {
     return choices.map((choice, index) => (
       <div className="radio-container" key={index}>

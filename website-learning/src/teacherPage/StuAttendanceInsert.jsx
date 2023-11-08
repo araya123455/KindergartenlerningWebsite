@@ -85,11 +85,12 @@ function StuAttendanceInsert() {
       });
   };
 
+  // when status change record new update
   const handleStatusChange = (index, attd_id) => {
     // Update the statusRecords array with the selected status for the specific student.
-    // console.log(index);
-    console.log(attd_id);
-    setStatusRecords((prevStatusRecords) => {
+    // console.log(index); of student
+    // console.log(attd_id);
+    setStatusRecords((prevStatusRecords) => {4
       const updatedStatusRecords = [...prevStatusRecords];
       updatedStatusRecords[index] = {
         ...updatedStatusRecords[index],
