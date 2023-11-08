@@ -186,7 +186,7 @@ function MgtAssessmentClass() {
 
   const handleDeleteConfirmation = (asses_id) => {
     setDatamodal({ asses_id }); // Store the ID of the record to be deleted
-    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+    setShowDeleteConfirmation(true); // Show the <p>ยืนยันการลบข้อมูล</p> modal
   };
 
   const onDelete = (id) => {
@@ -310,9 +310,9 @@ function MgtAssessmentClass() {
           onHide={() => setShowDeleteConfirmation(false)}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Delete Confirmation</Modal.Title>
+            <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+          <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
           <Modal.Footer>
             <Button
               variant="secondary"

@@ -162,3 +162,9 @@ label,
 i {
   font-family: "Mali", cursive;
 }
+
+.delete-p {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

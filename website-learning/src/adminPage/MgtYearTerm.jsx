@@ -123,7 +123,7 @@ function MgtYearTerm() {
 
   const handleDeleteConfirmation = (yearTerm_id) => {
     setDatamodal({ yearTerm_id }); // Store the ID of the record to be deleted
-    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+    setShowDeleteConfirmation(true); // Show the <p>ยืนยันการลบข้อมูล</p> modal
   };
 
   //   Delete
@@ -161,10 +161,10 @@ function MgtYearTerm() {
         <TableHead className="TableHead">
           <TableRow>
             <TableCell>
-              <p className="headerC">Year</p>
+              <p className="headerC">ปีการศึกษา</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Term</p>
+              <p className="headerC">เทอม</p>
             </TableCell>
             <TableCell>
               <p className="headerC">แก้ไข</p>
@@ -211,7 +211,7 @@ function MgtYearTerm() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Year</Form.Label>
+              <Form.Label>ปีการศึกษา</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -220,7 +220,7 @@ function MgtYearTerm() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Term</Form.Label>
+              <Form.Label>เทอม</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -247,7 +247,7 @@ function MgtYearTerm() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Year</Form.Label>
+              <Form.Label>ปีการศึกษา</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -257,7 +257,7 @@ function MgtYearTerm() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Term</Form.Label>
+              <Form.Label>เทอม</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -282,21 +282,21 @@ function MgtYearTerm() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
+          <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => setShowDeleteConfirmation(false)}
           >
-            Cancel
+            ยกเลิก
           </Button>
           <Button
             variant="btn btn-danger"
             onClick={() => onDelete(datamodal.yearTerm_id)}
           >
-            Delete
+            ยืนยัน
           </Button>
         </Modal.Footer>
       </Modal>

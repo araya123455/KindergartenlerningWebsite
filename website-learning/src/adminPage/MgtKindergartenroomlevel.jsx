@@ -130,7 +130,7 @@ function MgtKindergartenroomlevel() {
 
   const handleDeleteConfirmation = (kinder_id) => {
     setDatamodal({ kinder_id }); // Store the ID of the record to be deleted
-    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+    setShowDeleteConfirmation(true); // Show the <p>ยืนยันการลบข้อมูล</p> modal
   };
 
   //   Delete
@@ -166,10 +166,10 @@ function MgtKindergartenroomlevel() {
         <TableHead className="TableHead">
           <TableRow>
             <TableCell>
-              <p className="headerC">Level</p>
+              <p className="headerC">ชั้น</p>
             </TableCell>
             <TableCell>
-              <p className="headerC">Room</p>
+              <p className="headerC">ห้อง</p>
             </TableCell>
             <TableCell>
               <p className="headerC">แก้ไข</p>
@@ -215,7 +215,7 @@ function MgtKindergartenroomlevel() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Level</Form.Label>
+              <Form.Label>ชั้น</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -224,7 +224,7 @@ function MgtKindergartenroomlevel() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Room</Form.Label>
+              <Form.Label>ห้อง</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -251,7 +251,7 @@ function MgtKindergartenroomlevel() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Level</Form.Label>
+              <Form.Label>ชั้น</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -261,7 +261,7 @@ function MgtKindergartenroomlevel() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Room</Form.Label>
+              <Form.Label>ห้อง</Form.Label>
               <Form.Control
                 className="input-line"
                 type="text"
@@ -286,21 +286,21 @@ function MgtKindergartenroomlevel() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
+          <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => setShowDeleteConfirmation(false)}
           >
-            Cancel
+            ยกเลิก
           </Button>
           <Button
             variant="btn btn-danger"
             onClick={() => onDelete(datamodal.kinder_id)}
           >
-            Delete
+            ยืนยัน
           </Button>
         </Modal.Footer>
       </Modal>

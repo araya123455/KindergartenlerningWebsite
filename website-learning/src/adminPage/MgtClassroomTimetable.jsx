@@ -197,7 +197,7 @@ function MgtClassroomTimetable() {
 
   const handleDeleteConfirmation = (crt_id) => {
     setDatamodal({ crt_id }); // Store the ID of the record to be deleted
-    setShowDeleteConfirmation(true); // Show the delete confirmation modal
+    setShowDeleteConfirmation(true); // Show the <p>ยืนยันการลบข้อมูล</p> modal
   };
 
   //   Delete
@@ -327,7 +327,7 @@ function MgtClassroomTimetable() {
                 name="kinder_id"
                 onChange={(e) => handleInsert(e)}
               >
-                <option value="">Choose Room/Level</option>
+                <option value="">เลือก ชั้น/ห้อง</option>
                 {showkinder.map((kin) => (
                   <option key={kin.kinder_id} value={kin.kinder_id}>
                     {kin.kinde_level}/{kin.Kinder_room}
@@ -343,7 +343,7 @@ function MgtClassroomTimetable() {
                 name="yearterm_id"
                 onChange={(e) => handleInsert(e)}
               >
-                <option value="">Choose Term/Year</option>
+                <option value="">เลือก ปีการศึกษา/เทอม</option>
                 {showyear.map((yearterm) => (
                   <option
                     key={yearterm.yearTerm_id}
@@ -362,7 +362,7 @@ function MgtClassroomTimetable() {
                 name="sylla_id"
                 onChange={(e) => handleInsert(e)}
               >
-                <option value="">Choose Syllabus</option>
+                <option value="">เลือกหลักสูตร</option>
                 {showsylla.map((sylla) => (
                   <option key={sylla.sylla_id} value={sylla.sylla_id}>
                     {sylla.sylla_name}
@@ -378,7 +378,7 @@ function MgtClassroomTimetable() {
                 name="tch_id"
                 onChange={(e) => handleInsert(e)}
               >
-                <option value="">Choose Teacher</option>
+                <option value="">เลือกครูผู้สอน</option>
                 {showtea.map((teac) => (
                   <option key={teac.tch_id} value={teac.tch_id}>
                     {teac.tch_Fname} {teac.tch_Lname}
@@ -413,7 +413,7 @@ function MgtClassroomTimetable() {
                 onChange={(e) => handleChange(e)}
                 name={"kinder_id"}
               >
-                <option value="">Choose Room/Level</option>
+                <option value="">เลือก ชั้น/ห้อง</option>
                 {showkinder.map((kin) => (
                   <option key={kin.kinder_id} value={kin.kinder_id}>
                     {kin.kinde_level}/{kin.Kinder_room}
@@ -430,7 +430,7 @@ function MgtClassroomTimetable() {
                 onChange={(e) => handleChange(e)}
                 name={"yearterm_id"}
               >
-                <option value="">Choose Term/Year</option>
+                <option value="">เลือก เทอม/ปี</option>
                 {showyear.map((yearterm) => (
                   <option
                     key={yearterm.yearTerm_id}
@@ -450,7 +450,7 @@ function MgtClassroomTimetable() {
                 onChange={(e) => handleChange(e)}
                 name={"sylla_id"}
               >
-                <option value="">Choose Syllabus</option> {/* Default option */}
+                <option value="">เลือกหลักสูตร</option> {/* Default option */}
                 {showsylla.map((sylla) => (
                   <option key={sylla.sylla_id} value={sylla.sylla_id}>
                     {sylla.sylla_name}
@@ -467,7 +467,7 @@ function MgtClassroomTimetable() {
                 onChange={(e) => handleChange(e)}
                 name={"tch_id"}
               >
-                <option value="">Choose Teacher</option>
+                <option value="">เลือกครูผู้สอน</option>
                 {showtea.map((teac) => (
                   <option key={teac.tch_id} value={teac.tch_id}>
                     {teac.tch_Fname} {teac.tch_Lname}
@@ -491,21 +491,21 @@ function MgtClassroomTimetable() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
+          <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => setShowDeleteConfirmation(false)}
           >
-            Cancel
+            ยกเลิก
           </Button>
           <Button
             variant="btn btn-danger"
             onClick={() => onDelete(datamodal.crt_id)}
           >
-            Delete
+            ยืนยัน
           </Button>
         </Modal.Footer>
       </Modal>
