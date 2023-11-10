@@ -90,7 +90,7 @@ function StuAttendanceInsert() {
     // Update the statusRecords array with the selected status for the specific student.
     // console.log(index); of student
     // console.log(attd_id);
-    setStatusRecords((prevStatusRecords) => {4
+    setStatusRecords((prevStatusRecords) => {
       const updatedStatusRecords = [...prevStatusRecords];
       updatedStatusRecords[index] = {
         ...updatedStatusRecords[index],

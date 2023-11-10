@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import { RemindFill } from "@rsuite/icons";
 import "../assets/css/tableinsert.css";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";

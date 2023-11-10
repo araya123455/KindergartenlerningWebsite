@@ -119,6 +119,7 @@ const StartTest = () => {
   }, []);
 
   const handleAnswerSelect = (event) => {
+    // console.log("1");
     const newSelectedAnswers = [...selectedAnswers];
     newSelectedAnswers[currentQuestionIndex] = event.target.value;
     // console.log(newSelectedAnswers);
@@ -135,12 +136,18 @@ const StartTest = () => {
 
   const handlePrevClick = () => {
     if (currentQuestionIndex > 0) {
+      console.log("2");
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
 
+  useEffect(() => {
+    console.log(selectedAnswers);
+  }, [selectedAnswers]);
+
   const handleNextClick = () => {
     if (currentQuestionIndex < showques.length - 1) {
+      console.log("3");
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else if (allQuestionsAnswered) {
       setShowResults(true); // Set showResults to true here
@@ -185,20 +192,19 @@ const StartTest = () => {
   };
 
   const onInsertDe = (questionIndex) => {
-    console.log(questionIndex);
     const Answer = selectedAnswers[questionIndex];
-    // console.log(Answer);
+    const quesId = showques[questionIndex]?.ques_id; // Use the correct ques_id
+    const isCorrect = Answer === showques[questionIndex]?.answer;
+
     let body = {
       ans_result: Answer,
-      score:
-        Answer === showques[questionIndex]?.answer
-          ? showques[questionIndex]?.score_ques
-          : 0,
-      ques_id: showques[questionIndex]?.ques_id,
+      score: isCorrect ? showques[questionIndex]?.score_ques : 0,
+      ques_id: quesId, // Use the correct ques_id
       stu_id: stuid,
       test_id: testId,
     };
-    // console.log(body);
+    console.log(body);
+
     dispatch(savetestresultdetail(body))
       .then((result) => {
         console.log(result);
@@ -232,7 +238,6 @@ const StartTest = () => {
     return time;
   };
 
-  // selected choice
   const renderChoices = (choices) => {
     return choices.map((choice, index) => (
       <div className="radio-container" key={index}>
@@ -250,32 +255,40 @@ const StartTest = () => {
     ));
   };
 
+  // useEffect(() => {
+  //   console.log(selectedAnswers);
+  // }, [selectedAnswers]);
+
   const renderAnswerSummary = () => {
     loadTestdetail();
     loadShowtest();
     loadTestresult();
     return (
       <div>
-        {showredetail.map((question, index) => {
-          const quest = showques[index]?.ques;
-          const stuans = showredetail[index]?.ans_result;
-          const correctans = showques[index]?.answer;
-          const isCorrect = stuans === correctans;
-          const scoreq = showques[index]?.score_ques;
-
+        {showques.map((question, index) => {
+          const { ques_id, ques, answer, score_ques } = question;
+          const matchingQuestion = showredetail.find((q) => q.ques_id === ques_id);
+  
+          if (!matchingQuestion) {
+            // Handle the case where the question is not found
+            console.error(`Question with ques_id ${ques_id} not found.`);
+            return null;
+          }
+  
+          const { ans_result } = matchingQuestion;
+          const isCorrect = ans_result === answer;
+  
           return (
             <div key={index}>
               <p>
-                คำถาม {index + 1} {quest}
+                คำถาม {index + 1} {ques}
               </p>
               <div
-                className={`answer-summary ${
-                  isCorrect ? "correct" : "incorrect"
-                }`}
+                className={`answer-summary ${isCorrect ? "correct" : "incorrect"}`}
               >
-                <p>คำตอบของคุณ: {stuans}</p>
-                {!isCorrect && <p>คำตอบที่ถูกต้อง: {correctans}</p>}
-                <p className="score">คะแนน: {isCorrect ? scoreq : 0}</p>
+                <p>คำตอบของคุณ: {ans_result}</p>
+                {!isCorrect && <p>คำตอบที่ถูกต้อง: {answer}</p>}
+                <p className="score">คะแนน: {isCorrect ? score_ques : 0}</p>
               </div>
             </div>
           );
@@ -283,6 +296,7 @@ const StartTest = () => {
       </div>
     );
   };
+  
 
   return (
     <div>

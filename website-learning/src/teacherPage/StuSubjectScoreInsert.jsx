@@ -92,6 +92,7 @@ function StuSubjectScoreInsert() {
       });
   };
 
+  // Check enter scores not exceeding the range
   const valid = (body) => {
     return body.every((scoreObj) => {
       const score = parseInt(scoreObj.subscore);

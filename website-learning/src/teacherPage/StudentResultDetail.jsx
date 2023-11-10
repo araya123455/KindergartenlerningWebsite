@@ -120,31 +120,40 @@ function StudentResultDetail({ stuid, testId }) {
         <div className="body">
           <div className="m-test-container">
             <div className="m-question p-ques">
-              {showredetail.map((question, index) => (
-                <div key={index}>
-                  <p>
-                    คำถาม {index + 1} {showques[index]?.ques || ""}
-                  </p>
-                  {
-                    (isCorrect =
-                      showques[index]?.answer ===
-                        showredetail[index]?.ans_result || false)
-                  }
-                  <div
-                    className={`answer-summary ${
-                      isCorrect ? "correct" : "incorrect"
-                    }`}
-                  >
-                    <p>คำตอบของคุณ: {showredetail[index]?.ans_result || ""}</p>
-                    {!isCorrect && (
-                      <p>คำตอบที่ถูกต้อง: {showques[index]?.answer || ""}</p>
-                    )}
-                    <p className="score">
-                      คะแนน: {isCorrect ? showques[index]?.score_ques : 0}
+              {showques.map((question, index) => {
+                const { ques_id, ques, answer, score_ques } = question;
+                const matchingQuestion = showredetail.find(
+                  (q) => q.ques_id === ques_id
+                );
+
+                if (!matchingQuestion) {
+                  // Handle the case where the question is not found
+                  console.error(`Question with ques_id ${ques_id} not found.`);
+                  return null;
+                }
+
+                const { ans_result } = matchingQuestion;
+                const isCorrect = ans_result === answer;
+
+                return (
+                  <div key={index}>
+                    <p>
+                      คำถาม {index + 1} {ques}
                     </p>
+                    <div
+                      className={`answer-summary ${
+                        isCorrect ? "correct" : "incorrect"
+                      }`}
+                    >
+                      <p>คำตอบของคุณ: {ans_result}</p>
+                      {!isCorrect && <p>คำตอบที่ถูกต้อง: {answer}</p>}
+                      <p className="score">
+                        คะแนน: {isCorrect ? score_ques : 0}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
