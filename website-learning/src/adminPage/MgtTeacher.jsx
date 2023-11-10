@@ -32,6 +32,7 @@ function MgtTeacher() {
     tch_pass: "",
     status: "",
     tch_sect: "",
+    position_id: "",
   });
   const [showEdit, setshowEdit] = useState(false);
   const [datamodal, setDatamodal] = useState([]);
@@ -39,6 +40,8 @@ function MgtTeacher() {
     prefix: "",
     tch_Fname: "",
     tch_Lname: "",
+    tch_sn: "",
+    tch_user: "",
     tch_pass: "",
     status: "",
     tch_sect: "",
@@ -162,6 +165,8 @@ function MgtTeacher() {
           update.tch_Fname === "" ? datamodal.tch_Fname : update.tch_Fname,
         tch_Lname:
           update.tch_Lname === "" ? datamodal.tch_Lname : update.tch_Lname,
+        tch_sn: update.tch_sn === "" ? datamodal.tch_sn : update.tch_sn,
+        tch_user: update.tch_user === "" ? datamodal.tch_user : update.tch_user,
         tch_pass: update.tch_pass === "" ? datamodal.tch_pass : update.tch_pass,
         status: update.status === "" ? datamodal.status : update.status,
         tch_sect: update.tch_sect === "" ? datamodal.tch_sect : update.tch_sect,
@@ -178,6 +183,8 @@ function MgtTeacher() {
           prefix: "",
           tch_Fname: "",
           tch_Lname: "",
+          tch_sn: "",
+          tch_user: "",
           tch_pass: "",
           status: "",
           tch_sect: "",
@@ -196,7 +203,7 @@ function MgtTeacher() {
 
   const handleDeleteConfirmation = (tch_id) => {
     setDatamodal({ tch_id }); // Store the ID of the record to be deleted
-    setShowDeleteConfirmation(true); // Show the <p>ยืนยันการลบข้อมูล</p> modal
+    setShowDeleteConfirmation(true); // Show the delete confirmation modal
   };
 
   //   Delete
@@ -204,8 +211,12 @@ function MgtTeacher() {
     dispatch(deleteteacher(id))
       .unwrap()
       .then((result) => {
-        loadData();
-        setShowDeleteConfirmation(false);
+        if (result.payload && result.payload.error) {
+          console.log(result.payload.error);
+        } else {
+          loadData();
+          setShowDeleteConfirmation(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -479,6 +490,26 @@ function MgtTeacher() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label>รหัสประจำตัว</Form.Label>
+              <Form.Control
+                className="input-line"
+                type="text"
+                placeholder={datamodal.tch_sn}
+                onChange={(e) => handleChange(e)}
+                name={"tch_sn"}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>username</Form.Label>
+              <Form.Control
+                className="input-line" 
+                type="text"
+                placeholder={datamodal.tch_user}
+                onChange={(e) => handleChange(e)}
+                name={"tch_user"}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>password</Form.Label>
               <Form.Control
                 className="input-line"
@@ -550,25 +581,21 @@ function MgtTeacher() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            <p>ยืนยันการลบข้อมูล</p>
-          </Modal.Title>
+          <Modal.Title>Delete Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p>
-        </Modal.Body>
+        <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => setShowDeleteConfirmation(false)}
           >
-            ยกเลิก
+            Cancel
           </Button>
           <Button
             variant="btn btn-danger"
             onClick={() => onDelete(datamodal.tch_id)}
           >
-            ยืนยัน
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>
