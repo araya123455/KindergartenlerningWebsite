@@ -29,7 +29,6 @@ function TeacherProfile() {
   useEffect(() => {
     loadteacherposition();
     setshowdata(auth);
-    // console.log(auth);
   }, []);
 
   // const posi = showposition?.find(

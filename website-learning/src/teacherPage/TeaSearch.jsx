@@ -32,8 +32,6 @@ function TeaSearch() {
     dispatch(showclass())
       .then((result) => {
         setstuclass(result.payload);
-        // console.log(result);
-        // console.log(showclass[0]);
       })
       .catch((err) => {
         console.log(err);

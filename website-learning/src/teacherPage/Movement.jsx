@@ -3,15 +3,15 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { learningvideo } from "../slice/DataSlice";
 // import { learningfilepdf } from "../slice/DataSlice";
-import "../assets/css/movement.css";
-import Button from "react-bootstrap/Button";
+// import "../assets/css/movement.css";
+// import Button from "react-bootstrap/Button";
 import "../assets/css/clouds.css";
 
 const Movement = () => {
   const dispatch = useDispatch();
   const [showdata, setshowdata] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   const loadData = () => {
     dispatch(learningvideo())
@@ -92,7 +92,7 @@ const Movement = () => {
             </div>
           );
         })}
-
+   
       {/* Modal to show and play the video */}
       {selectedVideo && (
         <Modal show={true} onHide={handleCloseModal}>

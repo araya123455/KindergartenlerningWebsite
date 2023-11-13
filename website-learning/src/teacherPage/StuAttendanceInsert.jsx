@@ -30,6 +30,7 @@ function StuAttendanceInsert() {
   const loadstudent = () => {
     dispatch(studentattendance({ crtId }))
       .then((result) => {
+        console.log(result);
         const defaultAttdId = getAttdIdByStatus("มา"); // Default status for all students
         const initialStatusRecords = result.payload.map((student) => ({
           stu_id: student.stu_id,
