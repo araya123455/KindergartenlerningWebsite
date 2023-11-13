@@ -172,9 +172,9 @@ const StartTest = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedAnswers);
-  }, [selectedAnswers]);
+  // useEffect(() => {
+  //   console.log(selectedAnswers);
+  // }, [selectedAnswers]);
 
   const onInsert = (formattedTime) => {
     let body = {

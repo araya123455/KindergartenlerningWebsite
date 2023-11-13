@@ -137,6 +137,7 @@ function MgtStudent() {
 
   //   recomment
   const handleChange = (e) => {
+    console.log(e.target.value);
     let name = e.target.name;
     let value = e.target.value;
     setupdate({
@@ -144,8 +145,9 @@ function MgtStudent() {
       [name]: value,
     });
   };
-
+  
   const onSave = () => {
+    console.log(update);
     let body = {
       id: datamodal.stu_id,
       body: {

@@ -10,12 +10,11 @@ import { showadmin } from "../slice/DataSlice";
 import "../assets/css/blurredAnimatedGradients.css";
 
 function AdminProfile() {
-  const [showad, setshowad] = useState([]);
+  // const [showad, setshowad] = useState([]);
   const auth = getFromLocalStorage("adm_auth");
 
   useEffect(() => {
-    setshowad(auth);
-    // console.log(showad);
+    // setshowad(auth);
   }, []);
 
   return (
@@ -56,22 +55,21 @@ function AdminProfile() {
               src={"/images/admin.jpg"}
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom component="div">
                 <h2 className="font-mail">Profile</h2>
               </Typography>
-              <Typography gutterBottom variant="h5" component="div">
-                <p>
-                  ชื่อ-นามสกุล: {auth?.prefix} {auth?.adm_name} {auth?.adm_Lname}
-                </p>
+              <Typography gutterBottom component="div">
+                <h5>
+                  ชื่อ-นามสกุล: {auth?.prefix} {auth?.adm_name}{" "}
+                  {auth?.adm_Lname}
+                </h5>
               </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                <p>
-                  Username: {auth?.adm_user}
-                </p>
+              <Typography gutterBottom component="div">
+                <h5 className="font-mail">Username: {auth?.adm_user}</h5>
               </Typography>
               {/* color="text.secondary" */}
-              <Typography variant="h6" >
-                <p>แผนก: {auth?.adm_sect}</p>
+              <Typography>
+                <h5>แผนก: {auth?.adm_sect}</h5>
               </Typography>
             </CardContent>
           </CardActionArea>

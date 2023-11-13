@@ -8,6 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { toast, ToastContainer } from "react-toastify";
+import Subject from "./MgtSubject";
 import "react-toastify/dist/ReactToastify.css";
 import {
   showsyllabus,

@@ -106,8 +106,11 @@ function MgtClass() {
       .then((result) => {
         // Convert the teacher data to a map of { tch_id: teacherName }
         const teacherMap = result.payload.reduce((map, teacher) => {
+          // console.log(map);
+          // console.log(teacher);
           const teacherName = `${teacher.prefix} ${teacher.tch_Fname} ${teacher.tch_Lname}`;
           map[teacher.tch_id] = teacherName;
+          // console.log("123",map);
           return map;
         }, {});
         setTeacherNamesMap(teacherMap); // Save the teacher names map
@@ -153,7 +156,7 @@ function MgtClass() {
       ...prevInsert,
       [name]: value,
     }));
-
+    // console.log(value);
     if (name === "kinder_id") {
       const [selectedKinderId, selectedYeartermId, selectclassId] =
         value.split(" ");
@@ -249,6 +252,7 @@ function MgtClass() {
       })
     )
       .then((result) => {
+        // console.log(result);
         setFilteredData(result.payload);
         // console.log(filteredData.length);
         // setcountstu(filteredData.length);
@@ -352,6 +356,7 @@ function MgtClass() {
 
   // Update Todisplay whenever filteredData changes
   useEffect(() => {
+    // Todisplay every students in class
     setTodisplay(filteredData.length > 0 ? filteredData : Todisplay);
     // console.log(filteredData);
     setcountstu(filteredData.length);
@@ -409,9 +414,7 @@ function MgtClass() {
           </Form.Control>
         </Form.Group>
         <div>
-          <p>
-            จำนวนนักเรียน: {countstu} คน
-          </p>
+          <p>จำนวนนักเรียน: {countstu} คน</p>
         </div>
         <Button className="button" variant="primary" onClick={handleFilter}>
           Apply Filter
@@ -446,6 +449,7 @@ function MgtClass() {
           </TableHead>
           <TableBody>
             {Todisplay?.slice(startIndex, endIndex)?.map((data) => {
+              // console.log(data);
               const { class_id, kinder_id, yearterm_id, stu_id } = data;
 
               const student = showstu.find((stu) => stu.stu_id === stu_id);
@@ -471,6 +475,7 @@ function MgtClass() {
               const teacherNames = teacherIds.map((tch_id) => {
                 return teacherNamesMap[tch_id] || "";
               });
+              // console.log(teacherNamesMap);
 
               return (
                 <TableRow key={class_id}>
@@ -675,9 +680,13 @@ function MgtClass() {
         onHide={() => setShowDeleteConfirmation(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title><p>ยืนยันการลบข้อมูล</p></Modal.Title>
+          <Modal.Title>
+            <p>ยืนยันการลบข้อมูล</p>
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body><p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p></Modal.Body>
+        <Modal.Body>
+          <p>คุณต้องการลบข้อมูลนี้ใช่ไหม</p>
+        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
