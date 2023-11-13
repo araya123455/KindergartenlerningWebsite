@@ -53,6 +53,7 @@ function MgtClass() {
 
   const [filteredData, setFilteredData] = useState([]);
   const [Todisplay, setTodisplay] = useState([]);
+  const [classFilter, setclassFilter] = useState([])
   const [selectedFilter, setSelectedFilter] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
@@ -65,6 +66,16 @@ function MgtClass() {
         setTodisplay(result.payload);
         // console.log(Todisplay.length);
         // setcountstu(Todisplay.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadClassFilter = () => {
+    dispatch(showclass())
+      .then((result) => {
+        setclassFilter(result.payload);
       })
       .catch((err) => {
         console.log(err);
@@ -333,19 +344,21 @@ function MgtClass() {
 
   // Filter out students that have already been added to the table
   const getAvailableStudents = () => {
-    const addedStudentIds = Todisplay.map((data) => data.stu_id);
+    const addedStudentIds = classFilter.map((data) => data.stu_id);
     return showstu.filter((stu) => !addedStudentIds.includes(stu.stu_id));
   };
 
   useEffect(() => {
     // Load all the data and store it in both state variables
     loadData();
+    loadClassFilter();
     loadstudent();
     loadKinder();
     loadYearTerm();
     loadSearch();
     loadTeacherID();
     loadTeacher();
+    loadClassFilter();
     // Fetch the original data for filtering (remove this part from here)
   }, []);
 
