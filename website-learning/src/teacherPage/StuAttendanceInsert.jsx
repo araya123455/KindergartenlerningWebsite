@@ -30,6 +30,7 @@ function StuAttendanceInsert() {
   const loadstudent = () => {
     dispatch(studentattendance({ crtId }))
       .then((result) => {
+        console.log(result);
         const defaultAttdId = getAttdIdByStatus("มา"); // Default status for all students
         const initialStatusRecords = result.payload.map((student) => ({
           stu_id: student.stu_id,
@@ -85,10 +86,11 @@ function StuAttendanceInsert() {
       });
   };
 
+  // when status change record new update
   const handleStatusChange = (index, attd_id) => {
     // Update the statusRecords array with the selected status for the specific student.
-    // console.log(index);
-    console.log(attd_id);
+    // console.log(index); of student
+    // console.log(attd_id);
     setStatusRecords((prevStatusRecords) => {
       const updatedStatusRecords = [...prevStatusRecords];
       updatedStatusRecords[index] = {
@@ -163,6 +165,7 @@ function StuAttendanceInsert() {
   const getkin = kinroom ? kinroom?.kinde_level : "";
   const getroom = kinroom ? kinroom?.Kinder_room : "";
 
+  // find id attd
   function getAttdIdByStatus(status) {
     const matchingStatus = showatten?.find(
       (data) => data?.attd_name === status
@@ -193,7 +196,7 @@ function StuAttendanceInsert() {
       <button className="btn-back" role="button">
         <Link to={"/teacher/attendance"} className="back-font">
           <svg
-            viewBox="0 0 96 96"
+            viewBox="0 5 96 96"
             height="24px"
             id="Layer_1"
             version="1.2"

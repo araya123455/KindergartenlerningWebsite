@@ -701,7 +701,7 @@ export const searchstuclass = createAsyncThunk("searchstuclass", async () => {
 });
 
 //slice irin
-// Vedio
+// video
 export const learningvideo = createAsyncThunk("learningvideo", async () => {
   const response = await axios.get(
     `${import.meta.env.VITE_APP_API}/learningvideo`,
@@ -736,6 +736,7 @@ const pdfSlice = createSlice({
     });
   },
 });
+
 //file PDF English
 export const fetchPdfEnglish = createAsyncThunk("fetchPdfEnglish", async () => {
   const response = await axios.get(`${import.meta.env.VITE_APP_API}/pdf`, {
