@@ -22,6 +22,7 @@ function StuAttendanceInsert() {
   const [showatten, setshowatten] = useState([]);
   const [statusRecords, setStatusRecords] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  console.log(new Date(selectedDate).toISOString());
   const [showkinder, setShowKinder] = useState([]);
   const [showyear, setShowYear] = useState([]);
   const [showSearch, setshowsearch] = useState([]);
@@ -37,15 +38,17 @@ function StuAttendanceInsert() {
           attd_id: defaultAttdId,
           date: new Date(selectedDate).toISOString().split("T")[0],
         }));
+        // console.log(initialStatusRecords);
         setshowstu(result.payload);
         // console.log(result);
         setStatusRecords(initialStatusRecords);
-        console.log(statusRecords);
+        // console.log(statusRecords);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   const loadattendance = () => {
     dispatch(attendance())
       .then((result) => {
@@ -122,10 +125,13 @@ function StuAttendanceInsert() {
     // Create an array to hold all attendance records, including defaults
     const allAttendanceRecords = showstu.map((student) => ({
       stu_id: student.stu_id,
-      attd_id: statusRecords.find((record) => record.stu_id === student.stu_id)?.attd_id || getAttdIdByStatus("มา"),
+      attd_id:
+        statusRecords.find((record) => record.stu_id === student.stu_id)
+          ?.attd_id || getAttdIdByStatus("มา"),
       date: new Date(selectedDate).toISOString().split("T")[0],
     }));
-  
+    console.log(allAttendanceRecords);
+
     // Iterate through all attendance records and send each to the server
     Promise.all(
       allAttendanceRecords.map((record) => {
@@ -153,7 +159,6 @@ function StuAttendanceInsert() {
         toast.error("Failed to insert attendance records");
       });
   };
-  
 
   const crt_Id = showSearch.find((data) => data?.crt_id === crtId);
   const yearTerm_id = crt_Id ? crt_Id.yearterm_id : "";
@@ -166,13 +171,14 @@ function StuAttendanceInsert() {
   const getroom = kinroom ? kinroom?.Kinder_room : "";
 
   // find id attd
-  function getAttdIdByStatus(status) {
+  const getAttdIdByStatus = (status) => {
     const matchingStatus = showatten?.find(
       (data) => data?.attd_name === status
     );
+    // console.log(matchingStatus);
     // console.log(matchingStatus?.attd_id);
     return matchingStatus ? matchingStatus?.attd_id : "";
-  }
+  };
 
   useEffect(() => {
     loadstudent();
@@ -247,15 +253,19 @@ function StuAttendanceInsert() {
         </TableHead>
         <TableBody>
           {showstu
-            ?.sort((a, b) => a.stu_id - b.stu_id)
+            ?.sort((a, b) => a?.stu_id - b?.stu_id)
             ?.map((data, index) => {
               const { stu_id, prefix, stu_Fname, stu_Lname, stu_sn } = data;
               return (
                 <TableRow key={stu_id}>
                   <TableCell>
-                    <p>{prefix} {stu_Fname} {stu_Lname}</p>
+                    <p>
+                      {prefix} {stu_Fname} {stu_Lname}
+                    </p>
                   </TableCell>
-                  <TableCell><p>{stu_sn}</p></TableCell>
+                  <TableCell>
+                    <p>{stu_sn}</p>
+                  </TableCell>
                   <TableCell>
                     <p>{new Date(selectedDate).toLocaleDateString("en-US")}</p>
                   </TableCell>
@@ -286,7 +296,9 @@ function StuAttendanceInsert() {
         </TableBody>
       </Table>
       <br />
-      <button className="buttonN buttnN" onClick={() => onInsert()}>บันทึก</button>
+      <button className="buttonN buttnN" onClick={() => onInsert()}>
+        บันทึก
+      </button>
       <ToastContainer
         position="top-right"
         autoClose={2000}

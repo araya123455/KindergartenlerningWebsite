@@ -69,7 +69,7 @@ function StudentProfile() {
       >
         <Card
           sx={{
-            width: "500px", // Updated to a wider value
+            width: "600px", // Updated to a wider value
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
