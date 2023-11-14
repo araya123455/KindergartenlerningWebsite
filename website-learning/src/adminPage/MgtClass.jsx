@@ -53,7 +53,7 @@ function MgtClass() {
 
   const [filteredData, setFilteredData] = useState([]);
   const [Todisplay, setTodisplay] = useState([]);
-  const [classFilter, setclassFilter] = useState([])
+  const [classFilter, setclassFilter] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
@@ -204,6 +204,7 @@ function MgtClass() {
           crt_id: "",
         });
         loadData();
+        loadClassFilter();
         closeEditModal();
         toast.success("Class records inserted successfully");
       })
@@ -297,6 +298,7 @@ function MgtClass() {
           crt_id: "",
         });
         loadData();
+        loadClassFilter();
         closeEditModal();
         toast.success("Class records have been edited successfully");
       })
@@ -316,6 +318,7 @@ function MgtClass() {
       .unwrap()
       .then(() => {
         loadData();
+        loadClassFilter();
         setShowDeleteConfirmation(false);
       })
       .catch((err) => {
@@ -358,7 +361,6 @@ function MgtClass() {
     loadSearch();
     loadTeacherID();
     loadTeacher();
-    loadClassFilter();
     // Fetch the original data for filtering (remove this part from here)
   }, []);
 
