@@ -7,7 +7,6 @@ import { saveToLocalStorage } from "../../LocalStorage/localstorage";
 
 function NavbarHead() {
   const signOut = () => {
-    
     saveToLocalStorage("login", false);
     saveToLocalStorage("tch_auth", null);
   };
@@ -53,18 +52,17 @@ function NavbarHead() {
               </NavDropdown.Item>
             </NavDropdown>
           </div>
-         
+          <div className="navbarCon">
+            <NavLink to="MgtAssessment">
+              <i>แบบประเมิน</i>
+            </NavLink>
+          </div>
           <div className="navbarCon">
             <NavLink to="report">
               <i>รายงาน</i>
             </NavLink>
           </div>
           <div className="navbarCon">
-            <NavLink to="MgtAssessment">
-              <i>แบบประเมิน</i>
-            </NavLink>
-          </div>
-           <div className="navbarCon">
             <NavLink to="teaSeacher">
               <i>ค้นหา</i>
             </NavLink>

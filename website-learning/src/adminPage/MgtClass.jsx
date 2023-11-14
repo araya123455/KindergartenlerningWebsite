@@ -246,7 +246,7 @@ function MgtClass() {
     // Convert the IDs to integers (if needed)
     const selectedKinderIdInt = parseInt(selectedKinderId, 10);
     const selectedYeartermIdInt = parseInt(selectedYeartermId, 10);
-
+    
     if (isNaN(selectedKinderIdInt)) {
       console.error("Invalid kinder_id");
       return;
