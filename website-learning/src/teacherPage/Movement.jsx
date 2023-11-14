@@ -106,7 +106,7 @@ const Movement = () => {
               title="Video Player"
               width="100%"
               height="400"
-              frameBorder="0"
+              // frameBorder="0"
               allowFullScreen
             ></iframe>
           </Modal.Body>
