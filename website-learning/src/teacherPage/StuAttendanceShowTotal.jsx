@@ -110,10 +110,10 @@ function StuAttendanceShowTotal() {
     }
   });
 
-  const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, sortedDates.length - page * rowsPerPage);
-
+  // const emptyRows =
+  //   rowsPerPage -
+  //   Math.min(rowsPerPage, sortedDates.length - page * rowsPerPage);
+  
   const displayedDates = sortedDates.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -173,7 +173,7 @@ function StuAttendanceShowTotal() {
       </button>
       <br />
       <br />
-      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+      <TableContainer component={Paper}>
         <Table className="custom-table" stickyHeader aria-label="sticky table">
           <TableHead className="TableHead">
             <TableRow>
@@ -239,17 +239,12 @@ function StuAttendanceShowTotal() {
                 </TableCell>
               </TableRow>
             ))}
-            {/* {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={4} />
-              </TableRow>
-            )} */}
           </TableBody>
         </Table>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={sortedDates.length}
+          count={sortedDates?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

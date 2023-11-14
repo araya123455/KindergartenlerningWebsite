@@ -20,7 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 function MgtStudent() {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
-  const [studentResults, setStudentResults] = useState([]);
+  // const [studentResults, setStudentResults] = useState([]);
   const studentData = useSelector((state) => state.data.studentData);
   const [showstr, setShowstr] = useState(""); // Use state for showstr
   let stuid;
@@ -211,7 +211,7 @@ function MgtStudent() {
   const handleSearch = () => {
     if (!searchQuery) {
       alert("กรุณาป้อนรหัสประจำตัวนักเรียนก่อนค้นหา!!"); // Display an alert message
-      setStudentResults([]);
+      // setStudentResults([]);
       setShowstr(""); // Set showstr to "not found"
       return;
     }
@@ -233,7 +233,7 @@ function MgtStudent() {
     const filteredStudents = studentData?.filter(
       (student) => student.stu_sn.toLowerCase() === searchQuery.toLowerCase()
     );
-    setStudentResults(filteredStudents);
+    // setStudentResults(filteredStudents);
     stuid = filteredStudents[0]?.stu_id;
     // Set showstr based on the results
     if (filteredStudents.length === 0) {
